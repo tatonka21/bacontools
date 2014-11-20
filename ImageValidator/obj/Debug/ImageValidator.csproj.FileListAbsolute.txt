@@ -1,0 +1,8 @@
+E:\Projects\ImageValidator\ImageValidator\bin\Debug\ImageValidator.exe.config
+E:\Projects\ImageValidator\ImageValidator\obj\Debug\ImageValidator.csprojResolveAssemblyReference.cache
+E:\Projects\ImageValidator\ImageValidator\bin\Debug\ImageValidator.exe
+E:\Projects\ImageValidator\ImageValidator\bin\Debug\ImageValidator.pdb
+E:\Projects\ImageValidator\ImageValidator\obj\Debug\ImageValidator.exe
+E:\Projects\ImageValidator\ImageValidator\obj\Debug\ImageValidator.pdb
+E:\Projects\ImageValidator\ImageValidator\bin\Debug\CommandLine.dll
+E:\Projects\ImageValidator\ImageValidator\bin\Debug\CommandLine.xml
