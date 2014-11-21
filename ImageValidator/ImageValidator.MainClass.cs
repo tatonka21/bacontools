@@ -20,9 +20,7 @@ namespace ImageValidator
 
             opts.WorkingDirectory = string.IsNullOrWhiteSpace(opts.WorkingDirectory) ? 
                 Directory.GetCurrentDirectory() :
-                Path.Combine(Directory.GetCurrentDirectory(), opts.WorkingDirectory);
-
-            //Console.WriteLine(opts.WorkingDirectory);
+                new DirectoryInfo (opts.WorkingDirectory).FullName;
 
             IEnumerable<string> fileList = Directory.EnumerateFiles(
                  opts.WorkingDirectory, 
@@ -34,10 +32,14 @@ namespace ImageValidator
             ImageValidator.Opts = opts;
 
             Action<string> OnFail = new Action<string>(DoNothingWithAString);
+            
+            OnFail += ReturnFileHandler(
+                opts.DeleteOnFailure, 
+                opts.RetainDirectories, 
+                opts.MoveDirectory,
+                opts.CopyDirectory, 
+                opts.WorkingDirectory);
 
-            if (opts.DeleteOnFailure) OnFail += DeleteFile;
-            if (!string.IsNullOrWhiteSpace(opts.MoveDirectory)) OnFail += MoveFile(opts.WorkingDirectory, opts.MoveDirectory);
-            if (!string.IsNullOrWhiteSpace(opts.CopyDirectory)) OnFail += CopyFile(opts.WorkingDirectory, opts.CopyDirectory);
             if (!string.IsNullOrWhiteSpace(opts.LogFilePath))
             {
                 var sw = new StreamWriter(new FileStream(new FileInfo(opts.LogFilePath).FullName, FileMode.Create));
@@ -53,15 +55,40 @@ namespace ImageValidator
         {
         }
 
-        internal static Action<string> MoveFile(string workDirectory, string destination)
+        internal static Action<string> ReturnFileHandler(bool delete, bool retain, string move, string copy, string workdir)
         {
-            return (string fname) => DirectoryExtensions.PivotMoveFile(fname, workDirectory, destination, false);
+            if (delete) return DeleteFile;
+            if (!String.IsNullOrWhiteSpace(move))
+            {
+                return retain ? MoveFileRetain(workdir, move) : MoveFile(move);
+            }
+            else if (!String.IsNullOrWhiteSpace(copy))
+            {
+                return retain ? CopyFileRetain(workdir, copy) : CopyFile(copy);
+            }
+            else return DoNothingWithAString;
         }
 
-        internal static Action<string> CopyFile(string workDirectory, string destination)
+        internal static Action<string> MoveFileRetain(string workDirectory, string destination)
         {
-            return (string fname) => DirectoryExtensions.PivotCopyFile(fname, workDirectory, destination, false);
+            return (string fname) => DirectoryExtensions.PivotMoveFile(fname, workDirectory, destination);
         }
+
+        internal static Action<string> CopyFileRetain(string workDirectory, string destination)
+        {
+            return (string fname) => DirectoryExtensions.PivotCopyFile(fname, workDirectory, destination);
+        }
+
+        internal static Action<string> MoveFile(string destination)
+        {
+            return (string fname) => DirectoryExtensions.MoveFile(fname, destination);
+        }
+
+        internal static Action<string> CopyFile(string destination)
+        {
+            return (string fname) => DirectoryExtensions.CopyFile(fname, destination);
+        }
+
 
         internal static void DeleteFile(string fname)
         {
@@ -101,8 +128,8 @@ namespace ImageValidator
        [Option("progress-step", Required = false, DefaultValue = 100, HelpText = "Specify period of progress notifications.")]
        public int LogPeriod { get; set; }
 
-       // [Option("retain-folders", Required = false, DefaultValue = false, HelpText = "Keep directory structure when copying/moving instead of dumping all files to a single directory.")]
-       // public bool RetainDirectories;
+       [Option("retain-folders", Required = false, DefaultValue = false, HelpText = "Keep directory structure when copying/moving instead of dumping all files to a single directory.")]
+       public bool RetainDirectories { get; set; } // Default behavior used to be true
 
        [HelpOption]
        public string GetHelp()

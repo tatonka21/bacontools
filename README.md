@@ -66,3 +66,8 @@ Delete all corrupted images. Mutually exclusive with --move-to and --copy-to.
 >ImageValidator --progress-step 100
 ```
 Define how frequently will progress be announced.
+
+```sh
+>ImageValidator --retain-folders
+```
+Copy/move files preserving their path structure in respect to the working directory.

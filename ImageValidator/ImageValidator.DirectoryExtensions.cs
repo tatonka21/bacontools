@@ -45,10 +45,46 @@ namespace ImageValidator
 
             DirectoryInfo di = new DirectoryInfo(pivotedPath);
             string diroot = di.Parent.FullName;
-            Console.WriteLine(diroot);
+            // Console.WriteLine(diroot);
             if (!Directory.Exists(diroot)) Directory.CreateDirectory(diroot);
 
             File.Copy(oldPath, pivotedPath, overwrite);
+        }
+
+        public static void MoveFile (string fname, string destination, bool overwrite = false)
+        {
+            DirectoryInfo di = new DirectoryInfo(destination);
+            FileInfo fi = new FileInfo(fname);
+            string dest = di.FullName + '\\' + fi.Name;
+
+            if (!new DirectoryInfo(dest).Parent.Exists) Directory.CreateDirectory(new DirectoryInfo(dest).Parent.FullName);
+
+            // Console.WriteLine("MoveFile {0} >> {1}", fname, dest);
+
+            if (!File.Exists(fname)) {throw new ArgumentException("fname must be an existing file", "fname");  }
+            else if (File.Exists(dest))
+            {
+                if (overwrite) { File.Delete(dest); } else return;
+            }
+            File.Move(fname, dest);
+        }
+
+        public static void CopyFile (string fname, string destination, bool overwrite = false)
+        {
+            DirectoryInfo di = new DirectoryInfo(destination);
+            FileInfo fi = new FileInfo(fname);
+            string dest = di.FullName + '\\' + fi.Name;
+
+            //Console.WriteLine("CopyFile {0} >> {1}", fname, dest);
+
+            if (!new DirectoryInfo(dest).Parent.Exists) Directory.CreateDirectory(new DirectoryInfo(dest).Parent.FullName);
+
+            if (!File.Exists(fname)) {throw new ArgumentException("fname must be an existing file", "fname");  }
+            else if (File.Exists(dest))
+            {
+                if (overwrite) {File.Delete(dest);} else return;
+            }
+            File.Copy(fname, dest, false);
         }
 
     }
