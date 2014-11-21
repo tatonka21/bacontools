@@ -49,18 +49,18 @@ Don't announce the progress.
 >ImageValidator -m "/badfiles/"
 >ImageValidator --move-to "/badfiles/"
 ```
-Move all corrupted images to the specified folder. Mutually exclusive with --move-to and --delete.
+Move all corrupted images to the specified folder. Mutually exclusive with --copy-to and --delete.
 
 ```sh
 >ImageValidator -c "/badfiles/"
 >ImageValidator --copy-to "/badfiles/"
 ```
-Copy all corrupted images to the specified folder. 
+Copy all corrupted images to the specified folder. Mutually exclusive with --move-to and --delete.
 
 ```sh
 >ImageValidator --delete
 ```
-Deletes all corrupted images.
+Deletes all corrupted images. Mutually exclusive with --move-to and --copy-to.
 
 ```sh
 >ImageValidator --progress-step 100
