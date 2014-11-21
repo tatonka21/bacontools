@@ -14,13 +14,13 @@ Print help.
 >ImageValidator -r
 >ImageValidator --recursive
 ```
-Searches in all subfolders.
+Search in all subfolders.
 
 ```sh
 >ImageValidator -d "C:\My pics"
 >ImageValidator --dir "C:\My pics"
 ```
-Searches in a specified directory, not the working one.
+Search in a specified directory, not the working one.
 
 ```sh
 >ImageValidator -a
@@ -60,7 +60,7 @@ Copy all corrupted images to the specified folder. Mutually exclusive with --mov
 ```sh
 >ImageValidator --delete
 ```
-Deletes all corrupted images. Mutually exclusive with --move-to and --copy-to.
+Delete all corrupted images. Mutually exclusive with --move-to and --copy-to.
 
 ```sh
 >ImageValidator --progress-step 100
