@@ -36,8 +36,8 @@ namespace ImageValidator
             Action<string> OnFail = new Action<string>(DoNothingWithAString);
 
             if (opts.DeleteOnFailure) OnFail += DeleteFile;
-            if (!string.IsNullOrWhiteSpace(opts.MoveDirectory)) OnFail += MoveFile(opts.MoveDirectory);
-            if (!string.IsNullOrWhiteSpace(opts.CopyDirectory)) OnFail += CopyFile(opts.CopyDirectory);
+            if (!string.IsNullOrWhiteSpace(opts.MoveDirectory)) OnFail += MoveFile(opts.WorkingDirectory, opts.MoveDirectory);
+            if (!string.IsNullOrWhiteSpace(opts.CopyDirectory)) OnFail += CopyFile(opts.WorkingDirectory, opts.CopyDirectory);
             if (!string.IsNullOrWhiteSpace(opts.LogFilePath))
             {
                 var sw = new StreamWriter(new FileStream(new FileInfo(opts.LogFilePath).FullName, FileMode.Create));
@@ -53,18 +53,14 @@ namespace ImageValidator
         {
         }
 
-        internal static Action<string> MoveFile(string destination)
+        internal static Action<string> MoveFile(string workDirectory, string destination)
         {
-            DirectoryInfo di = new DirectoryInfo(destination);
-            if (!Directory.Exists(di.FullName)) Directory.CreateDirectory(di.FullName);
-            return (string fname) => File.Move(fname, Path.Combine(di.FullName, Path.GetExtension(fname)));
+            return (string fname) => DirectoryExtensions.PivotMoveFile(fname, workDirectory, destination, false);
         }
 
-        internal static Action<string> CopyFile(string destination)
+        internal static Action<string> CopyFile(string workDirectory, string destination)
         {
-            DirectoryInfo di = new DirectoryInfo(destination);
-            if (!Directory.Exists(di.FullName)) Directory.CreateDirectory(di.FullName);
-            return (string fname) => File.Copy(fname, Path.Combine(di.FullName, Path.GetExtension(fname)));
+            return (string fname) => DirectoryExtensions.PivotCopyFile(fname, workDirectory, destination, false);
         }
 
         internal static void DeleteFile(string fname)
@@ -104,6 +100,9 @@ namespace ImageValidator
 
        [Option("progress-step", Required = false, DefaultValue = 100, HelpText = "Specify period of progress notifications.")]
        public int LogPeriod { get; set; }
+
+       // [Option("retain-folders", Required = false, DefaultValue = false, HelpText = "Keep directory structure when copying/moving instead of dumping all files to a single directory.")]
+       // public bool RetainDirectories;
 
        [HelpOption]
        public string GetHelp()

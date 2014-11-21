@@ -11,11 +11,15 @@ namespace ImageValidator
     {
         public static string PivotPath(string oldPath, string root, string newRoot)
         {
-            return Path.Combine(newRoot, oldPath.Replace(root, ""));
+            DirectoryInfo di = new DirectoryInfo(newRoot);
+
+            return di.FullName + oldPath.Replace(root, "");
         }
 
-        public static void PivotAndMoveFile(string oldPath, string root, string newRoot, bool overwrite = false)
+        public static void PivotMoveFile(string oldPath, string root, string newRoot, bool overwrite = false)
         {
+            // Console.WriteLine("PivotMoveFile {0}, {1}, {2}", oldPath, root, newRoot);
+
             if (!File.Exists(oldPath)) throw new ArgumentException("oldPath must be an existing file", "oldPath");
             string pivotedPath = PivotPath(oldPath, root, newRoot);
 
@@ -25,7 +29,26 @@ namespace ImageValidator
                 File.Delete(pivotedPath);
             }
 
+            // Console.WriteLine("Moving {0} >> {1}", oldPath, pivotedPath);
+
             File.Move(oldPath, pivotedPath);            
+        }
+
+        public static void PivotCopyFile(string oldPath, string root, string newRoot, bool overwrite = false)
+        {
+            // Console.WriteLine("PivotCopyFile {0}, {1}, {2}", oldPath, root, newRoot);
+
+            if (!File.Exists(oldPath)) throw new ArgumentException("oldPath must be an existing file", "oldPath");
+            string pivotedPath = PivotPath(oldPath, root, newRoot);
+
+            // Console.WriteLine("Copying {0} >> {1}", oldPath, pivotedPath);
+
+            DirectoryInfo di = new DirectoryInfo(pivotedPath);
+            string diroot = di.Parent.FullName;
+            Console.WriteLine(diroot);
+            if (!Directory.Exists(diroot)) Directory.CreateDirectory(diroot);
+
+            File.Copy(oldPath, pivotedPath, overwrite);
         }
 
     }
