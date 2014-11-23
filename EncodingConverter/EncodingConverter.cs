@@ -19,6 +19,7 @@ namespace EncodingConverter
             Encoding t = Encoding.UTF8;
             IEnumerable<string> files = Enumerable.Empty<string>();
             var opts = new Options();
+            Stopwatch sw = new Stopwatch();
             Parser.Default.ParseArgumentsStrict(args, opts, () => 
             {
                 if (!(args.Select(s => s.Trim()).Contains(@"-?") 
@@ -68,8 +69,10 @@ namespace EncodingConverter
                 Environment.Exit(1);
             }
 
+            sw.Restart();
             files.AsParallel().ForAll(s => File.WriteAllBytes(s, Encoding.Convert(f, t, File.ReadAllBytes(s))));
-            Console.WriteLine("Conversion completed.");
+            sw.Stop();
+            Console.WriteLine("Conversion completed in {0} ms.", sw.ElapsedMilliseconds);
         }
     }
 
