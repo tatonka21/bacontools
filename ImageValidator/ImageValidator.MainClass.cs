@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 using CommandLine;
 using CommandLine.Text;
 
@@ -47,6 +49,15 @@ namespace ImageValidator
                 ImageValidator.CorruptedFileListOutput = sw;
             }
             if (opts.Mute) ImageValidator.ProgressReportOutput = StreamWriter.Null;
+
+            fileList = fileList.Except(Enumerable.Repeat(Process.GetCurrentProcess().ProcessName, 1));
+
+            if (opts.ListMimeTypes)
+            {
+                foreach (string s in fileList)
+                    ImageValidator.CorruptedFileListOutput.WriteLine("{0} = {1}", s, MimeRetriever.GetMimeType(s));
+                return;
+            }
 
             ImageValidator.ProcessImages(fileList, OnFail);
         }
@@ -130,6 +141,9 @@ namespace ImageValidator
 
        [Option("retain-folders", Required = false, DefaultValue = false, HelpText = "Keep directory structure when copying/moving instead of dumping all files to a single directory.")]
        public bool RetainDirectories { get; set; } // Default behavior used to be true
+
+       [Option("list-mimes", Required = false,  DefaultValue = false, HelpText = "Instead of validation, list file mime types retrieved by heuristic file content lookup.")]
+       public bool ListMimeTypes { get; set; }
 
        [HelpOption]
        public string GetHelp()

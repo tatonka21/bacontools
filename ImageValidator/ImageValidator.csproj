@@ -58,6 +58,7 @@
     <Compile Include="ImageValidator.cs" />
     <Compile Include="ImageValidator.DirectoryExtensions.cs" />
     <Compile Include="ImageValidator.MainClass.cs" />
+    <Compile Include="ImageValidator.MimeRetriever.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
