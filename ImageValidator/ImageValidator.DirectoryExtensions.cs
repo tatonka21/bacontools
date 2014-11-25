@@ -31,6 +31,10 @@ namespace ImageValidator
 
             // Console.WriteLine("Moving {0} >> {1}", oldPath, pivotedPath);
 
+            DirectoryInfo di = new DirectoryInfo(pivotedPath);
+            string diroot = di.Parent.FullName;
+            if (!Directory.Exists(diroot)) Directory.CreateDirectory(diroot);
+
             File.Move(oldPath, pivotedPath);            
         }
 
