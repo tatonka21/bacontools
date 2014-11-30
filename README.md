@@ -5,6 +5,11 @@ ImageValidator is a .NET utility which performs a batch analysis of raster image
 ### Flags
 
 ```sh
+>ImageValidator
+```
+Check all image files in current directory, print corrupted image files to the standard output, don't do anything else.
+
+```sh
 >ImageValidator --help
 >ImageValidator -?
 ```
@@ -38,7 +43,7 @@ Write the corrupted image list to the specified file.
 >ImageValidator -v
 >ImageValidator --verbose
 ```
-Print the specific exception that causes the image to be discarded.
+Print the specific exception that causes the image to be discarded. Doesn't really tell much, so don't even bother.
 
 ```sh
 >ImageValidator --mute
@@ -49,23 +54,23 @@ Don't announce the progress.
 >ImageValidator -m "/badfiles/"
 >ImageValidator --move-to "/badfiles/"
 ```
-Move all corrupted images to the specified folder. Mutually exclusive with --copy-to and --delete.
+Move all corrupted images to the specified folder. Can't use with neither --copy-to nor --delete.
 
 ```sh
 >ImageValidator -c "/badfiles/"
 >ImageValidator --copy-to "/badfiles/"
 ```
-Copy all corrupted images to the specified folder. Mutually exclusive with --move-to and --delete.
+Copy all corrupted images to the specified folder. Can't use with neither --move-to nor --delete.
 
 ```sh
 >ImageValidator --delete
 ```
-Delete all corrupted images. Mutually exclusive with --move-to and --copy-to.
+Delete all corrupted images. Can't use with neither --move-to nor --copy-to.
 
 ```sh
 >ImageValidator --progress-step 100
 ```
-Define how frequently will progress be announced.
+Define how frequently will progress be announced. Default is 100.
 
 ```sh
 >ImageValidator --retain-folders
