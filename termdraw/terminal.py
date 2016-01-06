@@ -10,6 +10,7 @@ representing parent terminal's width and height, respectively.
 """
 
 import os
+import sys
 import shlex
 import struct
 import platform
@@ -94,6 +95,6 @@ def _get_terminal_size_linux():
 
 if __name__ == '__main__':
 	prefix = os.path.basename(__file__)
-	print(os.path.basename(prefix+': this module is not meant to be run'
-		' directly! exiting'))
+	sys.stderr.write(prefix+': this module is not meant to be run'
+		' directly! exiting\n')
 	exit(1)
