@@ -15,8 +15,8 @@ _ticks = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█']
 _ticks_n = len(_ticks)
 
 
-_shortopts = ['h']
-_longopts = ['help', 'debug']
+_shortopts = ['h', 'i', 'n']
+_longopts = ['help', 'debug', 'interpolate', 'no-interpolate']
 _max_term_graph_width = 80
 _max_term_graph_height = 30
 
@@ -30,9 +30,21 @@ if __name__ == '__main__':
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import termdraw.terminal
 import termdraw.csv
-
+from termdraw.interpolate import linear_interpolate
 
 print_debug_info = False
+
+
+def _termdraw_print_help(progname):
+	_termdraw_help_string_1 = "Usage: "
+	_termdraw_help_string_2 = (
+		" [options] file.csv\n\n"
+		"Draw a human-friendly CLI graph with Unicode symbols.\n"
+		"  -h, --help               Print this help message and exit\n"
+		"  -i, --interpolate        Enable interpolation\n"
+		"  -n, --no-interpolate     Disable interpolation"
+	)
+	print(_termdraw_help_string_1 + progname + _termdraw_help_string_2)
 
 
 def _debug_write(str):
@@ -58,16 +70,6 @@ def _unique_everseen(iterable, key=None):
                 yield element
 
 
-def _termdraw_print_help(progname):
-	_termdraw_help_string_1 = "Usage: "
-	_termdraw_help_string_2 = (
-		" [options] file.csv\n\n"
-		"Draw a human-friendly CLI graph with Unicode symbols.\n"
-		"  -h, --help               Print this help message and exit"
-	)
-	print(_termdraw_help_string_1 + progname + _termdraw_help_string_2)
-
-
 def _limited(val, min, max):
 	if val > max:
 		return max
@@ -82,10 +84,9 @@ def _scale(val, a, b, c, d):
 	return 1.0*(c+(d-c)*(val-a)/(b-a))
 
 
-def _draw_graph(stream, width, height, data, interpolate=False,
+def _draw_graph(stream, width, height, data, interpolate=True,
 		solid_graph=True):
 	# TODO: implement non-solid graphs
-	# TODO: implement point interpolation
 	# TODO: write docstring
 	# TODO: make public
 	if solid_graph:
@@ -93,7 +94,7 @@ def _draw_graph(stream, width, height, data, interpolate=False,
 	return 0
 
 
-def _termdraw_draw_solid_graph(stream, width, height, data, interpolate=False):
+def _termdraw_draw_solid_graph(stream, width, height, data, interpolate=True):
 	# TODO: enforce 80 character line wrap
 	# TODO: move graph, pts initialization to _termdraw_draw_graph
 	# Get min and max X and Y values
@@ -113,10 +114,10 @@ def _termdraw_draw_solid_graph(stream, width, height, data, interpolate=False):
 		rawy = _limited(_scale(i[1], bottom, top, 0, height-1), 0, height-1)
 		pts.append((rawx, rawy))
 
-	pts = _deduplicate_points(pts)
-
 	if interpolate:
 		pts = _interpolate_points(pts)
+
+	pts = _deduplicate_points(pts)
 
 	for i in pts:
 		graphx = int(_limited(i[0], 0, width-1))
@@ -134,19 +135,38 @@ def _termdraw_draw_solid_graph(stream, width, height, data, interpolate=False):
 
 
 def _deduplicate_points(pts):
-	result = pts
+	sorted_list = pts
 
-	result = sorted(result, key=lambda p: p[1], reverse=True)
-	# [uniques.add(p.id) or p for p in result if p.id not in uniques]
+	sorted_list.sort(key=lambda p: p[1], reverse=True)
 
-	uniques = _unique_everseen(result, key=lambda p: p[0])
+	uniques = _unique_everseen(sorted_list, key=lambda p: p[0])
 
 	return list(uniques)
 
 
 def _interpolate_points(pts):
-	result = pts
-	return result
+	result = sorted(pts, key=lambda p: p[0])
+	_debug_write(repr(result))
+
+	for i, current in enumerate(result):
+		if i == (len(result)-1):
+			break
+
+		next = result[i+1]
+
+		interval = int(next[0]-current[0])
+		a = current[1]
+		b = next[1]
+
+		if interval <= 1:
+			continue
+		for n in range(interval-1):
+			newx = current[0] + n + 1
+			newy = linear_interpolate(a, b, 1.0*(n+1)/interval)
+			result.append((newx, newy))
+
+	_debug_write(repr(result))
+	return sorted(result)
 
 
 def _termdraw_get_soft_view_width(termwidth):
@@ -166,9 +186,11 @@ def _termdraw_get_soft_view_height(termheight):
 def _main(args):
 	exit_status = 0
 	prefix = os.path.basename(__file__)
+	global print_debug_info
 	args0 = args[0]
 	input_files = []
 	bare_dash_active = False
+	interpolate = True
 	term_width, term_height = termdraw.terminal.get_terminal_size()
 	graph_width = _termdraw_get_soft_view_width(term_width)
 	graph_height = _termdraw_get_soft_view_height(term_height)
@@ -199,15 +221,24 @@ def _main(args):
 				exit(0)
 			elif val == 'debug':
 				print_debug_info = True
+			elif val == 'interpolate':
+				interpolate = True
+			elif val == 'no-interpolate':
+				interpolate = False
 			continue
 		elif opt.startswith('-'):
-			for c in opt[1:]:
+			val = opt[1:]
+			for c in val:
 				if c not in _shortopts:
 					sys.stderr.write(prefix + ': unknown option ' + c + '\n')
 					exit(1)
-			if 'h' in opt[1:]:
+			if 'h' in val:
 				_termdraw_print_help(prefix)
 				exit(0)
+			if 'i' in val:
+				interpolate = True
+			if 'n' in val:
+				interpolate = False
 			continue
 		else:
 			input_files.append(opt)
@@ -223,4 +254,5 @@ def _main(args):
 				exit(1)
 
 		sys.stdout.write(f + '\n')
-		_draw_graph(sys.stdout, graph_width, graph_height, data)
+		_draw_graph(sys.stdout, graph_width, graph_height, data,
+				interpolate=interpolate)
