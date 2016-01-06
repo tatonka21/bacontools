@@ -95,7 +95,6 @@ def _draw_graph(stream, width, height, data, interpolate=True,
 
 
 def _termdraw_draw_solid_graph(stream, width, height, data, interpolate=True):
-	# TODO: enforce 80 character line wrap
 	# TODO: move graph, pts initialization to _termdraw_draw_graph
 	# Get min and max X and Y values
 	left = min(data, key=lambda p: p[0])[0]
