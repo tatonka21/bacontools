@@ -3,7 +3,7 @@
 
 # TODO: write module docstring
 
-import csv
+
 import os
 import sys
 import math
@@ -22,6 +22,7 @@ if __name__ == '__main__':
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import termdraw.terminal
+import termdraw.csv
 
 
 def __termdraw_print_help(progname):
