@@ -4,6 +4,11 @@
 # The following code which detects terminal geometry is courtesy of Github user
 # @jtriley. This code was taken from https://gist.github.com/jtriley/1108174
 
+"""
+terminal.py implements get_terminal_size(), which returns a tuple (int,int)
+representing parent terminal's width and height, respectively.
+"""
+
 import os
 import shlex
 import struct
