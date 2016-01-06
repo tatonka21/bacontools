@@ -81,7 +81,7 @@ def _limited(val, min, max):
 
 
 def _scale(val, a, b, c, d):
-	return 1.0*(c+(d-c)*(val-a)/(b-a))
+	return _limited(1.0*(c+(d-c)*(val-a)/(b-a)), c, d)
 
 
 def _draw_graph(stream, width, height, data, interpolate=True,
@@ -110,8 +110,8 @@ def _termdraw_draw_solid_graph(stream, width, height, data, interpolate=True):
 	pts = []
 
 	for i in data:
-		rawx = int(_limited(_scale(i[0], left, right, 0, width-1), 0, width-1))
-		rawy = _limited(_scale(i[1], bottom, top, 0, height-1), 0, height-1)
+		rawx = int(_scale(i[0], left, right, 0, width-1))
+		rawy = _scale(i[1], bottom, top, 0, height-1)
 		pts.append((rawx, rawy))
 
 	if interpolate:
@@ -122,7 +122,7 @@ def _termdraw_draw_solid_graph(stream, width, height, data, interpolate=True):
 	for i in pts:
 		graphx = int(_limited(i[0], 0, width-1))
 		graphy = int(_limited(i[1], 0, height-1))
-		tickval = int(_limited(_scale(i[1]-math.floor(i[1]), 0, 1, 0, _ticks_n), 0, _ticks_n-1))
+		tickval = int(_scale(i[1]-math.floor(i[1]), 0, 1, 0, _ticks_n-1))
 		if graphy != 0:
 			for n in range(graphy):
 				graph[height-n-1][graphx] = _ticks[_ticks_n-1]
