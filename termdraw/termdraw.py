@@ -8,6 +8,7 @@ import os
 import sys
 import math
 import io
+import itertools
 
 
 _ticks = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█']
@@ -37,6 +38,24 @@ print_debug_info = False
 def _debug_write(str):
 	if print_debug_info:
 		sys.stderr.write('debug: ' + str)
+
+
+def _unique_everseen(iterable, key=None):
+    "List unique elements, preserving order. Remember all elements ever seen."
+    # unique_everseen('AAAABBBCCDAABBB') --> A B C D
+    # unique_everseen('ABBCcAD', str.lower) --> A B C D
+    seen = set()
+    seen_add = seen.add
+    if key is None:
+        for element in filterfalse(seen.__contains__, iterable):
+            seen_add(element)
+            yield element
+    else:
+        for element in iterable:
+            k = key(element)
+            if k not in seen:
+                seen_add(k)
+                yield element
 
 
 def _termdraw_print_help(progname):
@@ -90,12 +109,16 @@ def _termdraw_draw_solid_graph(stream, width, height, data, interpolate=False):
 	pts = []
 
 	for i in data:
-		rawx = _limited(_scale(i[0], left, right, 0, width-1), 0, width-1)
+		rawx = int(_limited(_scale(i[0], left, right, 0, width-1), 0, width-1))
 		rawy = _limited(_scale(i[1], bottom, top, 0, height-1), 0, height-1)
 		pts.append((rawx, rawy))
 
+	pts = _deduplicate_points(pts)
+
+	if interpolate:
+		pts = _interpolate_points(pts)
+
 	for i in pts:
-		# FIXME: if several points have same x value, fractional ticks overwrite bottom filler ticks
 		graphx = int(_limited(i[0], 0, width-1))
 		graphy = int(_limited(i[1], 0, height-1))
 		tickval = int(_limited(_scale(i[1]-math.floor(i[1]), 0, 1, 0, _ticks_n), 0, _ticks_n-1))
@@ -108,6 +131,17 @@ def _termdraw_draw_solid_graph(stream, width, height, data, interpolate=False):
 		for x in y:
 			stream.write(x)
 		stream.write('\n')
+
+
+def _deduplicate_points(pts):
+	result = pts
+
+	result = sorted(result, key=lambda p: p[1], reverse=True)
+	# [uniques.add(p.id) or p for p in result if p.id not in uniques]
+
+	uniques = _unique_everseen(result, key=lambda p: p[0])
+
+	return list(uniques)
 
 
 def _interpolate_points(pts):
