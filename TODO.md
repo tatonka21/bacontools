@@ -3,15 +3,17 @@ termdraw v0.1 "to do" list
 
 General
 -------
-+ Implement histogram graphs
-+ Implement stdin data consumption
-+ Implement graph decorations
++ setup.py
++ Histogram graphs
++ Stdin data consumption
++ Graph decorations
++ Tests
 
 termdraw/termdraw.py
 --------------------
-+ Implement data interpolation
-+ Implement non-solid graphs
-+ Write docstrings
++ Data interpolation
++ Non-solid graphs
++ Write method and module docstrings
 + Move all init code to `__draw_graph`
 + Make `__draw_graph` function public
 + Extract graph functions to `graph.py`
@@ -23,4 +25,4 @@ termdraw/terminal.py
 
 termdraw/csv.py
 ---------------
-+ Write module docstring
++ Module docstring
