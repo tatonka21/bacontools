@@ -9,4 +9,4 @@ import termdraw.termdraw
 
 
 if __name__=='__main__':
-	termdraw.termdraw.termdraw_main(sys.argv)
+	termdraw.termdraw._main(sys.argv)
