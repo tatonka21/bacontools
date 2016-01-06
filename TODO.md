@@ -11,7 +11,6 @@ General
 
 termdraw/termdraw.py
 --------------------
-+ Data interpolation
 + Non-solid graphs
 + Write method and module docstrings
 + Move all init code to `__draw_graph`
