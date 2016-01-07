@@ -16,8 +16,6 @@ import struct
 import platform
 import subprocess
 
-# TODO: aesthetic refactor
-
 def get_terminal_size():
 	""" getTerminalSize()
 	 - get width and height of console
