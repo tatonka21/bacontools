@@ -3,7 +3,8 @@ termdraw v0.1 "to do" list
 
 General
 -------
-+ setup.py
++ setuptools-compatible `setup.py`
++ setuptools-compatible `termdraw/__init__.py`
 + Histogram graphs
 + Line graphs (ref: http://www.algorithm.co.il/blogs/ascii-plotter/)
 + Horizontal string-value graphs (ref:
@@ -13,6 +14,7 @@ General
 + Graph view decorations
 + Tests
 + ASCII-only option
++ Parse DAT files in some simple readable format (e.g. space separated)
 
 termdraw/termdraw.py
 --------------------
