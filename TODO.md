@@ -3,8 +3,6 @@ termdraw v0.1 "to do" list
 
 General
 -------
-+ setuptools-compatible `setup.py`
-+ setuptools-compatible `termdraw/__init__.py`
 + Histogram graphs
 + Line graphs (ref: http://www.algorithm.co.il/blogs/ascii-plotter/)
 + Horizontal string-value graphs (ref:
