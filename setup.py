@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # vim:syntax=python:filetype=python:ts=4:sw=4:noet:
 
-import os
+import os, shutil, sys
 from setuptools import setup
 
 setup(
@@ -25,3 +25,14 @@ setup(
 		"Topic :: Utilities"
 	]
 )
+
+# Install manpages
+# TODO: remove manpages on uninstall
+# FIXME: setup will fail on Windows systems; ignore manpages when on Windows
+if 'install' in sys.argv:
+	man_path = '/usr/share/man/man1/'
+	if os.path.exists(man_path):
+		print("Installing man pages to " + man_path)
+		man_page = "docs/termdraw.1"
+		shutil.copy2(man_page, man_path)
+		os.chmod(man_path + 'termdraw.1', int('644', 8))
