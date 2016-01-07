@@ -90,7 +90,6 @@ def _scale(val, a, b, c, d):
 
 def _draw_graph(stream, width, height, data, interpolate=None,
 		solid_graph=True):
-	# TODO: implement non-solid graphs
 	# TODO: write docstring
 	# TODO: make public
 	intp = None
