@@ -13,10 +13,12 @@ import itertools
 
 _ticks = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█']
 _ticks_n = len(_ticks)
+_nonsolid_graph_tick = '•'
 
 
-_shortopts = ['h', 'i', 'n']
-_longopts = ['help', 'debug', 'interpolate', 'no-interpolate']
+_shortopts = ['h', 'i', 'n', 's', 'p']
+_longopts = ['help', 'debug', 'interpolate', 'no-interpolate', 'solid',
+	'point']
 _max_term_graph_width = 80
 _max_term_graph_height = 30
 
@@ -42,7 +44,9 @@ def _termdraw_print_help(progname):
 		"Draw a human-friendly CLI graph with Unicode symbols.\n"
 		"  -h, --help               Print this help message and exit\n"
 		"  -i, --interpolate        Enable interpolation\n"
-		"  -n, --no-interpolate     Disable interpolation"
+		"  -n, --no-interpolate     Disable interpolation\n"
+		"  -s, --solid              Draw solid graph (with columns)\n"
+		"  -p, --point              Draw point graph (with points)"
 	)
 	print(_termdraw_help_string_1 + progname + _termdraw_help_string_2)
 
@@ -84,18 +88,28 @@ def _scale(val, a, b, c, d):
 	return _limited(1.0*(c+(d-c)*(val-a)/(b-a)), c, d)
 
 
-def _draw_graph(stream, width, height, data, interpolate=True,
+def _draw_graph(stream, width, height, data, interpolate=None,
 		solid_graph=True):
 	# TODO: implement non-solid graphs
 	# TODO: write docstring
 	# TODO: make public
+	intp = None
+	if interpolate is None:
+		if solid_graph:
+			intp = True
+		else:
+			intp = False
+	else:
+		intp = interpolate
+
 	if solid_graph:
-		_termdraw_draw_solid_graph(stream, width, height, data, interpolate)
+		_draw_solid_graph(stream, width, height, data, intp)
+	else:
+		_draw_point_graph(stream, width, height, data, intp)
 	return 0
 
 
-def _termdraw_draw_solid_graph(stream, width, height, data, interpolate=True):
-	# TODO: move graph, pts initialization to _termdraw_draw_graph
+def _draw_solid_graph(stream, width, height, data, interpolate=True):
 	# Get min and max X and Y values
 	left = min(data, key=lambda p: p[0])[0]
 	right = max(data, key=lambda p: p[0])[0]
@@ -126,6 +140,38 @@ def _termdraw_draw_solid_graph(stream, width, height, data, interpolate=True):
 			for n in range(graphy):
 				graph[height-n-1][graphx] = _ticks[_ticks_n-1]
 		graph[height-graphy-1][graphx] = _ticks[tickval]
+
+	for y in graph:
+		for x in y:
+			stream.write(x)
+		stream.write('\n')
+
+
+def _draw_point_graph(stream, width, height, data, interpolate=False):
+	# Get min and max X and Y values
+	left = min(data, key=lambda p: p[0])[0]
+	right = max(data, key=lambda p: p[0])[0]
+	bottom = min(data, key=lambda p: p[1])[1]
+	top = max(data, key=lambda p: p[1])[1]
+
+	# Initialize graph table
+	graph = [[' ' for x in range(width)] for y in range(height)]
+
+	pts = []
+
+	for i in data:
+		rawx = int(_scale(i[0], left, right, 0, width-1))
+		rawy = _scale(i[1], bottom, top, 0, height-1)
+		pts.append((rawx, rawy))
+
+	if interpolate:
+		pts = _deduplicate_points(pts)
+		pts = _interpolate_points(pts)
+
+	for i in pts:
+		graphx = i[0]
+		graphy = int(i[1])
+		graph[height-graphy-1][graphx] = _nonsolid_graph_tick
 
 	for y in graph:
 		for x in y:
@@ -168,14 +214,14 @@ def _interpolate_points(pts):
 	return sorted(result)
 
 
-def _termdraw_get_soft_view_width(termwidth):
+def _get_soft_view_width(termwidth):
 	if termwidth >= _max_term_graph_width:
 		return _max_term_graph_width
 	else:
 		return termwidth
 
 
-def _termdraw_get_soft_view_height(termheight):
+def _get_soft_view_height(termheight):
 	if termheight >= _max_term_graph_height:
 		return _max_term_graph_height
 	else:
@@ -189,10 +235,11 @@ def _main(args):
 	args0 = args[0]
 	input_files = []
 	bare_dash_active = False
-	interpolate = True
+	interpolate = None
+	solid = False
 	term_width, term_height = termdraw.terminal.get_terminal_size()
-	graph_width = _termdraw_get_soft_view_width(term_width)
-	graph_height = _termdraw_get_soft_view_height(term_height)
+	graph_width = _get_soft_view_width(term_width)
+	graph_height = _get_soft_view_height(term_height)
 
 	if (len(args) <= 1):
 		_termdraw_print_help(prefix)
@@ -200,6 +247,7 @@ def _main(args):
 
 	args.pop(0)
 
+	# TODO: refactor error messages
 	for opt in args:
 		if opt == '--':
 			if bare_dash_active == False:
@@ -224,6 +272,10 @@ def _main(args):
 				interpolate = True
 			elif val == 'no-interpolate':
 				interpolate = False
+			elif val == 'solid':
+				solid = True
+			elif val == 'point':
+				solid == False
 			continue
 		elif opt.startswith('-'):
 			val = opt[1:]
@@ -231,16 +283,24 @@ def _main(args):
 				if c not in _shortopts:
 					sys.stderr.write(prefix + ': unknown option ' + c + '\n')
 					exit(1)
-			if 'h' in val:
-				_termdraw_print_help(prefix)
-				exit(0)
-			if 'i' in val:
-				interpolate = True
-			if 'n' in val:
-				interpolate = False
-			continue
+				if c is 'h':
+					_termdraw_print_help(prefix)
+					exit(0)
+				if c is 'i':
+					interpolate = True
+				if c is 'n':
+					interpolate = False
+				if c is 's':
+					solid = True
+				if c is 'p':
+					solid = False
+				continue
 		else:
 			input_files.append(opt)
+
+	if interpolate and not solid:
+		sys.stderr.write(prefix + ': unable to interpolate point graph\n')
+		exit(1)
 
 	for f in input_files:
 		_debug_write(f)
@@ -254,4 +314,4 @@ def _main(args):
 
 		sys.stdout.write(f + '\n')
 		_draw_graph(sys.stdout, graph_width, graph_height, data,
-				interpolate=interpolate)
+				interpolate=interpolate, solid_graph=solid)

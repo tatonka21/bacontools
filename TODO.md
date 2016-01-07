@@ -11,7 +11,6 @@ General
 
 termdraw/termdraw.py
 --------------------
-+ Non-solid graphs
 + Graph size command line switches
 + Module docstring
 + Move all init code to `__draw_graph`
