@@ -13,7 +13,7 @@ import itertools
 
 _ticks = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█']
 _ticks_n = len(_ticks)
-_nonsolid_graph_tick = '•'
+_point_graph_tick = '•'
 
 
 _shortopts = ['h', 'i', 'n', 's', 'p']
@@ -171,7 +171,7 @@ def _draw_point_graph(stream, width, height, data, interpolate=False):
 	for i in pts:
 		graphx = i[0]
 		graphy = int(i[1])
-		graph[height-graphy-1][graphx] = _nonsolid_graph_tick
+		graph[height-graphy-1][graphx] = _point_graph_tick
 
 	for y in graph:
 		for x in y:
