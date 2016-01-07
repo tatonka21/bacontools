@@ -5,9 +5,14 @@ General
 -------
 + setup.py
 + Histogram graphs
++ Line graphs (ref: http://www.algorithm.co.il/blogs/ascii-plotter/)
++ Horizontal string-value graphs (ref:
+  https://pypi.python.org/pypi/ascii_graph/0.2.1)
 + Stdin data consumption
-+ Graph decorations
++ Graph views
++ Graph view decorations
 + Tests
++ ASCII-only option
 
 termdraw/termdraw.py
 --------------------
