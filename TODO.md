@@ -11,7 +11,6 @@ General
 + Graph views
 + Graph view decorations
 + Tests
-+ ASCII-only option
 + Parse DAT files in some simple readable format (e.g. space separated)
 + Inline point graph value labels
 + Inline line graph value labels

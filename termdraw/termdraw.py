@@ -11,16 +11,17 @@ import io
 import itertools
 
 
-_ticks = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█']
-_ticks_n = len(_ticks)
-_point_graph_tick = '•'
+_solid_graph_ticks_unicode = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█']
+_solid_graph_ticks_ascii = [' ', '.', '|']
+_point_graph_tick_unicode = '•'
+_point_graph_tick_ascii = 'o'
 
-
-_shortopts = ['h', 'i', 'n', 's', 'p']
-_longopts = ['help', 'debug', 'interpolate', 'no-interpolate', 'solid',
-	'point']
 _max_term_graph_width = 80
 _max_term_graph_height = 30
+
+_shortopts = ['h', 'i', 'n', 's', 'p', 'a']
+_longopts = ['help', 'debug', 'interpolate', 'no-interpolate', 'solid',
+	'point', 'ascii']
 
 
 if __name__ == '__main__':
@@ -46,7 +47,8 @@ def _termdraw_print_help(progname):
 		"  -i, --interpolate        Enable interpolation\n"
 		"  -n, --no-interpolate     Disable interpolation\n"
 		"  -s, --solid              Draw solid graph (with columns)\n"
-		"  -p, --point              Draw point graph (with points)"
+		"  -p, --point              Draw point graph (with points)\n"
+		"  -a, --ascii              Only use ASCII symbols"
 	)
 	print(_termdraw_help_string_1 + progname + _termdraw_help_string_2)
 
@@ -89,7 +91,7 @@ def _scale(val, a, b, c, d):
 
 
 def _draw_graph(stream, width, height, data, interpolate=None,
-		solid_graph=True):
+		solid_graph=True, ascii_only=False):
 	# TODO: write docstring
 	# TODO: make public
 	intp = None
@@ -101,14 +103,22 @@ def _draw_graph(stream, width, height, data, interpolate=None,
 	else:
 		intp = interpolate
 
-	if solid_graph:
-		_draw_solid_graph(stream, width, height, data, intp)
+	if ascii_only:
+		solid_graph_ticks = _solid_graph_ticks_ascii
+		point_graph_tick = _point_graph_tick_ascii
 	else:
-		_draw_point_graph(stream, width, height, data, intp)
+		solid_graph_ticks = _solid_graph_ticks_unicode
+		point_graph_tick = _point_graph_tick_unicode
+
+	if solid_graph:
+		_draw_solid_graph(stream, width, height, data, intp, solid_graph_ticks)
+	else:
+		_draw_point_graph(stream, width, height, data, intp, point_graph_tick)
 	return 0
 
 
-def _draw_solid_graph(stream, width, height, data, interpolate=True):
+def _draw_solid_graph(stream, width, height, data, interpolate, ticks):
+	ticks_n = len(ticks)
 	# Get min and max X and Y values
 	left = min(data, key=lambda p: p[0])[0]
 	right = max(data, key=lambda p: p[0])[0]
@@ -134,11 +144,11 @@ def _draw_solid_graph(stream, width, height, data, interpolate=True):
 	for i in pts:
 		graphx = int(_limited(i[0], 0, width-1))
 		graphy = int(_limited(i[1], 0, height-1))
-		tickval = int(_scale(i[1]-math.floor(i[1]), 0, 1, 0, _ticks_n-1))
+		tickval = int(_scale(i[1]-math.floor(i[1]), 0, 1, 0, ticks_n-1))
 		if graphy != 0:
 			for n in range(graphy):
-				graph[height-n-1][graphx] = _ticks[_ticks_n-1]
-		graph[height-graphy-1][graphx] = _ticks[tickval]
+				graph[height-n-1][graphx] = ticks[ticks_n-1]
+		graph[height-graphy-1][graphx] = ticks[tickval]
 
 	for y in graph:
 		for x in y:
@@ -146,7 +156,7 @@ def _draw_solid_graph(stream, width, height, data, interpolate=True):
 		stream.write('\n')
 
 
-def _draw_point_graph(stream, width, height, data, interpolate=False):
+def _draw_point_graph(stream, width, height, data, interpolate, tick):
 	# Get min and max X and Y values
 	left = min(data, key=lambda p: p[0])[0]
 	right = max(data, key=lambda p: p[0])[0]
@@ -170,7 +180,7 @@ def _draw_point_graph(stream, width, height, data, interpolate=False):
 	for i in pts:
 		graphx = i[0]
 		graphy = int(i[1])
-		graph[height-graphy-1][graphx] = _point_graph_tick
+		graph[height-graphy-1][graphx] = tick
 
 	for y in graph:
 		for x in y:
@@ -236,6 +246,7 @@ def _main(args):
 	bare_dash_active = False
 	interpolate = None
 	solid = False
+	ascii_only = False
 	term_width, term_height = termdraw.terminal.get_terminal_size()
 	graph_width = _get_soft_view_width(term_width)
 	graph_height = _get_soft_view_height(term_height)
@@ -275,6 +286,8 @@ def _main(args):
 				solid = True
 			elif val == 'point':
 				solid == False
+			elif val == 'ascii':
+				ascii_only = True
 			continue
 		elif opt.startswith('-'):
 			val = opt[1:]
@@ -293,6 +306,8 @@ def _main(args):
 					solid = True
 				if c is 'p':
 					solid = False
+				if c is 'a':
+					ascii_only = True
 				continue
 		else:
 			input_files.append(opt)
@@ -313,4 +328,4 @@ def _main(args):
 
 		sys.stdout.write(f + '\n')
 		_draw_graph(sys.stdout, graph_width, graph_height, data,
-				interpolate=interpolate, solid_graph=solid)
+				interpolate, solid, ascii_only)
