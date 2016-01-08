@@ -19,6 +19,8 @@ Draw a solid graph (fills values at or below the points).
 
 ` $ termdraw data.csv -p`
 
+Draw a point graph (does not fill below the values). This flag is on by
+default.
 
 ` $ termdraw data.csv -si`
 
