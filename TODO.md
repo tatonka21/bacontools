@@ -9,6 +9,7 @@ General
   https://pypi.python.org/pypi/ascii_graph/0.2.1)
 + Stdin data consumption
 + Write to file option
++ Point graph interpolation support
 + Graph views
 + Graph view decorations
 + Tests
