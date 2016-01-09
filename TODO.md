@@ -18,7 +18,6 @@ General
 
 Documentation
 -------------
-+ Update README.md
 + Write docs/termdraw.3 for Python modules and their public functions
 
 termdraw/termdraw.py
