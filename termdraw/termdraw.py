@@ -22,6 +22,16 @@ _max_term_graph_height = 30
 _shortopts = ['h', 'i', 'n', 's', 'p', 'a']
 _longopts = ['help', 'debug', 'interpolate', 'no-interpolate', 'solid',
 	'point', 'ascii']
+_shortopts_with_arg = []
+_longopts_with_arg = []
+_shortlong_map = {
+	'h': 'help',
+	'i': 'interpolate',
+	'n': 'no-interpolate',
+	's': 'solid',
+	'p': 'point',
+	'a': 'ascii'
+}
 
 
 if __name__ == '__main__':
@@ -33,6 +43,7 @@ if __name__ == '__main__':
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import termdraw.terminal
 import termdraw.csv
+import termdraw.cli
 from termdraw.interpolate import linear_interpolate
 
 print_debug_info = False
@@ -242,75 +253,50 @@ def _main(args):
 	prefix = os.path.basename(__file__)
 	global print_debug_info
 	args0 = args[0]
-	input_files = []
-	bare_dash_active = False
-	interpolate = None
-	solid = False
-	ascii_only = False
 	term_width, term_height = termdraw.terminal.get_terminal_size()
 	graph_width = _get_soft_view_width(term_width)
 	graph_height = _get_soft_view_height(term_height)
+
+	cliparse = termdraw.cli.CLIParser()
+	cliparse.shortoptlist = _shortopts
+	cliparse.longoptlist = _longopts
+	cliparse.shortopts_with_arg = _shortopts_with_arg
+	cliparse.longopts_with_arg = _longopts_with_arg
+	cliparse.short_long_mapping = _shortlong_map
+	cliparse.accept_bare_dash = True
 
 	if (len(args) <= 1):
 		_termdraw_print_help(prefix)
 		exit(1)
 
-	args.pop(0)
-
 	# TODO: refactor error messages
-	for opt in args:
-		if opt == '--':
-			if bare_dash_active == False:
-				bare_dash_active == True
-				continue
-			else:
-				input_files.append(opt)
-		elif bare_dash_active:
-			input_files.append(opt)
-			continue
-		elif opt.startswith('--'):
-			if opt[2:] not in _longopts:
-				sys.stderr.write(prefix + ': unknown option ' + opt[2:] + '\n')
-				exit(1)
-			val = opt[2:]
-			if val == 'help':
-				_termdraw_print_help(prefix)
-				exit(0)
-			elif val == 'debug':
-				print_debug_info = True
-			elif val == 'interpolate':
-				interpolate = True
-			elif val == 'no-interpolate':
-				interpolate = False
-			elif val == 'solid':
-				solid = True
-			elif val == 'point':
-				solid == False
-			elif val == 'ascii':
-				ascii_only = True
-			continue
-		elif opt.startswith('-'):
-			val = opt[1:]
-			for c in val:
-				if c not in _shortopts:
-					sys.stderr.write(prefix + ': unknown option ' + c + '\n')
-					exit(1)
-				if c is 'h':
-					_termdraw_print_help(prefix)
-					exit(0)
-				if c is 'i':
-					interpolate = True
-				if c is 'n':
-					interpolate = False
-				if c is 's':
-					solid = True
-				if c is 'p':
-					solid = False
-				if c is 'a':
-					ascii_only = True
-				continue
-		else:
-			input_files.append(opt)
+	try:
+		cliparse.parse(args)
+	except ValueError as e:
+		sys.stderr.write(str(e)+'\n')
+		exit(1)
+
+	print_debug_info = cliparse.longoptions.get('debug', False)
+
+	_debug_write('short CLI options: ' + repr(cliparse.shortoptions))
+	_debug_write('long CLI options: ' + repr(cliparse.longoptions))
+	_debug_write('raw CLI arguments: ' + repr(cliparse.rawargs))
+
+	input_files = cliparse.rawargs
+
+	interpolate = cliparse.longoptions.get('interpolate')
+	no_interpolate = cliparse.longoptions.get('no-interpolate')
+	solid = cliparse.longoptions.get('solid', False)
+	solid = not cliparse.longoptions.get('point', True)
+	ascii_only = cliparse.longoptions.get('ascii', False)
+
+	if interpolate is None and no_interpolate is None:
+		_debug_write('no interpolation option set, selecting ' + repr(solid))
+		interpolate = solid
+
+	if cliparse.longoptions.get('help', False):
+		_termdraw_print_help(prefix)
+		exit(0)
 
 	if interpolate and not solid:
 		sys.stderr.write(prefix + ': unable to interpolate point graph\n')

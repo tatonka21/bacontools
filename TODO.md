@@ -23,14 +23,12 @@ Documentation
 
 termdraw/termdraw.py
 --------------------
-+ Adapt cli.py from togif
 + Graph size command line switches
 + Module docstring
 + Move all init code to `__draw_graph`
 + Make `__draw_graph` function public
 + `draw_graph` docstring
 + Extract graph functions to `graph.py`
-+ Extract CLI logic to `cli.py`
 + Non-binary interpolation support for `_interpolate_points`
 
 termdraw/csv.py
