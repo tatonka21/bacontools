@@ -51,17 +51,17 @@ print_debug_info = False
 
 
 def _termdraw_print_help(progname):
-	_termdraw_help_string_1 = "Usage: "
+	_termdraw_help_string_1 = 'Usage: '
 	_termdraw_help_string_2 = (
-		" [options] file.csv\n"
-		"Draw a human-friendly CLI graph with Unicode symbols.\n\n"
-		"  -h, --help               Print this help message and exit\n"
-		"  -i, --interpolate        Enable interpolation\n"
-		"  -n, --no-interpolate     Disable interpolation\n"
-		"  -s, --solid              Draw solid graph (with columns)\n"
-		"  -p, --point              Draw point graph (with points)\n"
-		"  -a, --ascii              Only use ASCII symbols\n"
-		"  -o file, --output file   Write to file instead of stdout"
+		' [options] file.csv\n'
+		'Draw a human-friendly CLI graph with Unicode symbols.\n\n'
+		'  -h, --help               Print this help message and exit\n'
+		'  -i, --interpolate        Enable interpolation\n'
+		'  -n, --no-interpolate     Disable interpolation\n'
+		'  -s, --solid              Draw solid graph (with columns)\n'
+		'  -p, --point              Draw point graph (with points)\n'
+		'  -a, --ascii              Only use ASCII symbols\n'
+		'  -o file, --output file   Write to file instead of stdout'
 	)
 	print(_termdraw_help_string_1 + progname + _termdraw_help_string_2)
 
