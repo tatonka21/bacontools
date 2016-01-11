@@ -68,7 +68,11 @@ def _termdraw_print_help(progname):
 
 def _debug_write(str):
 	if print_debug_info:
-		sys.stderr.write('debug: ' + str)
+		sys.stderr.write(os.path.basename(__file__) + ': debug: ' + str + '\n')
+
+
+def _err(str):
+	sys.stderr.write(os.path.basename(__file__) + ': ' + str + '\n')
 
 
 def _unique_everseen(iterable, key=None):
@@ -213,7 +217,6 @@ def _deduplicate_points(pts):
 
 def _interpolate_points(pts):
 	result = sorted(pts, key=lambda p: p[0])
-	_debug_write(repr(result))
 
 	for i, current in enumerate(result):
 		if i == (len(result)-1):
@@ -232,7 +235,6 @@ def _interpolate_points(pts):
 			newy = linear_interpolate(a, b, 1.0*(n+1)/interval)
 			result.append((newx, newy))
 
-	_debug_write(repr(result))
 	return sorted(result)
 
 
@@ -252,7 +254,6 @@ def _get_soft_view_height(termheight):
 
 def _main(args):
 	exit_status = 0
-	prefix = os.path.basename(__file__)
 	global print_debug_info
 	args0 = args[0]
 	output_stream = sys.stdout
@@ -272,11 +273,10 @@ def _main(args):
 		_termdraw_print_help(prefix)
 		exit(1)
 
-	# TODO: refactor error messages
 	try:
 		cliparse.parse(args)
 	except ValueError as e:
-		sys.stderr.write(str(e)+'\n')
+		_err(str(e))
 		exit(1)
 
 	print_debug_info = cliparse.longoptions.get('debug', False)
@@ -303,7 +303,7 @@ def _main(args):
 		exit(0)
 
 	if interpolate and not solid:
-		sys.stderr.write(prefix + ': unable to interpolate point graph\n')
+		_err('unable to interpolate point graph')
 		exit(1)
 
 	if output is not None:
@@ -314,13 +314,13 @@ def _main(args):
 			output_stream = open(output, 'w+')
 
 	for f in input_files:
-		_debug_write(f)
+		_debug_write('processing file ' + f)
 		rawdata = termdraw.csv.get_csv_data(f)
 		data = [(float(t[0]), float(t[1])) for t in (tuple(x) for x in rawdata)]
 
 		for n in data:
 			if len(n) != 2:
-				sys.stderr.write(prefix + ': invalid CSV data: ' + repr(n) + '\n')
+				_err('CSV data does not conform to x,y format: ' + repr(n))
 				exit(1)
 
 		output_stream.write(f + '\n')
