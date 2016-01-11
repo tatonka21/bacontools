@@ -19,18 +19,19 @@ _point_graph_tick_ascii = 'o'
 _max_term_graph_width = 80
 _max_term_graph_height = 30
 
-_shortopts = ['h', 'i', 'n', 's', 'p', 'a']
+_shortopts = ['h', 'i', 'n', 's', 'p', 'a', 'o']
 _longopts = ['help', 'debug', 'interpolate', 'no-interpolate', 'solid',
-	'point', 'ascii']
-_shortopts_with_arg = []
-_longopts_with_arg = []
+	'point', 'ascii', 'output']
+_shortopts_with_arg = ['o']
+_longopts_with_arg = ['output']
 _shortlong_map = {
 	'h': 'help',
 	'i': 'interpolate',
 	'n': 'no-interpolate',
 	's': 'solid',
 	'p': 'point',
-	'a': 'ascii'
+	'a': 'ascii',
+	'o': 'output'
 }
 
 
@@ -59,7 +60,8 @@ def _termdraw_print_help(progname):
 		"  -n, --no-interpolate     Disable interpolation\n"
 		"  -s, --solid              Draw solid graph (with columns)\n"
 		"  -p, --point              Draw point graph (with points)\n"
-		"  -a, --ascii              Only use ASCII symbols"
+		"  -a, --ascii              Only use ASCII symbols\n"
+		"  -o file, --output file   Write to file instead of stdout"
 	)
 	print(_termdraw_help_string_1 + progname + _termdraw_help_string_2)
 
@@ -253,6 +255,7 @@ def _main(args):
 	prefix = os.path.basename(__file__)
 	global print_debug_info
 	args0 = args[0]
+	output_stream = sys.stdout
 	term_width, term_height = termdraw.terminal.get_terminal_size()
 	graph_width = _get_soft_view_width(term_width)
 	graph_height = _get_soft_view_height(term_height)
@@ -289,6 +292,7 @@ def _main(args):
 	solid = cliparse.longoptions.get('solid', False)
 	solid = not cliparse.longoptions.get('point', True)
 	ascii_only = cliparse.longoptions.get('ascii', False)
+	output = cliparse.longoptions.get('output')
 
 	if interpolate is None and no_interpolate is None:
 		_debug_write('no interpolation option set, selecting ' + repr(solid))
@@ -302,6 +306,13 @@ def _main(args):
 		sys.stderr.write(prefix + ': unable to interpolate point graph\n')
 		exit(1)
 
+	if output is not None:
+		if os.path.exists(output):
+			_err('file system entry already exists: ' + output)
+			exit(1)
+		else:
+			output_stream = open(output, 'w+')
+
 	for f in input_files:
 		_debug_write(f)
 		rawdata = termdraw.csv.get_csv_data(f)
@@ -312,6 +323,6 @@ def _main(args):
 				sys.stderr.write(prefix + ': invalid CSV data: ' + repr(n) + '\n')
 				exit(1)
 
-		sys.stdout.write(f + '\n')
-		_draw_graph(sys.stdout, graph_width, graph_height, data,
+		output_stream.write(f + '\n')
+		_draw_graph(output_stream, graph_width, graph_height, data,
 				interpolate, solid, ascii_only)
