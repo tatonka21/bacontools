@@ -3,16 +3,22 @@ termdraw v0.1 "to do" list
 
 General
 -------
-+ setup.py
 + Histogram graphs
 + Line graphs (ref: http://www.algorithm.co.il/blogs/ascii-plotter/)
 + Horizontal string-value graphs (ref:
   https://pypi.python.org/pypi/ascii_graph/0.2.1)
 + Stdin data consumption
++ Point graph interpolation support
 + Graph views
 + Graph view decorations
 + Tests
-+ ASCII-only option
++ Parse DAT files in some simple readable format (e.g. space separated)
++ Inline point graph value labels
++ Inline line graph value labels
+
+Documentation
+-------------
++ Write docs/termdraw.3 for Python modules and their public functions
 
 termdraw/termdraw.py
 --------------------

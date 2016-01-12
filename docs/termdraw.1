@@ -15,6 +15,11 @@ termdraw [options] file.csv [file2.csv [...]]
 Print help message.
 
 .TP
+\-o path, \-\-output=path
+Write result to file path instead of stdout. If the file already exists,
+termdraw will throw an error.
+
+.TP
 \-n, \-\-no\-interpolation
 Disable midpoint graph interpolation.
 
@@ -29,6 +34,10 @@ Draw solid graph (with continuous block columns below data points).
 .TP
 \-p, \-\-point
 Draw point graph (without supporting columns).
+
+.TP
+\-a, \-\-ascii
+Only use characters from ASCII charset.
 
 .TP
 \-\-debug
