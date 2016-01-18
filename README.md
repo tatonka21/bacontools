@@ -9,6 +9,10 @@ as text graphs.
 Assume data.csv contains a list of (x,y) points, graph those points, print the
 result to stdout.
 
+` $ termdraw data.csv --width=50 -h 20`
+
+Draw graph limited to the width of 50 characters and height of 20 lines.
+
 ` $ termdraw data.csv -a`
 
 Only use ASCII symbols in output.
@@ -26,6 +30,6 @@ default.
 
 Draw a solid graph with linear interpolation between points.
 
-` $ termdraw -h`
+` $ termdraw --help`
 
 Print a help message.

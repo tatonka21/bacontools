@@ -19,19 +19,20 @@ _point_graph_tick_ascii = 'o'
 _max_term_graph_width = 80
 _max_term_graph_height = 30
 
-_shortopts = ['h', 'i', 'n', 's', 'p', 'a', 'o']
+_shortopts = ['i', 'n', 's', 'p', 'a', 'o', 'w', 'h']
 _longopts = ['help', 'debug', 'interpolate', 'no-interpolate', 'solid',
-	'point', 'ascii', 'output']
-_shortopts_with_arg = ['o']
-_longopts_with_arg = ['output']
+	'point', 'ascii', 'output', 'width', 'height']
+_shortopts_with_arg = ['o', 'w', 'h']
+_longopts_with_arg = ['output', 'width', 'height']
 _shortlong_map = {
-	'h': 'help',
 	'i': 'interpolate',
 	'n': 'no-interpolate',
 	's': 'solid',
 	'p': 'point',
 	'a': 'ascii',
-	'o': 'output'
+	'o': 'output',
+	'w': 'width',
+	'h': 'height'
 }
 
 
@@ -55,7 +56,9 @@ def _termdraw_print_help(progname):
 	_termdraw_help_string_2 = (
 		' [options] file.csv\n'
 		'Draw a human-friendly CLI graph with Unicode symbols.\n\n'
-		'  -h, --help               Print this help message and exit\n'
+		'  --help                   Print this help message and exit\n'
+		'  -w X, --width X          Limit graph width to X characters\n'
+		'  -h Y, --height Y         Limit graph height to Y lines\n'
 		'  -i, --interpolate        Enable interpolation\n'
 		'  -n, --no-interpolate     Disable interpolation\n'
 		'  -s, --solid              Draw solid graph (with columns)\n'
@@ -258,8 +261,6 @@ def _main(args):
 	args0 = args[0]
 	output_stream = sys.stdout
 	term_width, term_height = termdraw.terminal.get_terminal_size()
-	graph_width = _get_soft_view_width(term_width)
-	graph_height = _get_soft_view_height(term_height)
 
 	cliparse = termdraw.cli.CLIParser()
 	cliparse.shortoptlist = _shortopts
@@ -293,6 +294,10 @@ def _main(args):
 	solid = not cliparse.longoptions.get('point', True)
 	ascii_only = cliparse.longoptions.get('ascii', False)
 	output = cliparse.longoptions.get('output')
+	graph_width = int(cliparse.longoptions.get('width',
+			_get_soft_view_width(term_width)))
+	graph_height = int(cliparse.longoptions.get('height',
+			_get_soft_view_height(term_height)))
 
 	if interpolate is None and no_interpolate is None:
 		_debug_write('no interpolation option set, selecting ' + repr(solid))
@@ -312,6 +317,15 @@ def _main(args):
 			exit(1)
 		else:
 			output_stream = open(output, 'w+')
+
+	if graph_width <= 1:
+		_err('graph width too small')
+		exit(1)
+
+	if graph_height <= 1:
+		_err('graph height too small')
+		exit(1)
+
 
 	for f in input_files:
 		_debug_write('processing file ' + f)
