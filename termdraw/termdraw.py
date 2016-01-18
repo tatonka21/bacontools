@@ -259,6 +259,7 @@ def _main(args):
 	exit_status = 0
 	global print_debug_info
 	args0 = args[0]
+	prefix = os.path.basename(__file__)
 	output_stream = sys.stdout
 	term_width, term_height = termdraw.terminal.get_terminal_size()
 
