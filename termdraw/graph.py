@@ -86,9 +86,7 @@ def _interpolate_points(pts):
 	return sorted(result)
 
 
-def print_point_graph(stream, width, height, data, interpolate, ticks):
-	ticks_n = len(ticks)
-
+def print_point_graph(stream, width, height, data, interpolate, tick):
 	# Get min and max X and Y values
 	left = min(data, key=lambda p: p[0])[0]
 	right = max(data, key=lambda p: p[0])[0]
@@ -107,18 +105,13 @@ def print_point_graph(stream, width, height, data, interpolate, ticks):
 		pts.append((rawx, rawy))
 
 	if interpolate:
+		pts = _deduplicate_points(pts)
 		pts = _interpolate_points(pts)
 
-	pts = _deduplicate_points(pts)
-
 	for i in pts:
-		graphx = int(_limit(i[0], 0, width-1))
-		graphy = int(_limit(i[1], 0, height-1))
-		tickval = int(_scale(i[1]-math.floor(i[1]), 0, 1, 0, ticks_n-1))
-		if graphy != 0:
-			for n in range(graphy):
-				graph[height-n-1][graphx] = ticks[ticks_n-1]
-		graph[height-graphy-1][graphx] = ticks[tickval]
+		graphx = i[0]
+		graphy = int(i[1])
+		graph[height-graphy-1][graphx] = tick
 
 	for y in graph:
 		for x in y:
