@@ -31,3 +31,18 @@ def get_csv_data(filename):
 		csvfile.seek(0)
 		reader = csv.reader(csvfile, dialect)
 		return list(reader)
+
+
+def get_csv_data_string(s):
+	"""Read CSV data from a string, return as a list
+
+	Args:
+		s (string): CSV data
+
+	Returns
+		list of all entries in s
+	"""
+	tmp = s.split('\n')
+	dialect = csv.Sniffer().sniff(s)
+	reader = csv.reader(tmp, dialect)
+	return list(reader)

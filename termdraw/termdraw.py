@@ -204,11 +204,26 @@ def _main(args):
 		_err('graph height too small')
 		exit(1)
 
-
 	for f in input_files:
-		_debug_write('processing file ' + f)
-		rawdata = termdraw.csv.get_csv_data(f)
-		data = [(float(t[0]), float(t[1])) for t in (tuple(x) for x in rawdata)]
+		data = []
+		is_stdin = False
+
+		if f is '-':
+			is_stdin = True
+
+		_debug_write('processing '+(('file '+f) if not is_stdin else 'stdin'))
+
+		if is_stdin:
+			stdin_string = sys.stdin.read()
+			stdin_string = stdin_string.replace(';', '\n')
+			stdin_string = stdin_string.replace(' ', '\n')
+			stdin_string = stdin_string.strip()
+			rawdata = termdraw.csv.get_csv_data_string(stdin_string)
+			data = [(float(t[0]), float(t[1])) for t in (tuple(x) for x in rawdata)]
+
+		else:
+			rawdata = termdraw.csv.get_csv_data(f)
+			data = [(float(t[0]), float(t[1])) for t in (tuple(x) for x in rawdata)]
 
 		for n in data:
 			if len(n) != 2:
