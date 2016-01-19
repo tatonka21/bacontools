@@ -21,8 +21,3 @@ termdraw/csv.py
 ---------------
 + Module docstring
 + `get_csv_data` docstring
-
-termdraw/interpolate.py
------------------------
-+ Module docstring
-+ `linear_interpolate` docstring
