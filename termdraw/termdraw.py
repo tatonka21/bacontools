@@ -291,14 +291,23 @@ def _main(args):
 
 	interpolate = cliparse.longoptions.get('interpolate')
 	no_interpolate = cliparse.longoptions.get('no-interpolate')
-	solid = cliparse.longoptions.get('solid', False)
-	solid = not cliparse.longoptions.get('point', True)
 	ascii_only = cliparse.longoptions.get('ascii', False)
 	output = cliparse.longoptions.get('output')
 	graph_width = int(cliparse.longoptions.get('width',
 			_get_soft_view_width(term_width)))
 	graph_height = int(cliparse.longoptions.get('height',
 			_get_soft_view_height(term_height)))
+	opt_solid = cliparse.longoptions.get('solid', None)
+	opt_point = cliparse.longoptions.get('point', None)
+
+	if opt_solid is None and opt_point is None:
+		solid = True
+
+	if opt_solid is True and opt_point is True:
+		_err('both types of graphs have been specified')
+		exit(1)
+
+	solid = False if opt_solid is None else True
 
 	if interpolate is None and no_interpolate is None:
 		_debug_write('no interpolation option set, selecting ' + repr(solid))
