@@ -11,6 +11,8 @@ Graphs
 + Line graphs (ref: http://www.algorithm.co.il/blogs/ascii-plotter/)
 + Horizontal string-value graphs (ref:
   https://pypi.python.org/pypi/ascii_graph/0.2.1)
++ Heat maps for large quantity of points, implement with ░▒▓█ symbols for
+  Unicode
 + Graph views
 + Graph view decorations
 + Inline point graph value labels
