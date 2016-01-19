@@ -16,8 +16,3 @@ termdraw/termdraw.py
 + Move all init code to `__draw_graph`
 + Make `__draw_graph` function public
 + `draw_graph` docstring
-
-termdraw/csv.py
----------------
-+ Module docstring
-+ `get_csv_data` docstring
