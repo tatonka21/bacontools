@@ -126,6 +126,7 @@ def _main(args):
 	args0 = args[0]
 	prefix = os.path.basename(__file__)
 	output_stream = sys.stdout
+	interpolate = True
 	term_width, term_height = termdraw.terminal.get_terminal_size()
 
 	cliparse = termdraw.cli.CLIParser()
@@ -154,8 +155,8 @@ def _main(args):
 
 	input_files = cliparse.rawargs
 
-	interpolate = cliparse.longoptions.get('interpolate')
-	no_interpolate = cliparse.longoptions.get('no-interpolate')
+	opt_interpolate = cliparse.longoptions.get('interpolate', None)
+	opt_no_interpolate = cliparse.longoptions.get('no-interpolate', None)
 	ascii_only = cliparse.longoptions.get('ascii', False)
 	output = cliparse.longoptions.get('output')
 	graph_width = int(cliparse.longoptions.get('width',
@@ -164,6 +165,10 @@ def _main(args):
 			_get_soft_view_height(term_height)))
 	opt_solid = cliparse.longoptions.get('solid', None)
 	opt_point = cliparse.longoptions.get('point', None)
+
+	if cliparse.longoptions.get('help', False):
+		_termdraw_print_help(prefix)
+		exit(0)
 
 	if opt_solid is None and opt_point is None:
 		solid = True
@@ -174,15 +179,13 @@ def _main(args):
 
 	solid = False if opt_solid is None else True
 
-	if interpolate is None and no_interpolate is None:
+	if opt_interpolate is None and opt_no_interpolate is None:
 		_debug_write('no interpolation option set, selecting ' + repr(solid))
 		interpolate = solid
 
-	if cliparse.longoptions.get('help', False):
-		_termdraw_print_help(prefix)
-		exit(0)
+	interpolate = (True if opt_interpolate is not None else False)
 
-	if interpolate and not solid:
+	if opt_interpolate and not solid:
 		_err('unable to interpolate point graph')
 		exit(1)
 
