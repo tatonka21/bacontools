@@ -16,7 +16,6 @@ termdraw/termdraw.py
 + Move all init code to `__draw_graph`
 + Make `__draw_graph` function public
 + `draw_graph` docstring
-+ Extract graph functions to `graph.py`
 
 termdraw/csv.py
 ---------------

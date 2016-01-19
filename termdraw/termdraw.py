@@ -46,6 +46,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import termdraw.terminal
 import termdraw.csv
 import termdraw.cli
+import termdraw.graph
 from termdraw.interpolate import linear_interpolate
 
 print_debug_info = False
@@ -78,38 +79,6 @@ def _err(str):
 	sys.stderr.write(os.path.basename(__file__) + ': ' + str + '\n')
 
 
-def _unique_everseen(iterable, key=None):
-    "List unique elements, preserving order. Remember all elements ever seen."
-    # unique_everseen('AAAABBBCCDAABBB') --> A B C D
-    # unique_everseen('ABBCcAD', str.lower) --> A B C D
-    seen = set()
-    seen_add = seen.add
-    if key is None:
-        for element in filterfalse(seen.__contains__, iterable):
-            seen_add(element)
-            yield element
-    else:
-        for element in iterable:
-            k = key(element)
-            if k not in seen:
-                seen_add(k)
-                yield element
-
-
-def _limited(val, min, max):
-	if val > max:
-		return max
-	else:
-		if val < min:
-			return min
-		else:
-			return val
-
-
-def _scale(val, a, b, c, d):
-	return _limited(1.0*(c+(d-c)*(val-a)/(b-a)), c, d)
-
-
 def _draw_graph(stream, width, height, data, interpolate=None,
 		solid_graph=True, ascii_only=False):
 	# TODO: write docstring
@@ -124,121 +93,17 @@ def _draw_graph(stream, width, height, data, interpolate=None,
 		intp = interpolate
 
 	if ascii_only:
-		solid_graph_ticks = _solid_graph_ticks_ascii
-		point_graph_tick = _point_graph_tick_ascii
+		solid_graph_ticks = termdraw.graph.solid_graph_ticks_ascii
+		point_graph_tick = termdraw.graph.point_graph_tick_ascii
 	else:
-		solid_graph_ticks = _solid_graph_ticks_unicode
-		point_graph_tick = _point_graph_tick_unicode
+		solid_graph_ticks = termdraw.graph.solid_graph_ticks_unicode
+		point_graph_tick = termdraw.graph.point_graph_tick_unicode
 
 	if solid_graph:
-		_draw_solid_graph(stream, width, height, data, intp, solid_graph_ticks)
+		termdraw.graph.print_solid_graph(stream, width, height, data, intp, solid_graph_ticks)
 	else:
-		_draw_point_graph(stream, width, height, data, intp, point_graph_tick)
+		termdraw.graph.print_point_graph(stream, width, height, data, intp, point_graph_tick)
 	return 0
-
-
-def _draw_solid_graph(stream, width, height, data, interpolate, ticks):
-	ticks_n = len(ticks)
-	# Get min and max X and Y values
-	left = min(data, key=lambda p: p[0])[0]
-	right = max(data, key=lambda p: p[0])[0]
-	bottom = min(data, key=lambda p: p[1])[1]
-	top = max(data, key=lambda p: p[1])[1]
-
-	# Initialize graph table
-	graph = [[' ' for x in range(width)] for y in range(height)]
-
-	# Initialize points list
-	pts = []
-
-	for i in data:
-		rawx = int(_scale(i[0], left, right, 0, width-1))
-		rawy = _scale(i[1], bottom, top, 0, height-1)
-		pts.append((rawx, rawy))
-
-	if interpolate:
-		pts = _interpolate_points(pts)
-
-	pts = _deduplicate_points(pts)
-
-	for i in pts:
-		graphx = int(_limited(i[0], 0, width-1))
-		graphy = int(_limited(i[1], 0, height-1))
-		tickval = int(_scale(i[1]-math.floor(i[1]), 0, 1, 0, ticks_n-1))
-		if graphy != 0:
-			for n in range(graphy):
-				graph[height-n-1][graphx] = ticks[ticks_n-1]
-		graph[height-graphy-1][graphx] = ticks[tickval]
-
-	for y in graph:
-		for x in y:
-			stream.write(x)
-		stream.write('\n')
-
-
-def _draw_point_graph(stream, width, height, data, interpolate, tick):
-	# Get min and max X and Y values
-	left = min(data, key=lambda p: p[0])[0]
-	right = max(data, key=lambda p: p[0])[0]
-	bottom = min(data, key=lambda p: p[1])[1]
-	top = max(data, key=lambda p: p[1])[1]
-
-	# Initialize graph table
-	graph = [[' ' for x in range(width)] for y in range(height)]
-
-	pts = []
-
-	for i in data:
-		rawx = int(_scale(i[0], left, right, 0, width-1))
-		rawy = _scale(i[1], bottom, top, 0, height-1)
-		pts.append((rawx, rawy))
-
-	if interpolate:
-		pts = _deduplicate_points(pts)
-		pts = _interpolate_points(pts)
-
-	for i in pts:
-		graphx = i[0]
-		graphy = int(i[1])
-		graph[height-graphy-1][graphx] = tick
-
-	for y in graph:
-		for x in y:
-			stream.write(x)
-		stream.write('\n')
-
-
-def _deduplicate_points(pts):
-	sorted_list = pts
-
-	sorted_list.sort(key=lambda p: p[1], reverse=True)
-
-	uniques = _unique_everseen(sorted_list, key=lambda p: p[0])
-
-	return list(uniques)
-
-
-def _interpolate_points(pts):
-	result = sorted(pts, key=lambda p: p[0])
-
-	for i, current in enumerate(result):
-		if i == (len(result)-1):
-			break
-
-		next = result[i+1]
-
-		interval = int(next[0]-current[0])
-		a = current[1]
-		b = next[1]
-
-		if interval <= 1:
-			continue
-		for n in range(interval-1):
-			newx = current[0] + n + 1
-			newy = linear_interpolate(a, b, 1.0*(n+1)/interval)
-			result.append((newx, newy))
-
-	return sorted(result)
 
 
 def _get_soft_view_width(termwidth):
