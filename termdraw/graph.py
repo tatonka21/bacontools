@@ -60,13 +60,16 @@ def _deduplicate_points(pts):
 	sorted_list = pts
 	sorted_list.sort(key=lambda p: p[1], reverse=True)
 	uniques = _unique_everseen(sorted_list, key=lambda p: p[0])
-	return list(uniques)
+	result = list(uniques)
+	result.sort(key=lambda p: p[0])
+	return result
 
 
 def _interpolate_points(pts):
-	result = sorted(pts, key=lambda p: p[0])
+	sorted_pts = sorted(pts, key=lambda p: p[0])
+	result = sorted_pts[:]
 
-	for i, current in enumerate(result):
+	for i, current in enumerate(sorted_pts):
 		if i == (len(result)-1):
 			break
 
@@ -83,7 +86,7 @@ def _interpolate_points(pts):
 			newy = termdraw.interpolate.linear_interpolate(a, b, 1.0*(n+1)/interval)
 			result.append((newx, newy))
 
-	return sorted(result)
+	return sorted(result, key=lambda p: p[0])
 
 
 def print_point_graph(stream, width, height, data, interpolate, tick):
@@ -96,17 +99,21 @@ def print_point_graph(stream, width, height, data, interpolate, tick):
 	# Initialize graph table
 	graph = [[' ' for x in range(width)] for y in range(height)]
 
-	# Initialize points list
+	unscaled_pts = []
 	pts = []
 
 	for i in data:
+		rawx = int(i[0])
+		rawy = i[1]
+		unscaled_pts.append((rawx, rawy))
+
+	for i in unscaled_pts:
 		rawx = int(_scale(i[0], left, right, 0, width-1))
 		rawy = _scale(i[1], bottom, top, 0, height-1)
 		pts.append((rawx, rawy))
 
 	if interpolate:
-		pts = _deduplicate_points(pts)
-		pts = _interpolate_points(pts)
+		pts = _interpolate_points(_deduplicate_points(pts))
 
 	for i in pts:
 		graphx = i[0]
@@ -139,10 +146,10 @@ def print_solid_graph(stream, width, height, data, interpolate, ticks):
 		rawy = _scale(i[1], bottom, top, 0, height-1)
 		pts.append((rawx, rawy))
 
+	pts = _deduplicate_points(pts)
+
 	if interpolate:
 		pts = _interpolate_points(pts)
-
-	pts = _deduplicate_points(pts)
 
 	for i in pts:
 		graphx = int(_limit(i[0], 0, width-1))

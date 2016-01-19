@@ -185,10 +185,6 @@ def _main(args):
 
 	interpolate = (True if opt_interpolate is not None else False)
 
-	if opt_interpolate and not solid:
-		_err('unable to interpolate point graph')
-		exit(1)
-
 	if output is not None:
 		if os.path.exists(output):
 			_err('file system entry already exists: ' + output)
