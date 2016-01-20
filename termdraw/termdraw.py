@@ -9,11 +9,6 @@ import io
 import itertools
 
 
-_solid_graph_ticks_unicode = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█']
-_solid_graph_ticks_ascii = [' ', '.', '|']
-_point_graph_tick_unicode = '•'
-_point_graph_tick_ascii = 'o'
-
 _max_term_graph_width = 80
 _max_term_graph_height = 30
 
