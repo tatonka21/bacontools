@@ -29,8 +29,7 @@ setup(
 
 # Install manpages
 # TODO: remove manpages on uninstall
-# FIXME: setup will fail on Windows systems; ignore manpages when on Windows
-if 'install' in sys.argv:
+if 'install' in sys.argv and os.name is 'posix':
 	man1_path = '/usr/share/man/man1/'
 	man3_path = '/usr/share/man/man3/'
 
