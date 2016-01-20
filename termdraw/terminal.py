@@ -32,7 +32,7 @@ def get_terminal_size():
 	if current_os in ['Linux', 'Darwin'] or current_os.startswith('CYGWIN'):
 		tuple_xy = _get_terminal_size_linux()
 	if tuple_xy is None:
-		print("default")
+		print('default')
 		tuple_xy = (80, 25)		 # default value
 	return tuple_xy
 
@@ -48,7 +48,7 @@ def _get_terminal_size_windows():
 		if res:
 			(bufx, bufy, curx, cury, wattr,
 			 left, top, right, bottom,
-			 maxx, maxy) = struct.unpack("hhhhHhhhhhh", csbi.raw)
+			 maxx, maxy) = struct.unpack('hhhhHhhhhhh', csbi.raw)
 			sizex = right - left + 1
 			sizey = bottom - top + 1
 			return sizex, sizey

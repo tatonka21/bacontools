@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # vim:syntax=python:filetype=python:ts=4:sw=4:noet:
 
-"""Define functions for parsing CSV files
-"""
+'''Define functions for parsing CSV files
+'''
 
 import os
 import sys
