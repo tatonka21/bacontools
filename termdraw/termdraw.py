@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # vim:syntax=python:filetype=python:ts=4:sw=4:noet:
 
-# TODO: write module docstring
-
 
 import os
 import sys
@@ -81,8 +79,6 @@ def _err(str):
 
 def _draw_graph(stream, width, height, data, interpolate=None,
 		solid_graph=True, ascii_only=False):
-	# TODO: write docstring
-	# TODO: make public
 	intp = None
 	if interpolate is None:
 		if solid_graph:

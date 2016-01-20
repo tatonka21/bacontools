@@ -4,7 +4,6 @@
 def _any_pref(haystack, preflist):
 	return any([haystack.startswith(pref) for pref in preflist])
 
-# TODO: class docstring
 class CLIParser(object):
 	def __init__(self):
 		self.shortoptlist       = []    # List of all one letter options
