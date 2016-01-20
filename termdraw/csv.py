@@ -4,11 +4,11 @@
 '''Define functions for parsing CSV files
 '''
 
+from __future__ import absolute_import
 import os
 import sys
 import io
 import csv
-
 
 if __name__ == '__main__':
 	prefix = os.path.basename(__file__)

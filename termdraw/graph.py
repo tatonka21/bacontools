@@ -21,7 +21,7 @@ if __name__ == '__main__':
 
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-import termdraw.interpolate
+from . import interpolate
 
 
 def _unique_everseen(iterable, key=None):
@@ -83,7 +83,7 @@ def _interpolate_points(pts):
 			continue
 		for n in range(interval-1):
 			newx = current[0] + n + 1
-			newy = termdraw.interpolate.linear_interpolate(a, b, 1.0*(n+1)/interval)
+			newy = interpolate.linear_interpolate(a, b, 1.0*(n+1)/interval)
 			result.append((newx, newy))
 
 	return sorted(result, key=lambda p: p[0])
@@ -162,7 +162,7 @@ def print_solid_graph(stream, width, height, data, interpolate, ticks):
 			element, while data points will be drawn with a tick depending on
 			their value after graph scaling; generally, this list should
 			contain symbols that look like blocks with increasing fill, like
-			termdraw.graph.solid_graph_ticks_ascii = [' ', '.', '|'].
+			graph.solid_graph_ticks_ascii = [' ', '.', '|'].
 
 	Returns
 		None
