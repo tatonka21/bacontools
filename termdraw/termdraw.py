@@ -182,11 +182,11 @@ def _main(args):
 		else:
 			output_stream = open(output, 'w+')
 
-	if graph_width <= 1:
+	if graph_width < 1:
 		_err('graph width too small')
 		exit(1)
 
-	if graph_height <= 1:
+	if graph_height < 1:
 		_err('graph height too small')
 		exit(1)
 
