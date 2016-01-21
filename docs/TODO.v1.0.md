@@ -4,6 +4,7 @@ termdraw v1.0 to-do list
 General
 -------
 + Tests
++ Option for printing/not printing filename
 
 Graphs
 ------
