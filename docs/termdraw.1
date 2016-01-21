@@ -11,8 +11,22 @@ termdraw [options] file.csv [file2.csv [...]]
 
 .SH OPTIONS
 .TP
-\-h, \-\-help
+\-\-help
 Print help message.
+
+.TP
+\-o path, \-\-output=path
+Write result to file path instead of stdout. If the file already exists,
+termdraw will throw an error.
+
+.TP
+\-w X, \-\-width=X
+Limit graph width to X characters, not including line breaks.
+
+.TP
+\-h Y, \-\-height=Y
+Limit graph height to Y lines, not including file names and trailing line
+breaks.
 
 .TP
 \-n, \-\-no\-interpolation
@@ -31,11 +45,36 @@ Draw solid graph (with continuous block columns below data points).
 Draw point graph (without supporting columns).
 
 .TP
+\-a, \-\-ascii
+Only use characters from ASCII charset.
+
+.TP
 \-\-debug
 Print debug info.
 
+.SH STANDARD INPUT
+termdraw can receive data from standard input instead of a file.
+For this, it must be either formatted as a CSV file with newlines, or a list of
+x,y points separated by either a single space or a semicolon.
+To instruct termdraw to read from standard input, pass - as a filename.
+.PP
+For instance:
+.nf
+.RS
+$ echo "0,1 1,2 2,3;3,4" | termdraw - -asi -w 7 -h 4
+-
+
+     .|
+   .|||
+ .|||||
+.RE
+.fi
+
 .SH SOURCE
-Source can be obtained at https://github.com/bacondropped/termdraw.git
+Source code can be obtained at https://github.com/bacondropped/termdraw.git
+
+.SH SEE ALSO
+.BR termdraw(3)
 
 .SH AUTHOR
 Ilya Terentyev <bacondropped@gmail.com>

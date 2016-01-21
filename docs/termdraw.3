@@ -1,0 +1,30 @@
+.TH termdraw 3 "termdraw"
+
+.SH NAME
+termdraw \- draw ASCII/Unicode art of various graphs
+
+Termdraw is a library developed for Python 3. It provides several functions for
+visualizing data sets as ASCII/Unicode art graphs.
+
+.SH SYNOPSIS
+.nf
+.RS
+import sys
+import termdraw.graph
+import termdraw.csv
+
+rawdata = get_csv_data_string('3,4 2,5 22,10 12,-7')
+data = [(float(i[0]), float(i[1])) for i in (tuple(x) for x in rawdata)]
+termdraw.graph.print_point_graph(sys.stdout, 40, 20, data, interpolate=True, tick='o')
+termdraw.graph.print_solid_graph(sys.stdout, 80, 30, data, interpolate=False, ticks=termdraw.graph.solid_graph_ticks_unicode)
+.RE
+.fi
+
+.SH SOURCE
+Source code can be obtained at https://github.com/bacondropped/termdraw.git
+
+.SH SEE ALSO
+.BR termdraw(1)
+
+.SH AUTHOR
+Ilya Terentyev <bacondropped@gmail.com>
