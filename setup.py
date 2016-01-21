@@ -7,7 +7,7 @@ from setuptools import setup
 
 setup(
 	name = 'termdraw',
-	version = '0.1-alpha',
+	version = '0.1',
 	author = 'Ilya Terentyev',
 	author_email = 'bacondropped@gmail.com',
 	description = 'Utility library for textual data visualization',
