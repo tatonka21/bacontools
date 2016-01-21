@@ -14,7 +14,7 @@ _max_term_graph_height = 30
 
 _shortopts = ['i', 'n', 's', 'p', 'a', 'o', 'w', 'h']
 _longopts = ['help', 'debug', 'interpolate', 'no-interpolate', 'solid',
-	'point', 'ascii', 'output', 'width', 'height']
+	'point', 'ascii', 'output', 'width', 'height', 'print-paths']
 _shortopts_with_arg = ['o', 'w', 'h']
 _longopts_with_arg = ['output', 'width', 'height']
 _shortlong_map = {
@@ -57,7 +57,8 @@ def _termdraw_print_help(progname):
 		'  -s, --solid              Draw solid graph (with columns)\n'
 		'  -p, --point              Draw point graph (with points)\n'
 		'  -a, --ascii              Only use ASCII symbols\n'
-		'  -o file, --output file   Write to file instead of stdout'
+		'  -o file, --output file   Write to file instead of stdout\n'
+		'  --print-paths            Print file names before graphs'
 	)
 	print(_termdraw_help_string_1 + progname + _termdraw_help_string_2)
 
@@ -149,6 +150,7 @@ def _main(args):
 	opt_no_interpolate = cliparse.longoptions.get('no-interpolate', None)
 	ascii_only = cliparse.longoptions.get('ascii', False)
 	output = cliparse.longoptions.get('output')
+	print_paths = cliparse.longoptions.get('print-paths')
 	graph_width = int(cliparse.longoptions.get('width',
 			_get_soft_view_width(term_width)))
 	graph_height = int(cliparse.longoptions.get('height',
@@ -216,6 +218,8 @@ def _main(args):
 				_err('CSV data does not conform to x,y format: ' + repr(n))
 				exit(1)
 
-		output_stream.write(f + '\n')
+		if print_paths:
+			output_stream.write(f + '\n')
+
 		_draw_graph(output_stream, graph_width, graph_height, data,
 				interpolate, solid, ascii_only)

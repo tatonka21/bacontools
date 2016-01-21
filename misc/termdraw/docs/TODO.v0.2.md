@@ -1,10 +1,6 @@
 termdraw v0.2 to-do list
 ========================
 
-General
--------
-+ Option for printing/not printing filename
-
 Graphs
 ------
 + Horizontal string-value graphs (ref:
