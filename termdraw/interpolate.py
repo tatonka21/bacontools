@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # vim:syntax=python:filetype=python:ts=4:sw=4:noet:
 
-"""Define functions used in graph interpolation
-"""
+'''Define functions used in graph interpolation
+'''
 
 import math
 
 
 def linear_interpolate(a, b, pos):
-	"""Interpolate between two values based using a simple linear function
+	'''Interpolate between two values based using a simple linear function
 
 	Args:
 		a   (double): First value
@@ -18,5 +18,5 @@ def linear_interpolate(a, b, pos):
 
 	Returns:
 		double: interpolated value
-	"""
+	'''
 	return a + (b-a)*pos

@@ -1,20 +1,13 @@
 #!/usr/bin/env python3
 # vim:syntax=python:filetype=python:ts=4:sw=4:noet:
 
-# TODO: write module docstring
-
-
+from __future__ import absolute_import
 import os
 import sys
 import math
 import io
 import itertools
 
-
-_solid_graph_ticks_unicode = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█']
-_solid_graph_ticks_ascii = [' ', '.', '|']
-_point_graph_tick_unicode = '•'
-_point_graph_tick_ascii = 'o'
 
 _max_term_graph_width = 80
 _max_term_graph_height = 30
@@ -43,11 +36,10 @@ if __name__ == '__main__':
 	exit(1)
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-import termdraw.terminal
-import termdraw.csv
-import termdraw.cli
-import termdraw.graph
-from termdraw.interpolate import linear_interpolate
+from . import terminal
+from . import csv
+from . import cli
+from . import graph
 
 print_debug_info = False
 
@@ -81,8 +73,6 @@ def _err(str):
 
 def _draw_graph(stream, width, height, data, interpolate=None,
 		solid_graph=True, ascii_only=False):
-	# TODO: write docstring
-	# TODO: make public
 	intp = None
 	if interpolate is None:
 		if solid_graph:
@@ -93,16 +83,16 @@ def _draw_graph(stream, width, height, data, interpolate=None,
 		intp = interpolate
 
 	if ascii_only:
-		solid_graph_ticks = termdraw.graph.solid_graph_ticks_ascii
-		point_graph_tick = termdraw.graph.point_graph_tick_ascii
+		solid_graph_ticks = graph.solid_graph_ticks_ascii
+		point_graph_tick = graph.point_graph_tick_ascii
 	else:
-		solid_graph_ticks = termdraw.graph.solid_graph_ticks_unicode
-		point_graph_tick = termdraw.graph.point_graph_tick_unicode
+		solid_graph_ticks = graph.solid_graph_ticks_unicode
+		point_graph_tick = graph.point_graph_tick_unicode
 
 	if solid_graph:
-		termdraw.graph.print_solid_graph(stream, width, height, data, intp, solid_graph_ticks)
+		graph.print_solid_graph(stream, width, height, data, intp, solid_graph_ticks)
 	else:
-		termdraw.graph.print_point_graph(stream, width, height, data, intp, point_graph_tick)
+		graph.print_point_graph(stream, width, height, data, intp, point_graph_tick)
 	return 0
 
 
@@ -127,9 +117,9 @@ def _main(args):
 	prefix = os.path.basename(__file__)
 	output_stream = sys.stdout
 	interpolate = True
-	term_width, term_height = termdraw.terminal.get_terminal_size()
+	term_width, term_height = terminal.get_terminal_size()
 
-	cliparse = termdraw.cli.CLIParser()
+	cliparse = cli.CLIParser()
 	cliparse.shortoptlist = _shortopts
 	cliparse.longoptlist = _longopts
 	cliparse.shortopts_with_arg = _shortopts_with_arg
@@ -192,11 +182,11 @@ def _main(args):
 		else:
 			output_stream = open(output, 'w+')
 
-	if graph_width <= 1:
+	if graph_width < 1:
 		_err('graph width too small')
 		exit(1)
 
-	if graph_height <= 1:
+	if graph_height < 1:
 		_err('graph height too small')
 		exit(1)
 
@@ -214,11 +204,11 @@ def _main(args):
 			stdin_string = stdin_string.replace(';', '\n')
 			stdin_string = stdin_string.replace(' ', '\n')
 			stdin_string = stdin_string.strip()
-			rawdata = termdraw.csv.get_csv_data_string(stdin_string)
+			rawdata = csv.get_csv_data_string(stdin_string)
 			data = [(float(t[0]), float(t[1])) for t in (tuple(x) for x in rawdata)]
 
 		else:
-			rawdata = termdraw.csv.get_csv_data(f)
+			rawdata = csv.get_csv_data(f)
 			data = [(float(t[0]), float(t[1])) for t in (tuple(x) for x in rawdata)]
 
 		for n in data:
