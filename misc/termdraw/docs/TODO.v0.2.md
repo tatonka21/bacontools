@@ -7,6 +7,7 @@ Graphs
   https://pypi.python.org/pypi/ascii_graph/0.2.1)
 + Graph views
 + Graph view decorations
++ Automatic equal step x value generation for data of form [(y), ...]
 
 Bugs
 ----
