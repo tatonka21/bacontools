@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf8 -*-
 # vim:syntax=python:filetype=python:ts=4:sw=4:noet:
 
 import os
