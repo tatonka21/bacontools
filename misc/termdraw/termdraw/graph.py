@@ -90,24 +90,24 @@ def _interpolate_points(pts):
 	return sorted(result, key=lambda p: p[0])
 
 
-def print_point_graph(stream, width, height, data, interpolate, tick):
-	'''Print an ASCII graph to stream
+def print_point_graph(width, height, data, interpolate, tick):
+	'''Graph data points, return string with the graph
 
 	Args:
-		stream (writable):     any object that supports write(), for instance,
-			files or sys.stdout
 		width  (int):          width of the resulting graph in characters
 		height (int):          height of the resulting graph in lines
-		data   (list): a list of (double,double) tuples representing (x,y)
-			points on a graph
-		interpolate (Boolean): if interpolate is true, empty columns between
-			data points will contain interpolated values
+		data   (list):         a list of (double,double) tuples representing
+			(x,y) points on a graph
+		interpolate (Boolean): if interpolate is true, empty columns
+			between data points will contain interpolated values
 		tick   (String):       a single-character string which represents the
 			point on a graph
 
 	Returns
-		None
+		string: the resulting graph
 	'''
+	result = ''
+
 	# Get min and max X and Y values
 	left = min(data, key=lambda p: p[0])[0]
 	right = max(data, key=lambda p: p[0])[0]
@@ -140,25 +140,25 @@ def print_point_graph(stream, width, height, data, interpolate, tick):
 
 	for y in graph:
 		for x in y:
-			stream.write(x)
-		stream.write('\n')
+			result += x
+		result += '\n'
+
+	return result
 
 
-def print_solid_graph(stream, width, height, data, interpolate, ticks):
-	'''Print a solid graph to stream
-	This function prints a solid graph to stream. Solid graphs fill the volume
-	below data points with ticks[len(ticks)-1] symbol.
+def print_solid_graph(width, height, data, interpolate, ticks):
+	'''Graph data points, return string with the graph
+	This function prints a solid graph. Solid graphs fill the volume below data
+	points with ticks[len(ticks)-1] symbol.
 
 	Args:
-		stream      (writable): any object that supports write), for instance,
-			files or sys.stdout
-		width       (int)     : width of the resulting graph in characters
-		height      (int)     : height of the resulting graph in lines
-		data        (list)    : a list of (double,double) tuples representing
+		width       (int)    : width of the resulting graph in characters
+		height      (int)    : height of the resulting graph in lines
+		data        (list)   : a list of (double,double) tuples representing
 			(x,y) points on a graph
-		interpolate (Boolean) : if interpolate is true, empty columns between
+		interpolate (Boolean): if interpolate is true, empty columns between
 			data points will contain interpolated values
-		ticks       (list)    : a list of single character strings representing
+		ticks       (list)   : a list of single character strings representing
 			data points; space below data points will be filled with the last
 			element, while data points will be drawn with a tick depending on
 			their value after graph scaling; generally, this list should
@@ -166,8 +166,9 @@ def print_solid_graph(stream, width, height, data, interpolate, ticks):
 			graph.solid_graph_ticks_ascii = [' ', '.', '|'].
 
 	Returns
-		None
+		string: the resulting graph
 	'''
+	result = ''
 
 	ticks_n = len(ticks)
 
@@ -204,5 +205,7 @@ def print_solid_graph(stream, width, height, data, interpolate, ticks):
 
 	for y in graph:
 		for x in y:
-			stream.write(x)
-		stream.write('\n')
+			result += x
+		result += '\n'
+
+	return result
