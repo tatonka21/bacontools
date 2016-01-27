@@ -15,7 +15,9 @@ setup(
 	keywords = 'data graph ascii visualization',
 	url = 'https://github.com/bacondropped/termdraw',
 	packages = ['termdraw'],
-	scripts = ['bin/termdraw'],
+	entry_points = {
+		'console_scripts': ['termdraw = termdraw.termdraw:main']
+	},
 	classifiers = [
 		'Environment :: Console',
 		'Intended Audience :: Developers',

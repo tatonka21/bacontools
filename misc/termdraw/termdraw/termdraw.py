@@ -122,7 +122,8 @@ def _get_soft_view_height(termheight):
 		return termheight
 
 
-def _main(args):
+def main():
+	args = sys.argv
 	exit_status = 0
 	global print_debug_info
 	args0 = args[0]

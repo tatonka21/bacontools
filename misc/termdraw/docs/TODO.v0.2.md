@@ -12,8 +12,3 @@ Graphs
   https://pypi.python.org/pypi/ascii_graph/0.2.1)
 + Graph view decorations
 + Automatic equal step x value generation for data of form [(y), ...]
-
-Bugs
-----
-+ If installed from PyPi, /usr/local/bin/termdraw does not have executable
-  permissions
