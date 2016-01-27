@@ -40,6 +40,7 @@ from . import terminal
 from . import csv
 from . import cli
 from . import graph
+from . import view
 
 print_debug_info = False
 
@@ -74,7 +75,7 @@ def _err(str):
 
 def _draw_graph(stream, width, height, data, interpolate=None,
 		solid_graph=True, ascii_only=False):
-	gs = ''
+	graph_view = view.GraphView()
 	intp = None
 
 	if interpolate is None:
@@ -92,12 +93,20 @@ def _draw_graph(stream, width, height, data, interpolate=None,
 		solid_graph_ticks = graph.solid_graph_ticks_unicode
 		point_graph_tick = graph.point_graph_tick_unicode
 
-	if solid_graph:
-		gs = graph.print_solid_graph(width, height, data, intp, solid_graph_ticks)
-	else:
-		gs = graph.print_point_graph(width, height, data, intp, point_graph_tick)
+	graph_view.width = width
+	graph_view.height = height
+	graph_view.bind_data(data)
+	graph_view.interpolate = intp
 
-	stream.write(gs)
+	if solid_graph:
+		graph_view.is_solid = True
+		graph_view.ticks = solid_graph_ticks
+	else:
+		graph_view.is_solid = False
+		graph_view.ticks = point_graph_tick
+
+	graph_view.write()
+	stream.write(graph_view.string)
 
 def _get_soft_view_width(termwidth):
 	if termwidth >= _max_term_graph_width:

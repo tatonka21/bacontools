@@ -23,66 +23,50 @@ class StringView(TextView):
 	def __init__(self):
 		self.width = 0
 		self.height = 0
-		self.outputstring = ''
+		self.string = ''
 
-	def writestring(self, lines, trim=True, include_newline=False):
-		self.outputstring = ''
+	def trimstring(self, trim=True):
+		lines = self.string.split('\n')
+
+		if lines[len(lines)-1] is '':
+			lines = lines[:len(lines)-1]
+
+		result = ''
 
 		for l in lines:
-			total_len = 0
+			result += l[:self.width] if trim else l
+			result += '\n'
 
-			if include_newline:
-				total_len += 1
-
-			for c in characters:
-				if trim and (total_len + len(c) >= self.width):
-					break
-				else:
-					total_len += len(c)
-					self.outputstring += c
-
-			self.outputstring += '\n'
-
-	def write(self, lines, trim=True, include_newline=False):
-		self.writestring(lines, trim, include_newline)
+		self.string = result
 
 
-class WritableBackedView(StringView):
-	def __init__(self):
-		self.width = 0
-		self.height = 0
-		self.source = None
-		self.output = None
-		self.outputstring = ''
-
-	def write(self, lines, trim=True, include_newline=False):
-		self.writestring(self, lines, trim, include_newline)
-		self.output.write(self.outputstring)
-
-
-class GraphView(WritableBackedView):
+class GraphView(StringView):
 	def __init__(self):
 		self.width = 0
 		self.height = 0
 		self.source = 0
-		self.outputstring = ''
+		self.data = []
+		self.string = ''
 		self.is_solid = None
 		self.interpolate = None
 		self.ticks = None
 
+	def bind_data(self, data):
+		self.data = data
+
 	def bind_input_file(self, filename, output=None):
 		self.source = filename
 
-		if output is not None:
-			self.output = output
-
 	def write(self):
-		raw_data = [tuple(x) for x in csv.get_csv_data(self.source)]
-		data = [(float(t[0]), float(t[1])) for t in raw_data]
+		if self.data is []:
+			raw_data = [tuple(x) for x in csv.get_csv_data(self.source)]
+			self.data = [(float(t[0]), float(t[1])) for t in raw_data]
 
 		if self.is_solid:
-			graph.print_solid_graph(self.output, self.width,
-				self.height, data, self.interpolate, self.ticks)
+			self.string = graph.print_solid_graph(self.width,
+			self.height, self.data, self.interpolate, self.ticks)
+			self.trimstring()
 		else:
-			graph.print_point_graph(self.output, self.width,
-				self.height, data, self.interpolate, self.ticks)
+			self.string = graph.print_point_graph(self.width,
+			self.height, self.data, self.interpolate, self.ticks)
+			self.trimstring()
