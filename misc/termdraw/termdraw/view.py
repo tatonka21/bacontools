@@ -16,7 +16,8 @@ class TextView(object):
 		self.height = 0
 
 	def write(self, lines, trim=True, include_newline=False):
-		raise NotImplementedError('calling TextView.write(); TextView is an abstract class')
+		raise NotImplementedError('calling TextView.write(); TextView is an '\
+		'abstract class')
 
 
 class StringView(TextView):
@@ -66,6 +67,7 @@ class GraphView(StringView):
 			self.string = graph.print_solid_graph(self.width,
 			self.height, self.data, self.interpolate, self.ticks)
 			self.trimstring()
+
 		else:
 			self.string = graph.print_point_graph(self.width,
 			self.height, self.data, self.interpolate, self.ticks)
