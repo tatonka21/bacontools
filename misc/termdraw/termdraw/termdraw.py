@@ -227,6 +227,10 @@ def main():
 			data = [(float(t[0]), float(t[1])) for t in (tuple(x) for x in rawdata)]
 
 		else:
+			if not os.path.exists(f):
+				_err('file '+f+' does not exist, exiting')
+				exit(1)
+
 			rawdata = csv.get_csv_data(f)
 			data = [(float(t[0]), float(t[1])) for t in (tuple(x) for x in rawdata)]
 
