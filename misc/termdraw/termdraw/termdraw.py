@@ -9,6 +9,8 @@ import io
 import itertools
 
 
+version_string="0.2.dev1"
+
 _max_term_graph_width = 80
 _max_term_graph_height = 30
 
@@ -46,7 +48,8 @@ print_debug_info = False
 
 
 def _termdraw_print_help(progname):
-	_termdraw_help_string_1 = 'Usage: '
+	_termdraw_help_string_0 = 'termdraw '
+	_termdraw_help_string_1 = '\nUsage: '
 	_termdraw_help_string_2 = (
 		' [options] file.csv\n'
 		'Draw a human-friendly CLI graph with Unicode symbols.\n\n'
@@ -61,7 +64,9 @@ def _termdraw_print_help(progname):
 		'  -o file, --output file   Write to file instead of stdout\n'
 		'  --print-paths            Print file names before graphs'
 	)
-	print(_termdraw_help_string_1 + progname + _termdraw_help_string_2)
+	print(
+		_termdraw_help_string_0 + version_string +
+		_termdraw_help_string_1 + progname + _termdraw_help_string_2)
 
 
 def _debug_write(str):
