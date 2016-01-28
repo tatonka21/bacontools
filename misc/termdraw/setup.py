@@ -23,7 +23,8 @@ setup(
 		'Intended Audience :: Developers',
 		'Intended Audience :: Science/Research',
 		'License :: Freely Distributable',
-		'Programming Language :: Python :: 3 :: Only',
+		'Programming Language :: Python :: 2',
+		'Programming Language :: Python :: 3',
 		'Topic :: Scientific/Engineering :: Visualization',
 		'Topic :: Utilities'
 	]
