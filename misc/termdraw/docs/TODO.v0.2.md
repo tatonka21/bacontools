@@ -3,7 +3,6 @@ termdraw v0.2 to-do list
 
 Docs
 ----
-+ Migrate README to RST, use it at PyPi project page
 + Docstrings for view.py
 
 Graphs
