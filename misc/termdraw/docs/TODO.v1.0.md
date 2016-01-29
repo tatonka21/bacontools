@@ -17,3 +17,4 @@ Graphs
 + Non-binary interpolation support for `_interpolate_points`
 + Cubic interpolation
 + Cosine interpolation
++ Color gradients implemented with ANSI sequences and ░▒▓█ blocks.
