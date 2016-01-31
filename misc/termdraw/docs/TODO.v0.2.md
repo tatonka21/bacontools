@@ -1,10 +1,6 @@
 termdraw v0.2 to-do list
 ========================
 
-Docs
-----
-+ Docstrings for view.py
-
 Graphs
 ------
 + Horizontal string-value graphs (ref:
