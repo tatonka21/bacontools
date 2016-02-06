@@ -38,7 +38,6 @@ if os.name is 'posix' and os.path.exists(executable_path):
 	os.chmod(executable_path, int('755', 8))
 
 # Install manpages
-# TODO: remove manpages on uninstall
 if os.name is 'posix' and 'install' in sys.argv:
 	man1_path = '/usr/share/man/man1/'
 	man3_path = '/usr/share/man/man3/'
