@@ -52,13 +52,10 @@ class StringView(TextView):
 		'''
 		lines = self.string.split('\n')
 
-		if lines[len(lines)-1] is '':
-			lines = lines[:len(lines)-1]
-
 		result = ''
 
-		for l in lines:
-			result += l[:self.width] if trim else l
+		for l in lines[:-1]:
+			result += l[0:self.width]
 			result += '\n'
 
 		self.string = result
