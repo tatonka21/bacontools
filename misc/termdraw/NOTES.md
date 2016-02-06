@@ -10,3 +10,5 @@ Current version summary:
 + Catch non-existent file exception (b1cd94cf)
 + Move README to RST (e507bc65)
 + Write docstrings for view.py (9bf4d3fa)
++ Fix occasional graph corruption (84c33685)
++ Allow for multiple separators in stdin (f5be1de7)
