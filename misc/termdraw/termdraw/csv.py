@@ -30,7 +30,7 @@ def get_csv_data(filename):
 		dialect = csv.Sniffer().sniff(csvfile.read(1024))
 		csvfile.seek(0)
 		reader = csv.reader(csvfile, dialect)
-		return list(reader)
+		return list(trim_csv_data(reader))
 
 
 def get_csv_data_string(s):
@@ -42,7 +42,35 @@ def get_csv_data_string(s):
 	Returns
 		list of all entries in s
 	'''
-	tmp = s.split('\n')
+	tmp = list(trim_csv_string(s.split('\n')))
 	dialect = csv.Sniffer().sniff(s)
 	reader = csv.reader(tmp, dialect)
-	return list(reader)
+	return list(trim_csv_data(reader))
+
+
+def trim_csv_data(data):
+	'''Delete empty entries from the tuple list
+
+	Args:
+		data (list[tuple]): source CSV data
+
+	Returns:
+		the same list but with empty entries filtered out
+	'''
+	for t in data:
+		if len(t) is not 0:
+			yield t
+
+
+def trim_csv_string(s):
+	'''Delete empty lines from the line list
+
+	Args:
+		s (list[str]): source CSV data as lines
+
+	Returns:
+		the same list but with empty lines filtered out
+	'''
+	for t in s:
+		if len(t.strip()) is not 0:
+			yield t
