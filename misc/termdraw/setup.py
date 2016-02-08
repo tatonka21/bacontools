@@ -5,12 +5,17 @@ import os, shutil, sys
 from setuptools import setup
 
 
+def _read(fname):
+	return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
+
 setup(
 	name = 'termdraw',
 	version = '0.2.dev1',
 	author = 'Ilya Terentyev',
 	author_email = 'bacondropped@gmail.com',
 	description = 'Utility library for textual data visualization',
+	long_description = _read('README.rst'),
 	license = 'MIT',
 	keywords = 'data graph ascii visualization',
 	url = 'https://github.com/bacondropped/termdraw',

@@ -12,3 +12,4 @@ Current version summary:
 + Write docstrings for view.py (9bf4d3fa)
 + Fix occasional graph corruption (84c33685)
 + Allow for multiple separators in stdin (f5be1de7)
++ Infer X values if not given (a6ebe32f)
