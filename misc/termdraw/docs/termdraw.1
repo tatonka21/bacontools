@@ -74,6 +74,10 @@ $ echo "0,1 1,2 2,3;3,4" | termdraw - -asi -w 7 -h 4
 .RE
 .fi
 
+.SH X VALUE INFERENCE
+If termdraw receives singular values as opposed to (X,Y) pairs, it will infer
+that X values are evenly spread out, preserving initial order of Y values.
+
 .SH SOURCE
 Source code can be obtained at https://github.com/bacondropped/termdraw.git
 

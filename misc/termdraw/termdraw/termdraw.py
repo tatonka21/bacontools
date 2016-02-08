@@ -8,7 +8,6 @@ import math
 import io
 import itertools
 
-
 version_string="0.2.dev1"
 
 _max_term_graph_width = 80
@@ -36,6 +35,7 @@ if __name__ == '__main__':
 	sys.stderr.write(prefix+': this module is not meant to be run'
 		' directly! exiting\n')
 	exit(1)
+
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from . import terminal
@@ -82,6 +82,7 @@ def _draw_graph(stream, width, height, data, interpolate=None,
 		solid_graph=True, ascii_only=False):
 	graph_view = view.GraphView()
 	intp = None
+	datatype = csv.infer_data_schema(data)
 
 	if interpolate is None:
 		if solid_graph:
@@ -97,6 +98,17 @@ def _draw_graph(stream, width, height, data, interpolate=None,
 	else:
 		solid_graph_ticks = graph.solid_graph_ticks_unicode
 		point_graph_tick = graph.point_graph_tick_unicode
+
+	_debug_write("_draw_graph received data of type " + repr(datatype))
+
+	if datatype is "mixed" or datatype is "unknown":
+		_err("_draw_graph: unable to process received data: incorrect schema")
+		exit(1)
+
+	if datatype is "values":
+		data = [(str(i), t[0]) for (i, t) in enumerate(data)]
+
+	data = [(float(t[0]), float(t[1])) for t in data]
 
 	graph_view.width = width
 	graph_view.height = height
@@ -224,7 +236,6 @@ def main():
 			stdin_string = stdin_string.replace(' ', '\n')
 			stdin_string = stdin_string.strip()
 			rawdata = csv.get_csv_data_string(stdin_string)
-			data = [(float(t[0]), float(t[1])) for t in (tuple(x) for x in rawdata)]
 
 		else:
 			if not os.path.exists(f):
@@ -232,15 +243,9 @@ def main():
 				exit(1)
 
 			rawdata = csv.get_csv_data(f)
-			data = [(float(t[0]), float(t[1])) for t in (tuple(x) for x in rawdata)]
-
-		for n in data:
-			if len(n) != 2:
-				_err('CSV data does not conform to x,y format: ' + repr(n))
-				exit(1)
 
 		if print_paths:
 			output_stream.write(f + '\n')
 
-		_draw_graph(output_stream, graph_width, graph_height, data,
+		_draw_graph(output_stream, graph_width, graph_height, rawdata,
 				interpolate, solid, ascii_only)
