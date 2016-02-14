@@ -10,6 +10,21 @@ from . import graph
 from . import csv
 
 
+def string_wrapper_p2(s):
+	if type(s) != unicode:
+		return s.decode('utf-8')
+	else:
+		return s
+
+
+def string_wrapper_p3(s):
+	return s
+
+
+string_wrapper = string_wrapper_p3 if sys.version_info.major is 3 else\
+	string_wrapper_p2
+
+
 class TextView(object):
 	'''An abstract base class for all termdraw views.
 
@@ -108,12 +123,37 @@ class GraphView(StringView):
 			raw_data = [tuple(x) for x in csv.get_csv_data(self.source)]
 			self.data = [(float(t[0]), float(t[1])) for t in raw_data]
 
-		if self.is_solid:
-			self.string = graph.print_solid_graph(self.width,
-			self.height, self.data, self.interpolate, self.ticks)
-			self.trimstring()
+		graphfunc = graph.print_solid_graph if self.is_solid else graph.print_point_graph
 
-		else:
-			self.string = graph.print_point_graph(self.width,
-			self.height, self.data, self.interpolate, self.ticks)
-			self.trimstring()
+		self.string = string_wrapper(graphfunc(self.width, self.height,
+			self.data, self.interpolate, self.ticks))
+		self.trimstring()
+
+		if get_string_region_dimensions(self.string) != (self.width,
+				self.height):
+			raise ValueError('Rendered graph is not of expected dimensions')
+
+
+def get_region_dimensions(s):
+	'''Accept a list of lines, return maximum width in characters and total
+	height in lines.
+	'''
+	# if type(s) is not list:
+		# raise TypeError('oh noe')
+
+	return (max([len(i) for i in s]), len(s))
+
+
+def get_string_region_dimensions(s):
+	'''Accept a newline-separated string, return maximum width in characters
+	and total height in lines.
+	'''
+	isnot = (isinstance(s, basestring))\
+		if sys.version_info.major is 2\
+		else (type(s) is not str)
+
+	# if isnot:
+		# raise TypeError('oh noe')
+
+	tmp = s.split('\n')[:-1]
+	return get_region_dimensions(tmp)

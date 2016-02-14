@@ -8,10 +8,10 @@ import io
 import math
 
 
-solid_graph_ticks_unicode = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█']
+solid_graph_ticks_unicode = [u' ', u'▁', u'▂', u'▃', u'▄', u'▅', u'▆', u'▇', u'█']
 solid_graph_ticks_ascii = [' ', '.', '|']
 point_graph_tick_unicode = '•'
-point_graph_tick_ascii = 'o'
+point_graph_tick_ascii = u'o'
 
 
 if __name__ == '__main__':
