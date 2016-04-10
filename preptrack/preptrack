@@ -1,0 +1,21 @@
+#!/bin/sh
+
+SAVE_TO="/home/$(whoami)/Music"
+
+FILE="$1"
+ARTIST="$2"
+ALBUM="$3"
+TITLE="$4"
+NEW_FILEPATH="$SAVE_TO/$ARTIST - $TITLE.mp3"
+
+mkdir -p "$SAVE_TO"
+
+ffmpeg -hide_banner -i "$FILE" -b:a 320k "$NEW_FILEPATH"
+
+id3v2 -D "$NEW_FILEPATH"
+id3v2 -a "$ARTIST" "$NEW_FILEPATH"
+id3v2 -A "$ALBUM" "$NEW_FILEPATH"
+id3v2 -t "$TITLE" "$NEW_FILEPATH"
+
+stat "$NEW_FILEPATH"
+id3v2 -l "$NEW_FILEPATH"
