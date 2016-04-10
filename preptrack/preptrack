@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SAVE_TO="/home/$(whoami)/Music"
+SAVE_TO="$HOME/Music"
 
 FILE="$1"
 ARTIST="$2"
