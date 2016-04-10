@@ -6,11 +6,12 @@ FILE="$1"
 ARTIST="$2"
 ALBUM="$3"
 TITLE="$4"
+BITRATE=${5:-320}
 NEW_FILEPATH="$SAVE_TO/$ARTIST - $TITLE.mp3"
 
 mkdir -p "$SAVE_TO"
 
-ffmpeg -hide_banner -i "$FILE" -b:a 320k "$NEW_FILEPATH"
+ffmpeg -hide_banner -i "$FILE" -b:a "$BITRATE"k "$NEW_FILEPATH"
 
 id3v2 -D "$NEW_FILEPATH"
 id3v2 -a "$ARTIST" "$NEW_FILEPATH"
