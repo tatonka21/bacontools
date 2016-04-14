@@ -1,0 +1,60 @@
+#!/bin/sh
+
+is_video_file () {
+	VSTREAM_LINES="$(ffprobe "$1" 2>&1\
+	| grep Video | grep Stream | wc -l)"
+
+	if [ "$VSTREAM_LINES" = "0" ] ; then
+		exit
+	else
+		echo 1
+	fi
+}
+
+for f in $@ ; do
+	if [ -e "$f" ] ; then
+		FILEPATH="$f"
+	else
+		FILEPATH="$(mktemp)"
+		IS_TEMP=1
+		wget -q "$f" -O "$FILEPATH"
+
+		echo "$f: saved to temporary file $FILEPATH"
+
+		if [ "$?" != "0" ] ; then
+			echo "$f is not a file or URL"
+			exit 1
+		fi
+	fi
+
+	if [ ! -s "$FILEPATH" ] ; then
+		echo "$0: $FILEPATH doesn't exist or is empty" 1>&2
+		continue
+	fi
+
+	if [ ! "$(is_video_file "$FILEPATH")" ] ; then
+		echo "$0: $FILEPATH is not a video file" 1>&2
+		continue
+	fi
+
+	echo "$f: filesize = $(ls -lh "$FILEPATH" | cut -f5 -d' ')"
+
+	FRAME_COUNT="$(ffmpeg -i "$FILEPATH" -vcodec copy -f rawvideo -y /dev/null 2>&1 | \
+	tr ^M '\n' | awk '/^frame=/ {print $2}' | tail -n 1)"
+	echo "$f: frame count = $FRAME_COUNT"
+
+	WIDTH="$(ffprobe -show_format -show_streams "$FILEPATH" 2>/dev/null | \
+	grep -Po '(?<=width=)[0-9.]*' | head -n 1)"
+	echo "$f: width = $WIDTH"
+
+	HEIGHT="$(ffprobe -show_format -show_streams "$FILEPATH" 2>/dev/null | \
+	grep -Po '(?<=height=)[0-9.]*' | head -n 1)"
+	echo "$f: height = $HEIGHT"
+
+	VIDEO_STREAM="$(ffprobe "$FILEPATH" 2>&1 | grep -Po '(?<=Video: ).*' | head -n 1)"
+	echo "$f: 1st video stream = $VIDEO_STREAM"
+
+	if [ -n "$IS_TEMP" ] ; then
+		rm "$FILEPATH"
+	fi
+done
