@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ Create a Linux-specific subdirectory
 + Fix vidinfo and update-all README.md headers
 + Add netinfo
 + Add checkreboot
