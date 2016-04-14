@@ -1,0 +1,4 @@
+#!/bin/sh
+find -maxdepth 1 -mindepth 1 -type d -exec bash -c 'cd "$1" ; echo "$1" |\
+sed "s/\.\///g" |\
+toilet -t -f pagga ; pwd ; git pull --all --depth=1' funcname \{\} \;
