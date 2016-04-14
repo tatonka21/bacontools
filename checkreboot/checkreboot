@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ -e "/var/run/reboot-required" ] ; then
+	echo "Reboot required"
+	echo "reboot-required.pkgs contents:"
+	cat "/var/run/reboot-required.pkgs"
+else
+	echo "Reboot not required"
+fi
