@@ -1,22 +1,31 @@
-#!/bin/sh
+#!/bin/bash
 
-SAVE_TO="$HOME/Music"
+function strip() {
+	sed -e 's/^[[:space:]]*//' |  sed -e 's/[[:space:]]*$//'
+}
 
+DIR="${DIR:-$HOME/Music}"
 FILE="$1"
-ARTIST="$2"
-ALBUM="$3"
-TITLE="$4"
-BITRATE=${5:-320}
-NEW_FILEPATH="$SAVE_TO/$ARTIST - $TITLE.mp3"
 
-mkdir -p "$SAVE_TO"
+BITRATE="${BITRATE:-320}"
+
+ARTIST="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Artist: ).*$" | strip)"
+read -e -p "Artist: " -i "$ARTIST" ARTIST
+
+ALBUM="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Album: ).*$" | strip)"
+read -e -p "Album: " -i "$ALBUM" ALBUM
+
+TITLE="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Title: ).*$" | strip)"
+read -e -p "Title: " -i "$TITLE" TITLE
+
+NEW_FILEPATH="$DIR/$ARTIST - $TITLE.mp3"
+mkdir -p "$DIR"
 
 ffmpeg -hide_banner -i "$FILE" -b:a "$BITRATE"k "$NEW_FILEPATH"
 
-id3v2 -D "$NEW_FILEPATH"
-id3v2 -a "$ARTIST" "$NEW_FILEPATH"
-id3v2 -A "$ALBUM" "$NEW_FILEPATH"
-id3v2 -t "$TITLE" "$NEW_FILEPATH"
+eyeD3 --remove-all "$NEW_FILEPATH"
+eyeD3 -a "$ARTIST" -A "$ALBUM" -t "$TITLE" "$NEW_FILEPATH"
 
 stat "$NEW_FILEPATH"
-id3v2 -l "$NEW_FILEPATH"
+file "$NEW_FILEPATH"
+eyeD3 "$NEW_FILEPATH"
