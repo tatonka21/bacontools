@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ Add netinfo
 + Add checkreboot
 + Add NOTES.md
 + Add vidinfo
