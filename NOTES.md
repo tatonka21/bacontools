@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ Create a subdirectory for miscellanea
 + Create a media-specific subdirectory
 + Create a Linux-specific subdirectory
 + Fix vidinfo and update-all README.md headers
