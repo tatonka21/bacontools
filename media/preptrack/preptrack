@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function strip() {
+function trim() {
 	sed -e 's/^[[:space:]]*//' |  sed -e 's/[[:space:]]*$//'
 }
 
@@ -9,13 +9,13 @@ FILE="$1"
 
 BITRATE="${BITRATE:-320}"
 
-ARTIST="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Artist: ).*$" | strip)"
+ARTIST="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Artist: ).*$" | trim)"
 read -e -p "Artist: " -i "$ARTIST" ARTIST
 
-ALBUM="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Album: ).*$" | strip)"
+ALBUM="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Album: ).*$" | trim)"
 read -e -p "Album: " -i "$ALBUM" ALBUM
 
-TITLE="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Title: ).*$" | strip)"
+TITLE="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Title: ).*$" | trim)"
 read -e -p "Title: " -i "$TITLE" TITLE
 
 NEW_FILEPATH="$DIR/$ARTIST - $TITLE.mp3"
