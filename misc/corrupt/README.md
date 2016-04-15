@@ -1,5 +1,5 @@
-soreutils/corrupt - feels good, doesn't it?
-===========================================
+corrupt - feels good, doesn't it?
+=================================
 
 ```
 % corrupt --help

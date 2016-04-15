@@ -1,5 +1,5 @@
-soreutils/n7m - eldritch numbers that wake them up
-==================================================
+n7m - eldritch numbers that wake them up
+========================================
 
 Generate a numeronym version of a word.
 

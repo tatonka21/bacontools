@@ -1,5 +1,5 @@
-soreutils/bitdiff - your life doesn't make a difference
-=======================================================
+bitdiff - your life doesn't make a difference
+=============================================
 
 Compare files byte-wise.
 

@@ -1,5 +1,5 @@
-soreutils/balance - the world is toppling over
-==============================================
+balance - the world is toppling over
+====================================
 
 Detect whether input string contains balanced matching characters or not.
 
