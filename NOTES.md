@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ update-all: Don't pwd
 + Move all soreutils to misc
 + Create a subdirectory for miscellanea
 + Create a media-specific subdirectory
