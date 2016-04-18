@@ -3,6 +3,8 @@ bacontools notes
 
 April 2016
 ----------
++ preptrack: don't write empty tags
++ preptrack: rename strip() to trim()
 + update-all: Don't pwd
 + Move all soreutils to misc
 + Create a subdirectory for miscellanea
