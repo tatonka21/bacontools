@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+
+# TODO: Context options, like -ABC in grep, but with symbols instead of lines
+
+import os
+import sys
+import difflib
+import pprint
+import itertools
+
+
+max_neighbors   = 1000
+neighbor_cutoff = 0.7
+
+
+def apdiff_process(arg):
+    basename      = os.path.basename(arg)
+    parent_path   = os.path.abspath(os.path.join(arg, os.pardir))
+    sibling_files = os.listdir(parent_path)
+    close_paths   = difflib.get_close_matches(basename,
+                                              sibling_files,
+                                              max_neighbors,
+                                              neighbor_cutoff)
+    diff_subseqs = []
+
+    for neighbor in close_paths:
+        same    = lambda s: s.startswith('  ')
+        deleted = lambda s: s.startswith('- ')
+        diff = list(difflib.Differ().compare(neighbor, basename))
+        diff = list(itertools.dropwhile(same, diff))
+        diff.reverse()
+        diff = list(itertools.dropwhile(same, diff))
+        diff.reverse()
+        diff = ''.join(list([i[2:] for i in diff if not deleted(i)]))
+        diff_subseqs.append(diff)
+
+    print(max(diff_subseqs, key=len))
+
+
+if __name__ == '__main__':
+    for argument in sys.argv[1:]:
+        if os.path.exists(argument):
+            apdiff_process(argument)

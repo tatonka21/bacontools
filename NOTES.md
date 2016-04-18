@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ add apdiff
 + preptrack: don't write empty tags
 + preptrack: rename strip() to trim()
 + update-all: Don't pwd
