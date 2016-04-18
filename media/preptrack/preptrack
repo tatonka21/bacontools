@@ -24,7 +24,18 @@ mkdir -p "$DIR"
 ffmpeg -hide_banner -i "$FILE" -b:a "$BITRATE"k "$NEW_FILEPATH"
 
 eyeD3 --remove-all "$NEW_FILEPATH"
-eyeD3 -a "$ARTIST" -A "$ALBUM" -t "$TITLE" "$NEW_FILEPATH"
+
+if [ -n "$ARTIST" ] ; then
+	eyeD3 -a "$ARTIST" "$NEW_FILEPATH"
+fi
+
+if [ -n "$ALBUM" ] ; then
+	eyeD3 -A "$ALBUM" "$NEW_FILEPATH"
+fi
+
+if [ -n "$TITLE" ] ; then
+	eyeD3 -t "$TITLE" "$NEW_FILEPATH"
+fi
 
 stat "$NEW_FILEPATH"
 file "$NEW_FILEPATH"
