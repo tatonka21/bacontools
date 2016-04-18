@@ -8,8 +8,8 @@ import difflib
 import itertools
 
 
-max_neighbors   = 1000
-neighbor_cutoff = 0.7
+max_neighbors   = int(os.environ.get('MAX_NEIGHBORS', 1000))
+neighbor_cutoff = float(os.environ.get('CUTOFF', 0.7))
 
 
 def apdiff_process(arg):
