@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ apdiff: update README.md
 + apdiff: optional environment config
 + apdiff: remove unused import
 + add apdiff
