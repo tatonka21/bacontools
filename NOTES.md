@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ apdiff: todo tokenize
 + add LICENSE
 + add git-ls
 + preptrack: bitrate configuration
