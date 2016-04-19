@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+
+# TODO: arbitrary paths
+# TODO: ls-like sorting arguments (passed directly to ls)
+# TODO: color
+# TODO: code-refactoring-cat.gif
+
+
+import os
+import sys
+import subprocess
+
+
+def align_field(string, width, alignment='r'):
+    substring = string[:width] if alignment is 'l' else string[-width:]
+
+    if   alignment is 'r':
+        return substring.rjust(width)
+    elif alignment is 'l':
+        return substring.ljust(width)
+    else:
+        raise ValueError('Alignment is "'+ alignment +'", must be "r" or "l"')
+
+
+def columnize(row_list, alignments, separator_string='  '):
+    result = []
+    maxlen = {}
+
+    for r in row_list:
+        fields = r.split('\t')
+        for index, f in enumerate(fields):
+            maxlen[index] = max(maxlen.get(index, 0), len(f))
+
+    for r in row_list:
+        result.append(separator_string.join([
+            align_field(f, maxlen[i], alignments.get(i, 'l'))
+            for (i, f)
+            in enumerate(r.split('\t'))
+        ]))
+
+    return result
+
+
+if __name__ == '__main__':
+    arg_dir = '.'
+    rows    = []
+
+    git_files = set(
+        subprocess.check_output(
+            ['git', 'ls-tree', '--name-only', 'HEAD', arg_dir]
+        ).
+        split('\n')[:-1]
+    )
+
+    for f in git_files:
+        rows.append(f+'\t'+subprocess.check_output([
+            'git',
+            'log',
+            '-1',
+            '--pretty=format:%cr%x09%h%x09%s%x09%cn',
+            f
+            ]).strip())
+
+    for r in columnize(rows, {}):
+        print(r)

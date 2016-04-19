@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ add git-ls
 + preptrack: bitrate configuration
 + add subfolder READMEs
 + apdiff: update README.md
