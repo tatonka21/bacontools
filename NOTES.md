@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ preptrack: bitrate configuration
 + add subfolder READMEs
 + apdiff: update README.md
 + apdiff: optional environment config
