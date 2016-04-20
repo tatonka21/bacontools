@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ preptrack: filter out bad audio streams
 + add pip-upgrade-all
 + apdiff: todo tokenize
 + add LICENSE

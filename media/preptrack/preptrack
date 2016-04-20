@@ -8,7 +8,7 @@ DIR="${DIR:-$HOME/Music}"
 FILE="$1"
 
 MAX_BITRATE="${MAX_BITRATE:-320}"
-DETECTED_BITRATE="$(ffprobe -i "$FILE" 2>&1 | grep Stream | grep Audio | head -n1 | grep -oP "(\d+)(?= kb\/s)")"
+DETECTED_BITRATE="$(ffprobe -i "$FILE" 2>&1 | grep Stream | grep Audio | grep kb | head -n1 | grep -oP "(\d+)(?= kb\/s)")"
 
 ARTIST="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Artist: ).*$" | trim)"
 read -e -p "Artist: " -i "$ARTIST" ARTIST
