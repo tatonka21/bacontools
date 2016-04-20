@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ add pip-upgrade-all
 + apdiff: todo tokenize
 + add LICENSE
 + add git-ls

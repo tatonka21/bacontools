@@ -11,4 +11,5 @@ bacontools/misc - chaos reigns
 | git-ls           | Github-like human-readable Git repo directory listing   |
 | maybe            | Prints yes and no randomly interleaved                  |
 | n7m              | Generate a numeronym (i18n, l10n, etc) from a string    |
+| pip-upgrade-all  | Upgrade all local PIP packages                          |
 | update-all       | Update all Git repositories in level 1 subdirectories   |
