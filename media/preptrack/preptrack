@@ -31,7 +31,7 @@ fi
 
 read -e -p "Bitrate (kb/s): " -i "$FINAL_BITRATE" FINAL_BITRATE
 
-if [ "$FINAL_BITRATE" -gt "$DETECTED_BITRATE" ] ; then
+if [ -n "$DETECTED_BITRATE" ] && [ "$FINAL_BITRATE" -gt "$DETECTED_BITRATE"  ] ; then
 	echo "Warning: encoding with higher bitrate than the source: $FINAL_BITRATE kb/s vs $DETECTED_BITRATE kb/s" 1>&2
 fi
 

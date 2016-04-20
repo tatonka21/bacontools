@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ preptrack: prevent bad $DETECTED_BITRATE subst
 + preptrack: filter out bad audio streams
 + add pip-upgrade-all
 + apdiff: todo tokenize
