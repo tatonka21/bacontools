@@ -43,15 +43,15 @@ ffmpeg -hide_banner -i "$FILE" -b:a "$FINAL_BITRATE"k "$NEW_FILEPATH"
 eyeD3 --remove-all "$NEW_FILEPATH"
 
 if [ -n "$ARTIST" ] ; then
-	eyeD3 -a "$ARTIST" "$NEW_FILEPATH"
+	eyeD3 --set-encoding=utf8 -a "$ARTIST" "$NEW_FILEPATH"
 fi
 
 if [ -n "$ALBUM" ] ; then
-	eyeD3 -A "$ALBUM" "$NEW_FILEPATH"
+	eyeD3 --set-encoding=utf8 -A "$ALBUM" "$NEW_FILEPATH"
 fi
 
 if [ -n "$TITLE" ] ; then
-	eyeD3 -t "$TITLE" "$NEW_FILEPATH"
+	eyeD3 --set-encoding=utf8 -t "$TITLE" "$NEW_FILEPATH"
 fi
 
 stat "$NEW_FILEPATH"
