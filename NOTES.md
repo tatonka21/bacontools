@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ preptrack: process all arguments instead of $1
 + add languages to READMEs
 + preptrack: encode tags in UTF8
 + preptrack: prevent bad $DETECTED_BITRATE subst
