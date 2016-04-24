@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ update READMEs for ImageValidator
 + merge ImageValidator v0.1.1
 + limit LICENSE width to 79 instead of 80
 + termdraw: remove exec permissions
