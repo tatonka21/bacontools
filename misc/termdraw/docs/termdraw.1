@@ -1,0 +1,80 @@
+.TH termdraw 1 "termdraw"
+
+.SH NAME
+termdraw \- an ASCII/Unicode art data visualizer
+
+Termdraw is a command line interface to Python termdraw library. It requires
+Python 3.
+
+.SH SYNOPSIS
+termdraw [options] file.csv [file2.csv [...]]
+
+.SH OPTIONS
+.TP
+\-\-help
+Print help message.
+
+.TP
+\-o path, \-\-output=path
+Write result to file path instead of stdout. If the file already exists,
+termdraw will throw an error.
+
+.TP
+\-w X, \-\-width=X
+Limit graph width to X characters, not including line breaks.
+
+.TP
+\-h Y, \-\-height=Y
+Limit graph height to Y lines, not including file names and trailing line
+breaks.
+
+.TP
+\-n, \-\-no\-interpolation
+Disable midpoint graph interpolation.
+
+.TP
+\-i, \-\-interpolation
+Enable midpoint graph interpolation.
+
+.TP
+\-s, \-\-solid
+Draw solid graph (with continuous block columns below data points).
+
+.TP
+\-p, \-\-point
+Draw point graph (without supporting columns).
+
+.TP
+\-a, \-\-ascii
+Only use characters from ASCII charset.
+
+.TP
+\-\-debug
+Print debug info.
+
+.SH STANDARD INPUT
+termdraw can receive data from standard input instead of a file.
+For this, it must be either formatted as a CSV file with newlines, or a list of
+x,y points separated by either a single space or a semicolon.
+To instruct termdraw to read from standard input, pass - as a filename.
+.PP
+For instance:
+.nf
+.RS
+$ echo "0,1 1,2 2,3;3,4" | termdraw - -asi -w 7 -h 4
+-
+
+     .|
+   .|||
+ .|||||
+.RE
+.fi
+
+.SH SOURCE
+Source code can be obtained at https://github.com/bacondropped/termdraw.git
+
+.SH SEE ALSO
+.BR termdraw(3)
+
+.SH AUTHOR
+Ilya Terentyev <bacondropped@gmail.com>

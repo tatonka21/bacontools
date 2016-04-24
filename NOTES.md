@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ merge termdraw v0.2
 + preptrack: expand README
 + preptrack: process all arguments instead of $1
 + add languages to READMEs
