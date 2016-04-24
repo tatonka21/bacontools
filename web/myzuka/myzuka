@@ -1,0 +1,85 @@
+#!/usr/bin/env ruby
+
+# TODO: escape special characters such as forward slashes
+# TODO: columnize search results
+# TODO: output directory/filename option
+
+require 'rubygems'
+require 'capybara'
+require 'capybara/poltergeist'
+require 'highline/import'
+require 'net/http'
+require 'open-uri'
+require 'uri'
+
+MYZUKA_DOMAIN = "myzuka.fm"
+MYZUKA_HOME   = "https://#{MYZUKA_DOMAIN}/"
+MAX_RESULTS   = 20
+
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {js_errors: false})
+end
+
+Capybara.run_server            =  false
+Capybara.current_driver        = :poltergeist
+Capybara.app_host              =  MYZUKA_HOME
+Capybara.default_max_wait_time =  60
+
+def a(node)
+  node.find(:xpath, './/p').text
+end
+
+def t(node)
+  node.find(:xpath, './/h4').text
+end
+
+def tm(node)
+  node.find(:xpath, './/div[@class=\'time\']').text
+end
+
+module Myzuka
+  class Downloader
+    def download(s)
+      session = Capybara::Session.new(:poltergeist)
+      session.visit(MYZUKA_HOME)
+
+      session.fill_in 'SearchText', :with => s
+      session.find(:xpath, "//input[@type='submit' and @value='Поиск']").click
+
+      sleep(10)
+      session.execute_script('window.scrollBy(0,100000)')
+
+      results = session.all(:xpath, "//div[@class='players-list']//div[@class='player-inline']")
+
+      results.take(MAX_RESULTS).each_with_index do |hit, index|
+        puts("#{index+1}. #{a(hit)} - #{t(hit)} (#{tm(hit)})")
+      end
+
+      idx = Integer(ask "Download track # ")
+
+      song_artist = a(results[idx-1])
+      song_title  = t(results[idx-1]) 
+
+      session.visit(results[idx-1].find(:xpath, ".//a")[:href])
+
+      sleep(5)
+      session.execute_script('window.scrollBy(0,100000)')
+      sleep(5)
+
+      down_link = session.find(:xpath, "//div[@class='aside']/a", :visible => :all)[:href]
+
+      download = open(Net::HTTP.get_response(URI(down_link))['location'])
+      filename = "#{song_artist} - #{song_title}.mp3"
+      puts("Saving to #{filename}")
+      IO.copy_stream(download, filename)
+    end
+  end
+end
+
+if ARGV.empty? then
+  Myzuka::Downloader.new.download(ask "Search for ")
+end
+
+ARGV.each do |arg|
+  Myzuka::Downloader.new.download(arg)
+end

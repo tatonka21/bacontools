@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ add myzuka
 + merge EncodingConverter
 + update READMEs for ImageValidator
 + merge ImageValidator v0.1.1
