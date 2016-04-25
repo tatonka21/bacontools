@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-# TODO: escape special characters such as forward slashes
 # TODO: columnize search results
 # TODO: output directory/filename option
 
