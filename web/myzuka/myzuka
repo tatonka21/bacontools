@@ -39,6 +39,7 @@ end
 module Myzuka
   class Downloader
     def download(s)
+      idx = 0
       session = Capybara::Session.new(:poltergeist)
       session.visit(MYZUKA_HOME)
 
@@ -59,7 +60,11 @@ module Myzuka
         puts("#{index+1}. #{a(hit)} - #{t(hit)} (#{tm(hit)})")
       end
 
-      idx = Integer(ask "Download track # ")
+      loop do
+        idx = Integer(ask "Download track # ") rescue 0
+        break if idx >= 1 and idx <= results.size
+        puts "Invalid index, must be an integer from 1 to #{results.size}"
+      end
 
       song_artist = a(results[idx-1])
       song_title  = t(results[idx-1])
