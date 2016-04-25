@@ -15,15 +15,15 @@ require 'uri'
 MYZUKA_DOMAIN = "myzuka.fm"
 MYZUKA_HOME   = "https://#{MYZUKA_DOMAIN}/"
 MAX_RESULTS   = 20
+TIMEOUT       = 60
 
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, {js_errors: false})
+  Capybara::Poltergeist::Driver.new(app, {js_errors: false, timeout: TIMEOUT})
 end
 
 Capybara.run_server            =  false
 Capybara.current_driver        = :poltergeist
 Capybara.app_host              =  MYZUKA_HOME
-Capybara.default_max_wait_time =  60
 
 def a(node)
   node.find(:xpath, './/p').text
