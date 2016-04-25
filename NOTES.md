@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ myzuka: escape file names
 + add myzuka
 + merge EncodingConverter
 + update READMEs for ImageValidator
