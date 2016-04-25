@@ -62,7 +62,7 @@ module Myzuka
       idx = Integer(ask "Download track # ")
 
       song_artist = a(results[idx-1])
-      song_title  = t(results[idx-1]) 
+      song_title  = t(results[idx-1])
 
       session.visit(results[idx-1].find(:xpath, ".//a")[:href])
 
