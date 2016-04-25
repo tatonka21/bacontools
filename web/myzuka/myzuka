@@ -50,6 +50,11 @@ module Myzuka
 
       results = session.all(:xpath, "//div[@class='players-list']//div[@class='player-inline']")
 
+      unless results.any? then
+        puts("No results for query #{s}")
+        return
+      end
+
       results.take(MAX_RESULTS).each_with_index do |hit, index|
         puts("#{index+1}. #{a(hit)} - #{t(hit)} (#{tm(hit)})")
       end
