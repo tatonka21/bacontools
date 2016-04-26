@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ myzuka: add --tor option
 + myzuka: check for invalid index
 + myzuka: fix whitespace
 + myzuka: check for empty results

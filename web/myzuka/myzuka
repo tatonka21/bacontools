@@ -9,20 +9,14 @@ require 'capybara/poltergeist'
 require 'highline/import'
 require 'net/http'
 require 'open-uri'
+require 'optparse'
+require 'ostruct'
 require 'uri'
 
 MYZUKA_DOMAIN = "myzuka.fm"
 MYZUKA_HOME   = "https://#{MYZUKA_DOMAIN}/"
 MAX_RESULTS   = 20
 TIMEOUT       = 60
-
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, {js_errors: false, timeout: TIMEOUT})
-end
-
-Capybara.run_server            =  false
-Capybara.current_driver        = :poltergeist
-Capybara.app_host              =  MYZUKA_HOME
 
 def a(node)
   node.find(:xpath, './/p').text
@@ -84,6 +78,23 @@ module Myzuka
     end
   end
 end
+
+cli_options = OpenStruct.new
+phantom_opts = []
+
+OptionParser.new do |option|
+  option.on('-t', '--tor') {|o| cli_options.tor = true}
+end.parse!
+
+phantom_opts = ['--proxy-type=socks5', '--proxy=127.0.0.1:9050'] if cli_options.tor
+
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {js_errors: false, timeout: TIMEOUT, :phantomjs_options => phantom_opts})
+end
+
+Capybara.run_server            =  false
+Capybara.current_driver        = :poltergeist
+Capybara.app_host              =  MYZUKA_HOME
 
 if ARGV.empty? then
   Myzuka::Downloader.new.download(ask "Search for ")

@@ -48,3 +48,11 @@ John Williams - Double Trouble.mp3: Audio file with ID3 version 2.3.0 <...>
 $ file Nicholas\ Hooper\ -\ Professor\ Umbridge.mp3
 Nicholas Hooper - Professor Umbridge.mp3: Audio file 2.3.0 <...>
 ```
+
+Downloading over Tor
+--------------------
+
+Supplying `-t`/`--tor` command line option to `myzuka` makes it download web
+pages and files over Tor, assuming it runs as a SOCKS5 proxy at
+`localhost:9050`. Note that `myzuka` will still leak your DNS requests to the
+network, however, your IP will be masked from the target website.
