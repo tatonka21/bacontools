@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ imgur: code cleanup
 + add imgur
 + myzuka: add --tor option
 + myzuka: check for invalid index

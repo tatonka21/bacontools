@@ -11,8 +11,6 @@ require 'uri'
 require 'fileutils'
 
 TIMEOUT       = 60
-IMGUR_DOMAIN  = "imgur.com"
-IMGUR_HOME    = "https://#{IMGUR_DOMAIN}/"
 STDNULL       = File.open(File::NULL, 'w')
 
 module Imgur
@@ -25,31 +23,32 @@ module Imgur
       post_id = session.current_url[/(?<=\/)(\w*)$/, 1]
       post_title = session.find(:xpath, "//title").text.gsub("- Album on Imgur", "").strip
 
-      subdir = "#{post_id} - #{post_title}"
+      subdir = "#{post_id} #{"- " + post_title unless post_title =~ /Imgur: The most awesome images on the Internet/}".strip
       path = opts.path
-      path = File.join(opts.path, subdir) if path == "."
-      FileUtils::mkdir_p(path)
+      path = subdir if path == "."
 
-      session.visit(session.find(:xpath, "//a[@class='post-gridview-link']")[:href])
-      sleep 5
+      session.visit(session.current_url.gsub(/gallery/, "a").gsub(/(?<!\/layout\/grid)$/, '/layout/grid'))
 
-      expected_imgs = Integer session.find(:xpath, "//h2[contains(.,'images')]").text[/(\d+)(?= images)/, 1]
-      puts("Expecting #{expected_imgs} images")
+      expected_imgs = Integer session.find(:xpath, "//h2[contains(text(),'image')]").text[/(\d+) image(s)?$/, 1]
+      STDERR.puts("Expecting #{expected_imgs} images")
 
       loop do
-        puts("Scrolling down")
+        STDERR.puts("Scrolling down")
         session.execute_script('window.scrollBy(0,100000)')
         sleep 2
         images = session.all(:xpath, "//div[@class='posts']/div[.//img]")
-        puts("Found #{images.size} images out of expected #{expected_imgs}")
+        STDERR.puts("Found #{images.size} images out of expected #{expected_imgs}")
         break unless images.size < expected_imgs
       end
 
+      FileUtils::mkdir_p(path)
+
       images.each_with_index do |img, index|
-        image_url = img.find(:xpath, ".//img")[:src]
+        image_url = img.find(:xpath, ".//img")[:src].gsub("b.", ".")
         request   = open(image_url)
-        filename  = "#{index+1} - #{File.basename(URI.parse(image_url).path)}"
-        puts("Downloading #{filename}")
+        basename  = File.basename(URI.parse(image_url).path).tr("/\000", "")
+        filename  = "#{index+1} - #{basename}"
+        puts("#{File.join(path, filename)}")
         IO.copy_stream(request, File.join(path, filename))
       end
     end
@@ -70,7 +69,6 @@ end
 
 Capybara.run_server              = false
 Capybara.current_driver          = :poltergeist
-Capybara.app_host                = IMGUR_HOME
 Capybara.ignore_hidden_elements  = false
 
 if ARGV.empty? then
