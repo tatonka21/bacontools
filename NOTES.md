@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ imgur: fix title
 + imgur: code cleanup
 + add imgur
 + myzuka: add --tor option

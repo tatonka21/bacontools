@@ -20,13 +20,6 @@ module Imgur
       session.visit(url)
       images = []
 
-      post_id = session.current_url[/(?<=\/)(\w*)$/, 1]
-      post_title = session.find(:xpath, "//title").text.gsub("- Album on Imgur", "").strip
-
-      subdir = "#{post_id} #{"- " + post_title unless post_title =~ /Imgur: The most awesome images on the Internet/}".strip
-      path = opts.path
-      path = subdir if path == "."
-
       session.visit(session.current_url.gsub(/gallery/, "a").gsub(/(?<!\/layout\/grid)$/, '/layout/grid'))
 
       expected_imgs = Integer session.find(:xpath, "//h2[contains(text(),'image')]").text[/(\d+) image(s)?$/, 1]
@@ -40,6 +33,13 @@ module Imgur
         STDERR.puts("Found #{images.size} images out of expected #{expected_imgs}")
         break unless images.size < expected_imgs
       end
+
+      post_id = session.current_url[/(?<=\/a\/)([A-Za-z0-9]*)/, 1]
+      post_title = session.find(:xpath, "//title").text.gsub("- Album on Imgur", "").strip
+
+      subdir = "#{post_id} #{("- " + post_title) unless post_title =~ /Imgur: The most awesome images on the Internet/ or post_title.empty?}".strip
+      path = opts.path
+      path = subdir if path == "."
 
       FileUtils::mkdir_p(path)
 
