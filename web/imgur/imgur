@@ -1,0 +1,82 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'capybara'
+require 'capybara/poltergeist'
+require 'net/http'
+require 'open-uri'
+require 'optparse'
+require 'ostruct'
+require 'uri'
+require 'fileutils'
+
+TIMEOUT       = 60
+IMGUR_DOMAIN  = "imgur.com"
+IMGUR_HOME    = "https://#{IMGUR_DOMAIN}/"
+STDNULL       = File.open(File::NULL, 'w')
+
+module Imgur
+  class Downloader
+    def download(url, opts)
+      session = Capybara::Session.new(:poltergeist)
+      session.visit(url)
+      images = []
+
+      post_id = session.current_url[/(?<=\/)(\w*)$/, 1]
+      post_title = session.find(:xpath, "//title").text.gsub("- Album on Imgur", "").strip
+
+      subdir = "#{post_id} - #{post_title}"
+      path = opts.path
+      path = File.join(opts.path, subdir) if path == "."
+      FileUtils::mkdir_p(path)
+
+      session.visit(session.find(:xpath, "//a[@class='post-gridview-link']")[:href])
+      sleep 5
+
+      expected_imgs = Integer session.find(:xpath, "//h2[contains(.,'images')]").text[/(\d+)(?= images)/, 1]
+      puts("Expecting #{expected_imgs} images")
+
+      loop do
+        puts("Scrolling down")
+        session.execute_script('window.scrollBy(0,100000)')
+        sleep 2
+        images = session.all(:xpath, "//div[@class='posts']/div[.//img]")
+        puts("Found #{images.size} images out of expected #{expected_imgs}")
+        break unless images.size < expected_imgs
+      end
+
+      images.each_with_index do |img, index|
+        image_url = img.find(:xpath, ".//img")[:src]
+        request   = open(image_url)
+        filename  = "#{index+1} - #{File.basename(URI.parse(image_url).path)}"
+        puts("Downloading #{filename}")
+        IO.copy_stream(request, File.join(path, filename))
+      end
+    end
+  end
+end
+
+cli_options  = OpenStruct.new
+
+OptionParser.new do |option|
+  option.on('-d PATH', '--dir PATH') {|o| cli_options.path = o}
+end.parse!
+
+cli_options.path = '.' unless cli_options.path
+
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {js_errors: false, timeout: TIMEOUT, phantomjs_logger: STDNULL})
+end
+
+Capybara.run_server              = false
+Capybara.current_driver          = :poltergeist
+Capybara.app_host                = IMGUR_HOME
+Capybara.ignore_hidden_elements  = false
+
+if ARGV.empty? then
+  Imgur::Downloader.new.download(ask("Album url: "), cli_options)
+end
+
+ARGV.each do |arg|
+  Imgur::Downloader.new.download(arg, cli_options)
+end

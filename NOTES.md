@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ add imgur
 + myzuka: add --tor option
 + myzuka: check for invalid index
 + myzuka: fix whitespace
