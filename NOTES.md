@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ bitdiff: don't require C99 (initial 'for' decls)
 + add Makefiles
 + imgur: fix missing require
 + imgur: fix title

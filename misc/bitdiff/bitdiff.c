@@ -29,7 +29,8 @@ bool get_bit(byte source, int pos) {
 
 int bits_on(byte source) {
 	int result = 0;
-	for (int i = 0; i < 8; i++)
+	int i = 0;
+	for (i = 0; i < 8; i++)
 		if (get_bit(source, i)) result++;
 
 	return result;
@@ -74,12 +75,14 @@ void compare_files(FILE *f1, FILE *f2) {
 }
 
 int main(int argc, char **argv) {
+	int i = 0;
+
 	if (argc != 3) {
 		printf(HELP_TEXT);
 		return 0;
 	};
 
-	for (int i = 0; i < argc; i++) {
+	for (i = 0; i < argc; i++) {
 		if(!strcmp(argv[i], HELP_OPTION)) {
 			printf(HELP_TEXT);
 			return 0;
