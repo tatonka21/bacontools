@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ add .gitlab-ci.yml
 + top level Makefile: fix .PHONY misc
 + bitdiff: don't require C99 (initial 'for' decls)
 + add Makefiles
