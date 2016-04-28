@@ -8,6 +8,7 @@ April 2016
 + top level Makefile: fix .PHONY misc
 + bitdiff: don't require C99 (initial 'for' decls)
 + add Makefiles
++ termdraw: move .gitignore to misc/termdraw
 + imgur: fix missing require
 + imgur: fix title
 + imgur: code cleanup
