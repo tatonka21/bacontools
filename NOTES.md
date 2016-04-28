@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ imgur: fix missing require
 + imgur: fix title
 + imgur: code cleanup
 + add imgur

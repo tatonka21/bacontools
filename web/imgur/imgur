@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'capybara'
 require 'capybara/poltergeist'
+require 'highline/import'
 require 'net/http'
 require 'open-uri'
 require 'optparse'
