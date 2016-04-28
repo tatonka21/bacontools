@@ -1,4 +1,4 @@
-.PHONY: all install linux media web linux-install media-install misc-install web-install
+.PHONY: all install linux media misc web linux-install media-install misc-install web-install
 
 all: linux media misc web
 install: linux-install media-install misc-install web-install
