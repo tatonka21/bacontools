@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ myzuka: fix index boundary checking again
 + fix .gitlab-ci.yml make job
 + add .gitlab-ci.yml
 + top level Makefile: fix .PHONY misc

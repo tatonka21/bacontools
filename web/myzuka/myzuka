@@ -50,14 +50,16 @@ module Myzuka
         return
       end
 
+      displayed_results = [results.size, MAX_RESULTS].min
+
       results.take(MAX_RESULTS).each_with_index do |hit, index|
         puts("#{index+1}. #{a(hit)} - #{t(hit)} (#{tm(hit)})")
       end
 
       loop do
         idx = Integer(ask "Download track # ") rescue 0
-        break if idx >= 1 and idx <= results.size
-        puts "Invalid index, must be an integer from 1 to #{results.size}"
+        break if idx >= 1 and idx <= displayed_results
+        puts "Invalid index, must be an integer from 1 to #{displayed_results}"
       end
 
       song_artist = a(results[idx-1])
