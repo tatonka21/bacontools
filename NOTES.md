@@ -3,6 +3,7 @@ bacontools notes
 
 April 2016
 ----------
++ add .mailmap
 + myzuka: fix index boundary checking again
 + fix .gitlab-ci.yml make job
 + add .gitlab-ci.yml
