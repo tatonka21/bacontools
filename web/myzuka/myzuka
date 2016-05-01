@@ -33,7 +33,6 @@ end
 module Myzuka
   class Downloader
     def download(s)
-      idx = 0
       session = Capybara::Session.new(:poltergeist)
       session.visit(MYZUKA_HOME)
 
@@ -43,7 +42,14 @@ module Myzuka
       sleep(10)
       session.execute_script('window.scrollBy(0,100000)')
 
-      results = session.all(:xpath, "//div[@class='players-list']//div[@class='player-inline']")
+      results = session.all(:xpath, "//div[@class='players-list']//div[@class='player-inline']").map do |div|
+        {
+          :artist => a(div),
+          :title  => t(div),
+          :time   => tm(div),
+          :url    => div.find(:xpath, ".//a")[:href]
+        }
+      end
 
       unless results.any? then
         puts("No results for query #{s}")
@@ -53,30 +59,30 @@ module Myzuka
       displayed_results = [results.size, MAX_RESULTS].min
 
       results.take(MAX_RESULTS).each_with_index do |hit, index|
-        puts("#{index+1}. #{a(hit)} - #{t(hit)} (#{tm(hit)})")
+        puts("#{index+1}. #{hit[:artist]} - #{hit[:title]} (#{hit[:time]})")
       end
 
-      loop do
-        idx = Integer(ask "Download track # ") rescue 0
-        break if idx >= 1 and idx <= displayed_results
-        puts "Invalid index, must be an integer from 1 to #{displayed_results}"
-      end
+      ask("Download track # ").split(/[,\s]+/).map{|i| Integer(i) rescue 0}.each do |i|
+        unless i >= 1 and i <= displayed_results
+          puts "Invalid index #{i}, must be an integer from 1 to #{displayed_results}"
+          next
+        end
 
-      song_artist = a(results[idx-1])
-      song_title  = t(results[idx-1])
+        hit = results[i-1]
 
-      session.visit(results[idx-1].find(:xpath, ".//a")[:href])
+        session.visit(hit[:url])
 
-      sleep(5)
-      session.execute_script('window.scrollBy(0,100000)')
-      sleep(5)
+        sleep(5)
+        session.execute_script('window.scrollBy(0,100000)')
+        sleep(5)
 
-      down_link = session.find(:xpath, "//div[@class='aside']/a", :visible => :all)[:href]
+        down_link = session.find(:xpath, "//div[@class='aside']/a", :visible => :all)[:href]
 
-      download = open(Net::HTTP.get_response(URI(down_link))['location'])
-      filename = File.basename("#{song_artist} - #{song_title}.mp3".tr("/\000", " "))
-      puts("Saving to #{filename}")
-      IO.copy_stream(download, filename)
+        download = open(Net::HTTP.get_response(URI(down_link))['location'])
+        filename = File.basename("#{hit[:artist]} - #{hit[:title]}.mp3".tr("/\000", " "))
+        puts("#{filename}")
+        IO.copy_stream(download, filename)
+        end
     end
   end
 end

@@ -3,6 +3,7 @@ bacontools notes
 
 May 2016
 --------
++ myzuka: allow multiple indices
 + add lines
 
 April 2016
