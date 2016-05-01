@@ -47,7 +47,7 @@ module Imgur
       images.each_with_index do |img, index|
         image_url = img.find(:xpath, ".//img")[:src].gsub("b.", ".")
         request   = open(image_url)
-        basename  = File.basename(URI.parse(image_url).path).tr("/\000", "")
+        basename  = File.basename(URI.parse(image_url).path).tr("/\000", " ")
         filename  = "#{index+1} - #{basename}"
         puts("#{File.join(path, filename)}")
         IO.copy_stream(request, File.join(path, filename))

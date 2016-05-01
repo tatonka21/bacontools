@@ -3,6 +3,7 @@ bacontools notes
 
 May 2016
 --------
++ imgur: rewrite slashes and \000 to spaces
 + misc/README: add termdraw
 + add ruler
 + myzuka: allow multiple indices
