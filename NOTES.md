@@ -3,6 +3,7 @@ bacontools notes
 
 May 2016
 --------
++ misc/README: add termdraw
 + add ruler
 + myzuka: allow multiple indices
 + add lines

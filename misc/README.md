@@ -15,4 +15,5 @@ bacontools/misc - chaos reigns
 | n7m               | Generate a numeronym (i18n, l10n, etc) from a string    | C           |
 | pip-upgrade-all   | Upgrade all local PIP packages                          | Python      |
 | ruler             | Print maximum line length                               | POSIX shell |
+| termdraw          | Print ASCII-art graphs                                  | Python      |
 | update-all        | Update all Git repositories in level 1 subdirectories   | POSIX shell |
