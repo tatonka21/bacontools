@@ -10,6 +10,7 @@ bacontools/misc - chaos reigns
 | byteat            | Print value of byte at index                            | C           |
 | corrupt           | Flip/remove random bits/bytes                           | C           |
 | git-ls            | Github-like human-readable Git repo directory listing   | Python      |
+| lines             | Print distribution of lines' length                     | POSIX shell |
 | maybe             | Prints yes and no randomly interleaved                  | C           |
 | n7m               | Generate a numeronym (i18n, l10n, etc) from a string    | C           |
 | pip-upgrade-all   | Upgrade all local PIP packages                          | Python      |

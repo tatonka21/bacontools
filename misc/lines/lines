@@ -1,0 +1,2 @@
+#!/bin/sh
+awk '{++a[length()]} END{for (i in a) print i, a[i]}' $@

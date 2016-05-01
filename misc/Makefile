@@ -15,6 +15,7 @@ install:
 	$(MAKE) -C byteat install
 	$(MAKE) -C corrupt install
 	$(MAKE) -C git-ls install
+	$(MAKE) -C lines install
 	$(MAKE) -C maybe install
 	$(MAKE) -C n7m install
 	$(MAKE) -C pip-upgrade-all install

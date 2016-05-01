@@ -1,6 +1,10 @@
 bacontools notes
 ================
 
+May 2016
+--------
++ add lines
+
 April 2016
 ----------
 + add .mailmap
