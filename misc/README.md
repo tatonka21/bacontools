@@ -14,4 +14,5 @@ bacontools/misc - chaos reigns
 | maybe             | Prints yes and no randomly interleaved                  | C           |
 | n7m               | Generate a numeronym (i18n, l10n, etc) from a string    | C           |
 | pip-upgrade-all   | Upgrade all local PIP packages                          | Python      |
+| ruler             | Print maximum line length                               | POSIX shell |
 | update-all        | Update all Git repositories in level 1 subdirectories   | POSIX shell |

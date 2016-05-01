@@ -3,6 +3,7 @@ bacontools notes
 
 May 2016
 --------
++ add ruler
 + myzuka: allow multiple indices
 + add lines
 
