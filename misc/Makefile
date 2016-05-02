@@ -21,4 +21,5 @@ install:
 	$(MAKE) -C pip-upgrade-all install
 	$(MAKE) -C ruler install
 	$(MAKE) -C termdraw install
+	$(MAKE) -C trimline install
 	$(MAKE) -C update-all install

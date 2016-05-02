@@ -16,4 +16,5 @@ bacontools/misc - chaos reigns
 | pip-upgrade-all   | Upgrade all local PIP packages                          | Python      |
 | ruler             | Print maximum line length                               | POSIX shell |
 | termdraw          | Print ASCII-art graphs                                  | Python      |
+| trimline          | Remove all leading and trailing whitespaces             | POSIX shell |
 | update-all        | Update all Git repositories in level 1 subdirectories   | POSIX shell |
