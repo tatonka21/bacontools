@@ -3,6 +3,7 @@ bacontools notes
 
 May 2016
 --------
++ fix README
 + move text-related tools to text/
 + add trimline
 + imgur: rewrite slashes and \000 to spaces
