@@ -8,13 +8,14 @@ import math
 import io
 import itertools
 
+version_string="0.2.dev1"
 
 _max_term_graph_width = 80
 _max_term_graph_height = 30
 
 _shortopts = ['i', 'n', 's', 'p', 'a', 'o', 'w', 'h']
 _longopts = ['help', 'debug', 'interpolate', 'no-interpolate', 'solid',
-	'point', 'ascii', 'output', 'width', 'height']
+	'point', 'ascii', 'output', 'width', 'height', 'print-paths']
 _shortopts_with_arg = ['o', 'w', 'h']
 _longopts_with_arg = ['output', 'width', 'height']
 _shortlong_map = {
@@ -35,17 +36,20 @@ if __name__ == '__main__':
 		' directly! exiting\n')
 	exit(1)
 
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from . import terminal
 from . import csv
 from . import cli
 from . import graph
+from . import view
 
 print_debug_info = False
 
 
 def _termdraw_print_help(progname):
-	_termdraw_help_string_1 = 'Usage: '
+	_termdraw_help_string_0 = 'termdraw '
+	_termdraw_help_string_1 = '\nUsage: '
 	_termdraw_help_string_2 = (
 		' [options] file.csv\n'
 		'Draw a human-friendly CLI graph with Unicode symbols.\n\n'
@@ -57,9 +61,12 @@ def _termdraw_print_help(progname):
 		'  -s, --solid              Draw solid graph (with columns)\n'
 		'  -p, --point              Draw point graph (with points)\n'
 		'  -a, --ascii              Only use ASCII symbols\n'
-		'  -o file, --output file   Write to file instead of stdout'
+		'  -o file, --output file   Write to file instead of stdout\n'
+		'  --print-paths            Print file names before graphs'
 	)
-	print(_termdraw_help_string_1 + progname + _termdraw_help_string_2)
+	print(
+		_termdraw_help_string_0 + version_string +
+		_termdraw_help_string_1 + progname + _termdraw_help_string_2)
 
 
 def _debug_write(str):
@@ -73,7 +80,10 @@ def _err(str):
 
 def _draw_graph(stream, width, height, data, interpolate=None,
 		solid_graph=True, ascii_only=False):
+	graph_view = view.GraphView()
 	intp = None
+	datatype = csv.infer_data_schema(data)
+
 	if interpolate is None:
 		if solid_graph:
 			intp = True
@@ -89,12 +99,31 @@ def _draw_graph(stream, width, height, data, interpolate=None,
 		solid_graph_ticks = graph.solid_graph_ticks_unicode
 		point_graph_tick = graph.point_graph_tick_unicode
 
-	if solid_graph:
-		graph.print_solid_graph(stream, width, height, data, intp, solid_graph_ticks)
-	else:
-		graph.print_point_graph(stream, width, height, data, intp, point_graph_tick)
-	return 0
+	_debug_write("_draw_graph received data of type " + repr(datatype))
 
+	if datatype is "mixed" or datatype is "unknown":
+		_err("_draw_graph: unable to process received data: incorrect schema")
+		exit(1)
+
+	if datatype is "values":
+		data = [(str(i), t[0]) for (i, t) in enumerate(data)]
+
+	data = [(float(t[0]), float(t[1])) for t in data]
+
+	graph_view.width = width
+	graph_view.height = height
+	graph_view.bind_data(data)
+	graph_view.interpolate = intp
+
+	if solid_graph:
+		graph_view.is_solid = True
+		graph_view.ticks = solid_graph_ticks
+	else:
+		graph_view.is_solid = False
+		graph_view.ticks = point_graph_tick
+
+	graph_view.write()
+	stream.write(graph_view.string)
 
 def _get_soft_view_width(termwidth):
 	if termwidth >= _max_term_graph_width:
@@ -110,7 +139,8 @@ def _get_soft_view_height(termheight):
 		return termheight
 
 
-def _main(args):
+def main():
+	args = sys.argv
 	exit_status = 0
 	global print_debug_info
 	args0 = args[0]
@@ -149,6 +179,7 @@ def _main(args):
 	opt_no_interpolate = cliparse.longoptions.get('no-interpolate', None)
 	ascii_only = cliparse.longoptions.get('ascii', False)
 	output = cliparse.longoptions.get('output')
+	print_paths = cliparse.longoptions.get('print-paths')
 	graph_width = int(cliparse.longoptions.get('width',
 			_get_soft_view_width(term_width)))
 	graph_height = int(cliparse.longoptions.get('height',
@@ -205,17 +236,16 @@ def _main(args):
 			stdin_string = stdin_string.replace(' ', '\n')
 			stdin_string = stdin_string.strip()
 			rawdata = csv.get_csv_data_string(stdin_string)
-			data = [(float(t[0]), float(t[1])) for t in (tuple(x) for x in rawdata)]
 
 		else:
-			rawdata = csv.get_csv_data(f)
-			data = [(float(t[0]), float(t[1])) for t in (tuple(x) for x in rawdata)]
-
-		for n in data:
-			if len(n) != 2:
-				_err('CSV data does not conform to x,y format: ' + repr(n))
+			if not os.path.exists(f):
+				_err('file '+f+' does not exist, exiting')
 				exit(1)
 
-		output_stream.write(f + '\n')
-		_draw_graph(output_stream, graph_width, graph_height, data,
+			rawdata = csv.get_csv_data(f)
+
+		if print_paths:
+			output_stream.write(f + '\n')
+
+		_draw_graph(output_stream, graph_width, graph_height, rawdata,
 				interpolate, solid, ascii_only)

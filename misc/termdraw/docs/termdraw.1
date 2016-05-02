@@ -3,8 +3,7 @@
 .SH NAME
 termdraw \- an ASCII/Unicode art data visualizer
 
-Termdraw is a command line interface to Python termdraw library. It requires
-Python 3.
+Termdraw is a command line interface to Python termdraw library.
 
 .SH SYNOPSIS
 termdraw [options] file.csv [file2.csv [...]]
@@ -49,13 +48,17 @@ Draw point graph (without supporting columns).
 Only use characters from ASCII charset.
 
 .TP
+\-\-print\-paths
+Print file paths on a separate line before printing their graphs.
+
+.TP
 \-\-debug
 Print debug info.
 
 .SH STANDARD INPUT
 termdraw can receive data from standard input instead of a file.
 For this, it must be either formatted as a CSV file with newlines, or a list of
-x,y points separated by either a single space or a semicolon.
+x,y points separated by spaces or semicolons.
 To instruct termdraw to read from standard input, pass - as a filename.
 .PP
 For instance:
@@ -69,6 +72,10 @@ $ echo "0,1 1,2 2,3;3,4" | termdraw - -asi -w 7 -h 4
  .|||||
 .RE
 .fi
+
+.SH X VALUE INFERENCE
+If termdraw receives singular values as opposed to (X,Y) pairs, it will infer
+that X values are evenly spread out, preserving initial order of Y values.
 
 .SH SOURCE
 Source code can be obtained at https://github.com/bacondropped/termdraw.git

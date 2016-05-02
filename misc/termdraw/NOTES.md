@@ -6,11 +6,10 @@ Previous release: v0.1 (50a4360e)
 Current version summary:
 
 + Don't print file paths anymore, implement --print-paths to do that instead
-+ Implement graph views
-+ Catch non-existent file exception
-+ Move README to RST
-+ Write docstrings for view.py
-+ Fix occasional graph corruption
-+ Allow for multiple separators in stdin
-+ Infer X values if not given
-+ Properly handle Unicode strings in Python 2
++ Implement graph views (64f66384)
++ Catch non-existent file exception (b1cd94cf)
++ Move README to RST (e507bc65)
++ Write docstrings for view.py (9bf4d3fa)
++ Fix occasional graph corruption (84c33685)
++ Allow for multiple separators in stdin (f5be1de7)
++ Infer X values if not given (a6ebe32f)

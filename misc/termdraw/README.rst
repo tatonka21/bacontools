@@ -110,6 +110,23 @@ spread evenly.
 
 .. sourcecode:: bash
 
+    $ echo 1 2 3 4 5 | termdraw -a -
+                                 o
+
+
+                         o
+
+                  o
+
+           o
+
+    o
+
+If singular values are given, assume that Y values are given and X values are
+spread evenly.
+
+.. sourcecode:: bash
+
     $ termdraw data.csv -s
 
                     ▁     █

@@ -5,31 +5,45 @@ import os, shutil, sys
 from setuptools import setup
 
 
+def _read(fname):
+	return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
+
 setup(
 	name = 'termdraw',
-	version = '0.1',
+	version = '0.2.dev1',
 	author = 'Ilya Terentyev',
 	author_email = 'bacondropped@gmail.com',
 	description = 'Utility library for textual data visualization',
+	long_description = _read('README.rst'),
 	license = 'MIT',
 	keywords = 'data graph ascii visualization',
 	url = 'https://github.com/bacondropped/termdraw',
 	packages = ['termdraw'],
-	scripts = ['bin/termdraw'],
+	entry_points = {
+		'console_scripts': ['termdraw = termdraw.termdraw:main']
+	},
 	classifiers = [
 		'Environment :: Console',
 		'Intended Audience :: Developers',
 		'Intended Audience :: Science/Research',
 		'License :: Freely Distributable',
-		'Programming Language :: Python :: 3 :: Only',
+		'Programming Language :: Python :: 2',
+		'Programming Language :: Python :: 3',
 		'Topic :: Scientific/Engineering :: Visualization',
 		'Topic :: Utilities'
 	]
 )
 
+
+executable_path = 'usr/local/bin/termdraw'
+
+# Ensure executable permissions are set
+if os.name is 'posix' and os.path.exists(executable_path):
+	os.chmod(executable_path, int('755', 8))
+
 # Install manpages
-# TODO: remove manpages on uninstall
-if 'install' in sys.argv and os.name is 'posix':
+if os.name is 'posix' and 'install' in sys.argv:
 	man1_path = '/usr/share/man/man1/'
 	man3_path = '/usr/share/man/man3/'
 
