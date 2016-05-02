@@ -1,7 +1,10 @@
 #!/usr/bin/env ruby
 
+# -*- coding: UTF-8 -*-
+
 # TODO: columnize search results
 # TODO: output directory/filename option
+# TODO: handle [Утерян] (lost) uploads gracefully
 
 require 'rubygems'
 require 'capybara'
