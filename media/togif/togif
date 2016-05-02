@@ -1,0 +1,108 @@
+#!/bin/sh
+# ./togif.sh /home/user/video.mkv resultgifname
+
+FRAMES=${FRAMES-475}
+PIXELS=${PIXELS-100000}
+HW_THREADS="${THREADS-"$(cat /proc/cpuinfo | grep processor | wc -l)"}"
+THREADS="${HW_THREADS-2}"
+DELAY="${DELAY-12}"
+
+if [ -e "$1" ]; then
+	true
+else
+	echo "No such file: $1"
+	exit 1
+fi
+
+if [ -z "$2" ]; then
+	echo "No output name provided"
+	exit 1
+fi
+
+is_video_file() {
+	VSTREAM_LINES="$(ffprobe "$1" 2>&1 | grep Video | grep Stream | wc -l)"
+
+	if [ "$VSTREAM_LINES" = "0" ] ; then
+		exit
+	else
+		echo 1
+	fi
+}
+
+if [ -z "$(is_video_file "$1")" ] ; then
+	echo "No video streams in $1" 1>&2
+	exit 1
+fi
+
+datediff() {
+	DATE1="$(date -d "$1" +%s)"
+	DATE2="$(date -d "$2" +%s)"
+	echo "$(( (DATE2 - DATE1) ))"
+}
+
+DURATION=${DURATION-"$(ffprobe -show_format -show_streams "$1" 2>/dev/null | grep -Po '(?<=duration=)[0-9.]*' | head -n 1 )"}
+WIDTH=${WIDTH-"$(ffprobe -show_format -show_streams "$1" 2>/dev/null | grep -Po '(?<=width=)[0-9.]*' | head -n 1)"}
+HEIGHT=${HEIGHT-"$(ffprobe -show_format -show_streams "$1" 2>/dev/null | grep -Po '(?<=height=)[0-9.]*' | head -n 1)"}
+FPS=${FPS-"$(python -c "print(1.0*$(( FRAMES-2 ))/$DURATION)")"}
+SCALE=${SCALE-"$(python -c "print((1.0*$PIXELS/$WIDTH/$HEIGHT)**0.5)")"}
+STARTTIME=${STARTTIME-"$(date --rfc-3339=seconds)"}
+RESULT_FILENAME="$2.$FRAMES.gif"
+
+if [ -z "$FRAMES" ]; then
+	echo "\$FRAMES variable is unset or empty; positive integer required"
+	exit 1
+fi
+
+if [ -z "$PIXELS" ]; then
+	echo "\$PIXELS variable is unset or empty; positive integer required"
+	exit 1
+fi
+
+if [ -z "$THREADS" ]; then
+	echo "\$THREADS variable is unset or empty; positive integer required"
+	exit 1
+fi
+
+if [ -z "$DURATION" ]; then
+	echo "Unable to calculate \$DURATION: do you have ffprobe installed?"
+	exit 1
+fi
+
+if [ -z "$DELAY" ]; then
+	echo "\$DURATION variable is unset or empty; positive integer required"
+	exit 1
+fi
+
+# TODO: WIDTH, HEIGHT, FPS, SCALE empty/unset checks
+
+echo "File: $1"
+echo "Output name: $RESULT_FILENAME"
+echo "Frame count: $FRAMES"
+echo "Pixel count: $PIXELS"
+echo "Duration: $DURATION"
+echo "Width: $WIDTH"
+echo "Height: $HEIGHT"
+echo "FPS: $FPS"
+echo "Scale: $SCALE"
+echo "Delay: $DELAY/100 seconds"
+echo "Threads: $THREADS"
+
+notify-send "$RESULT_FILENAME started at $STARTTIME"
+echo "$RESULT_FILENAME started at $STARTTIME"
+
+mkdir -p "$RESULT_FILENAME.frames"
+
+ffmpeg -v quiet -stats -threads "$THREADS" -i "$1" -threads "$THREADS" -r "$FPS" -vf scale=iw*"$SCALE":-1 "$RESULT_FILENAME.frames/%04d.png" #2>/dev/null
+convert -delay "$DELAY" -loop 0 "$RESULT_FILENAME.frames/*.png" -verbose -limit memory 200MB -limit disk 200MB -limit map 75MB "$RESULT_FILENAME"
+
+stat "$RESULT_FILENAME" | head -n4
+file "$RESULT_FILENAME"
+gifsicle --info "$RESULT_FILENAME" | head -n2
+
+ENDTIME="$(date --rfc-3339=seconds)"
+TIMEELAPSED="$(datediff "$STARTTIME" "$ENDTIME")"
+COMPLETEMSG="$RESULT_FILENAME completed in $(( (TIMEELAPSED/60) ))m"
+notify-send "$COMPLETEMSG"
+echo "$RESULT_FILENAME ended at $ENDTIME, taking $(( (TIMEELAPSED/60) ))m"
+
+rm -r "$RESULT_FILENAME.frames"
