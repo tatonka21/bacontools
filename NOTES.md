@@ -3,6 +3,7 @@ bacontools notes
 
 May 2016
 --------
++ Merge termdraw v0.2 development branch
 + fix README
 + move text-related tools to text/
 + add trimline
