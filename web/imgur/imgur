@@ -41,16 +41,18 @@ module Imgur
       subdir = "#{post_id} #{("- " + post_title) unless post_title =~ /Imgur: The most awesome images on the Internet/ or post_title.empty?}".strip
       path = opts.path
       path = subdir if path == "."
+      path = path.tr("/\000", "")
 
       FileUtils::mkdir_p(path)
 
       images.each_with_index do |img, index|
-        image_url = img.find(:xpath, ".//img")[:src].gsub("b.", ".")
-        request   = open(image_url)
-        basename  = File.basename(URI.parse(image_url).path).tr("/\000", " ")
-        filename  = "#{index+1} - #{basename}"
-        puts("#{File.join(path, filename)}")
-        IO.copy_stream(request, File.join(path, filename))
+        image_url  = img.find(:xpath, ".//img")[:src].gsub("b.", ".")
+        request    = open(image_url)
+        basename   = File.basename(URI.parse(image_url).path)
+        basename   = "#{index+1} - #{basename}".tr("/\000", "")
+        final_path = File.join(path, basename)
+        puts("#{final_path}")
+        IO.copy_stream(request, final_path)
       end
     end
   end

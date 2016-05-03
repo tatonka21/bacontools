@@ -3,6 +3,7 @@ bacontools notes
 
 May 2016
 --------
++ imgur: fix escaping
 + Makefile: remove quotes
 + add togif
 + myzuka: TODO handle lost uploads gracefully
