@@ -5,7 +5,7 @@ May 2016
 --------
 + add togif
 + myzuka: TODO handle lost uploads gracefully
-+ Merge termdraw v0.2 development branch
++ Merge termdraw v0.3 development branch
 + fix README
 + move text-related tools to text/
 + add trimline
