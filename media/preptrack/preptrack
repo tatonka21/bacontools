@@ -38,7 +38,7 @@ function process() {
 		echo "Warning: encoding with higher bitrate than the source: $FINAL_BITRATE kb/s vs $DETECTED_BITRATE kb/s" 1>&2
 	fi
 
-	NEW_FILEPATH="$DIR/$ARTIST - $TITLE.mp3"
+	NEW_FILEPATH="$DIR/$(echo "$ARTIST - $TITLE" | sed 's/\///g').mp3"
 	mkdir -p "$DIR"
 
 	ffmpeg -hide_banner -i "$FILE" -b:a "$FINAL_BITRATE"k "$NEW_FILEPATH"
