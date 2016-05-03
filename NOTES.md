@@ -3,6 +3,7 @@ bacontools notes
 
 May 2016
 --------
++ myzuka: don't escape with whitespaces
 + imgur: fix escaping
 + Makefile: remove quotes
 + add togif

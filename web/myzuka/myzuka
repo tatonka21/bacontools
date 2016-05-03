@@ -82,7 +82,7 @@ module Myzuka
         down_link = session.find(:xpath, "//div[@class='aside']/a", :visible => :all)[:href]
 
         download = open(Net::HTTP.get_response(URI(down_link))['location'])
-        filename = File.basename("#{hit[:artist]} - #{hit[:title]}.mp3".tr("/\000", " "))
+        filename = File.basename("#{hit[:artist]} - #{hit[:title]}.mp3".tr("/\000", ""))
         puts("#{filename}")
         IO.copy_stream(download, filename)
         end
