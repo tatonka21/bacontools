@@ -2,7 +2,7 @@
 
 is_video_file () {
 	VSTREAM_LINES="$(ffprobe "$1" 2>&1\
-	| grep Video | grep Stream | wc -l)"
+	| grep Video | grep -c Stream)"
 
 	if [ "$VSTREAM_LINES" = "0" ] ; then
 		exit

@@ -3,7 +3,7 @@
 
 FRAMES=${FRAMES-475}
 PIXELS=${PIXELS-100000}
-HW_THREADS="${THREADS-"$(cat /proc/cpuinfo | grep processor | wc -l)"}"
+HW_THREADS="${THREADS-"$(grep -c processor /proc/cpuinfo)"}"
 THREADS="${HW_THREADS-2}"
 DELAY="${DELAY-12}"
 
@@ -20,7 +20,7 @@ if [ -z "$2" ]; then
 fi
 
 is_video_file() {
-	VSTREAM_LINES="$(ffprobe "$1" 2>&1 | grep Video | grep Stream | wc -l)"
+	VSTREAM_LINES="$(ffprobe "$1" 2>&1 | grep Video | grep -c Stream)"
 
 	if [ "$VSTREAM_LINES" = "0" ] ; then
 		exit
