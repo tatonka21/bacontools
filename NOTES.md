@@ -3,6 +3,7 @@ bacontools notes
 
 May 2016
 --------
++ quote $@ in scripts
 + preptrack: strip slashes from filenames
 + myzuka: don't escape with whitespaces
 + imgur: fix escaping

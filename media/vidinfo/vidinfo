@@ -11,7 +11,7 @@ is_video_file () {
 	fi
 }
 
-for f in $@ ; do
+for f in "$@" ; do
 	if [ -e "$f" ] ; then
 		FILEPATH="$f"
 	else
