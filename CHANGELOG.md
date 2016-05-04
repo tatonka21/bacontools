@@ -2,6 +2,8 @@ bacontools change log
 =====================
 Notable changes to `bacontools` are documented in this file.
 
+***
+
 Unreleased
 ----------
 ### Added
@@ -15,6 +17,8 @@ Unreleased
 ### Changed
 + Convert NOTES to CHANGELOG
 + Move text-related tools to `text/`.
+
+***
 
 [2016.04] - 2016-05-01
 ----------------------
