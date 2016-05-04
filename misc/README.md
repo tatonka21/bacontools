@@ -5,6 +5,7 @@ bacontools/misc - chaos reigns
 |-------------------|---------------------------------------------------------|-------------|
 | EncodingConverter | Convert between different encodings                     | C#          |
 | apdiff            | Print differing parts of similar file paths             | Python      |
+| bananaglee        | Generate a USA federal agency-like project identifier   | Haskell     |
 | bitdiff           | Detect different bytes in mostly similar files          | C           |
 | byteat            | Print value of byte at index                            | C           |
 | corrupt           | Flip/remove random bits/bytes                           | C           |
