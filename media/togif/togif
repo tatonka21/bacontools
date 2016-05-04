@@ -73,7 +73,25 @@ if [ -z "$DELAY" ]; then
 	exit 1
 fi
 
-# TODO: WIDTH, HEIGHT, FPS, SCALE empty/unset checks
+if [ -z "$WIDTH" -o "$WIDTH" = 0 ]; then
+	echo "\$WIDTH is \'$WIDTH\', must be a natural integer; problematic input?"
+	exit 1
+fi
+
+if [ -z "$HEIGHT" -o "$HEIGHT" = 0 ]; then
+	echo "\$HEIGHT is \'$HEIGHT\', must be a natural integer; problematic input?"
+	exit 1
+fi
+
+if [ -z "$FPS" -o "$FPS" = 0 ]; then
+	echo "\$FPS is \'$HEIGHT\', must be a natural integer; problematic input?"
+	exit 1
+fi
+
+if [ -z "$SCALE" -o "$SCALE" = 0 ]; then
+	echo "\$SCALE is \'$SCALE\', shouldn't be unset or zero; problems with Python?"
+	exit 1
+fi
 
 echo "File: $1"
 echo "Output name: $RESULT_FILENAME"

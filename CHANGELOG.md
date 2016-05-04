@@ -19,6 +19,9 @@ Unreleased
 + Convert NOTES to CHANGELOG
 + Move text-related tools to `text/`.
 
+### Fixed
++ `togif`: check for unset variables
+
 ***
 
 [2016.04] - 2016-05-01
