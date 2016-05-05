@@ -1,5 +1,5 @@
 before_script:
-  - apt-get update -qq && apt-get install -y -qq make cmake gcc haskell-platform
+  - apt-get clean -qq && apt-get update -qq && apt-get install -y -qq make cmake gcc haskell-platform
 
 make:
   script:
