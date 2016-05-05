@@ -14,6 +14,10 @@ title, and bitrate values, re-encodes these files, removes all metadata, and
 saves them to a directory of your choice (`$DIR` if specified, `$HOME/Music`
 otherwise), applying specified ID3V2 tags.
 
+If MAT (Metadata anonymization toolkit) is present, `preptrack` will run `mat
+newfile` after conversion and before applying new ID3 tags, unless `$DONT_MAT`
+is set to anything.
+
 Use cases
 ---------
 + Normalize your music library for publishing: `preptrack` renames files like

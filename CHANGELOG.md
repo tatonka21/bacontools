@@ -16,6 +16,7 @@ Unreleased
 + `lines`
 
 ### Changed
++ `preptrack`: run MAT on converted files
 + Convert NOTES to CHANGELOG
 + Move text-related tools to `text/`.
 

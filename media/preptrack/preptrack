@@ -43,6 +43,10 @@ function process() {
 
 	ffmpeg -hide_banner -i "$FILE" -b:a "$FINAL_BITRATE"k "$NEW_FILEPATH"
 
+	if [ "$(type mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" -a \( -z "$DONT_MAT" \) ]; then
+		mat "$NEW_FILEPATH"
+	fi
+
 	eyeD3 --remove-all "$NEW_FILEPATH"
 
 	if [ -n "$ARTIST" ] ; then
