@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `devbup`
 + `bananaglee`
 + `togif`
 + `termdraw` v0.2 dev branch

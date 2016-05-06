@@ -1,0 +1,121 @@
+#!/bin/bash
+# Usage: devbup [files...]
+# Tarball devices or files together and split the archive.
+#
+# Environment variables
+# ---------------------
+# NAME=documents              Override the default "timestamp+tz.devbup" naming
+#                             scheme.
+# DD_COMMAND=dcfldd           Override the 'dd' command. If equals 'dcfldd',
+#                             'statusinterval' will also be added (64 by
+# DCFLDD_STATINT=128          Override the default ('64') statusinterval if
+#                             DD_COMMAND equals 'dcfldd'.
+# CKSUM_COMMAND=md5sum        Override the default ('sha512sum') command.
+# ADD_PADDING=1               Add padding file (read from /dev/urandom) to
+#                             prevent size estimations.
+# PADDING_SIZE=1241M          Override padding file size.
+# GPG                         Override GnuPG command.
+# SIGN_KEY="dr.no@acme.io"    Sign all input files with this gpg user-id.
+# DIGEST_ALGO=SHA512          Override gpg signing digest via '--digest-algo'
+#                             option.
+# ENCRYPT_KEY="dr.no@acme.io" Encrypt the tarball with this gpg user-id.
+# HIDE_RECIPIENT=1            Use --hidden-recipient during encryption.
+# SPLIT_SIZE=512M             Override the default ('256M') split size.
+#
+# Requirements
+# ------------
+# bash
+# sha512sum
+# dd
+# tar
+# gpg2
+# split
+#
+# To do
+# -----
+# Compare checksums and exit on mismatch
+# Infer ADD_PADDING=1 when PADDING_SIZE is specified
+# Implement optional compression
+# MAT the tarball
+
+DCFLDD_STATINT="${DCFLDD_STATINT:-64}"
+NAME="${NAME:-$(date '+%s%z').devbup}"
+TARBALL_NAME="$NAME.tar"
+GPG_NAME="$NAME.tar.gpg"
+SPLIT_NAME="$NAME."
+SPLIT_SIZE="${SPLIT_SIZE:-256M}"
+GPG="${GPG:-gpg}"
+
+deedee() {
+	DD_COMMAND="${DD_COMMAND:-dd}"
+	CKSUM_COMMAND="${CKSUM_COMMAND:-sha512sum}"
+
+	if [ "$DD_COMMAND" = "dcfldd" ]; then
+		"$DD_COMMAND" if="$1" of="$2" statusinterval="$DCFLDD_STATINT"
+	else
+		"$DD_COMMAND" if="$1" of="$2"
+	fi
+
+	"$CKSUM_COMMAND" "$1" "$2"
+}
+
+# No arguments provided, cry ourselves to sleep
+if [ "$#" -eq 0 ]; then
+	echo "Usage: devbup [files...]" 1>&2
+	echo "Tarball devices or files together and split the archive." 1>&2
+	echo 1>&2
+	echo "Read the source for more information."
+
+	exit 1
+fi
+
+for file in "$@"; do
+	TMP_FILE="./$(basename "$file")"
+	deedee "$file" "$TMP_FILE"
+
+	tar -rvf "$TARBALL_NAME" "$TMP_FILE"
+
+	if [ -n "$SIGN_KEY" ]; then
+		SIGFILE_NAME="$TMP_FILE.sig"
+
+		if [ -n "$DIGEST_ALGO" ]; then
+			"$GPG" --detach-sign -u "$SIGN_KEY" --digest-algo="$DIGEST_ALGO" -o "$SIGFILE_NAME" "$TMP_FILE"
+		else
+			"$GPG" --detach-sign -u "$SIGN_KEY" -o "$SIGFILE_NAME" "$TMP_FILE"
+		fi
+
+		tar -rvf "$TARBALL_NAME" "$SIGFILE_NAME"
+
+		shred -u "$SIGFILE_NAME"
+	fi
+
+	shred -u "$TMP_FILE"
+done
+
+if [ -n "$ADD_PADDING" ]; then
+	PADDING_SIZE="${PADDING_SIZE:-"$(( RANDOM % 4096 ))M"}"
+
+	head -c"$PADDING_SIZE" /dev/urandom > random.bin
+	stat random.bin
+	tar -rvf "$TARBALL_NAME" random.bin
+
+	shred -u random.bin
+fi
+
+tar -tvf "$TARBALL_NAME"
+
+if [ -n "$ENCRYPT_KEY" ]; then
+	if [ -n "$HIDE_RECIPIENT" ]; then
+		RECIP_OPTION='--hidden-recipient'
+	else
+		RECIP_OPTION='--recipient'
+	fi
+
+	"$GPG" --encrypt "$RECIP_OPTION"="$ENCRYPT_KEY" -o "$GPG_NAME" "$TARBALL_NAME"
+	shred -u "$TARBALL_NAME"
+	split -b"$SPLIT_SIZE" "$GPG_NAME" "$SPLIT_NAME"
+	shred -u "$GPG_NAME"
+else
+	split -b"$SPLIT_SIZE" "$TARBALL_NAME" "$SPLIT_NAME"
+	shred -u "$TARBALL_NAME"
+fi
