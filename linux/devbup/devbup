@@ -14,6 +14,8 @@
 # ADD_PADDING=1               Add padding file (read from /dev/urandom) to
 #                             prevent size estimations.
 # PADDING_SIZE=1241M          Override padding file size.
+# RUN_MAT                     Do not run Metadata anonymization toolkit
+#                             on the resulting tarball.
 # GPG                         Override GnuPG command.
 # SIGN_KEY="dr.no@acme.io"    Sign all input files with this gpg user-id.
 # DIGEST_ALGO=SHA512          Override gpg signing digest via '--digest-algo'
@@ -36,7 +38,6 @@
 # Compare checksums and exit on mismatch
 # Infer ADD_PADDING=1 when PADDING_SIZE is specified
 # Implement optional compression
-# MAT the tarball
 
 DCFLDD_STATINT="${DCFLDD_STATINT:-64}"
 NAME="${NAME:-$(date '+%s%z').devbup}"
@@ -100,6 +101,10 @@ if [ -n "$ADD_PADDING" ]; then
 	tar -rvf "$TARBALL_NAME" random.bin
 
 	shred -u random.bin
+fi
+
+if [ "$(type mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" -a \( -n "$RUN_MAT" \) ]; then
+	mat -a "$TARBALL_NAME"
 fi
 
 tar -tvf "$TARBALL_NAME"
