@@ -8,5 +8,6 @@ ADDED|REMOVED|DEPRECATED"
 grep \
 --color=auto \
 --exclude="$0" \
---exclude-dir=".git" \
+--exclude-dir='build' \
+--exclude-dir='.git' \
 -B1 -A4 -nrEI " \b($TAGS)\b" "$@" 2>/dev/null
