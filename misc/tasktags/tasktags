@@ -1,0 +1,12 @@
+#!/bin/sh
+
+TAGS="ERROR|BROKEN|WTF|ORLY|OMFGRLY|\
+FIXME|HACK|BUG|REVIEW|SMELL|REMOVE|UPDATE|\?\?\?|!!!|\
+TODO|NOTE|XXX|QUESTION|ANSWER|ISSUE|CHANGED\
+ADDED|REMOVED|DEPRECATED"
+
+grep \
+--color=auto \
+--exclude="$0" \
+--exclude-dir=".git" \
+-B1 -A4 -nrEI " \b($TAGS)\b" "$@" 2>/dev/null

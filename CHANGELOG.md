@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `tasktags`
 + `devbup`
 + `bananaglee`
 + `togif`

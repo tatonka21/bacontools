@@ -12,5 +12,6 @@ bacontools/misc - chaos reigns
 | git-ls            | Github-like human-readable Git repo directory listing   | Python      |
 | maybe             | Prints yes and no randomly interleaved                  | C           |
 | pip-upgrade-all   | Upgrade all local PIP packages                          | Python      |
+| tasktags          | Search for tags like TODO                               | POSIX shell |
 | termdraw          | Print ASCII-art graphs                                  | Python      |
 | update-all        | Update all Git repositories in level 1 subdirectories   | POSIX shell |
