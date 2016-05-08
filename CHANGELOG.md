@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `myzuka`: `-d`/`--dir` option
 + `readable`
 + `imgur`: support non-album gallery posts
 + `tasktags`

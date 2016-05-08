@@ -15,6 +15,7 @@ require 'open-uri'
 require 'optparse'
 require 'ostruct'
 require 'uri'
+require 'fileutils'
 
 MYZUKA_DOMAIN = "myzuka.fm"
 MYZUKA_HOME   = "https://#{MYZUKA_DOMAIN}/"
@@ -35,7 +36,10 @@ end
 
 module Myzuka
   class Downloader
-    def download(s)
+    def download(s, opts)
+      output_path = opts.dir ? opts.dir : "."
+      FileUtils::mkdir_p(output_path)
+
       session = Capybara::Session.new(:poltergeist)
       session.visit(MYZUKA_HOME)
 
@@ -82,9 +86,11 @@ module Myzuka
         down_link = session.find(:xpath, "//div[@class='aside']/a", :visible => :all)[:href]
 
         download = open(Net::HTTP.get_response(URI(down_link))['location'])
+        directory = output_path.tr("/\000", "")
         filename = File.basename("#{hit[:artist]} - #{hit[:title]}.mp3".tr("/\000", ""))
-        puts("#{filename}")
-        IO.copy_stream(download, filename)
+        final_path = File.join(directory, filename)
+        puts("#{final_path}")
+        IO.copy_stream(download, final_path)
         end
     end
   end
@@ -95,6 +101,7 @@ phantom_opts = []
 
 OptionParser.new do |option|
   option.on('-t', '--tor') {|o| cli_options.tor = true}
+  option.on('-d PATH', '--dir PATH') {|o| cli_options.dir = o}
 end.parse!
 
 phantom_opts = ['--proxy-type=socks5', '--proxy=127.0.0.1:9050'] if cli_options.tor
@@ -112,5 +119,5 @@ if ARGV.empty? then
 end
 
 ARGV.each do |arg|
-  Myzuka::Downloader.new.download(arg)
+  Myzuka::Downloader.new.download(arg, cli_options)
 end
