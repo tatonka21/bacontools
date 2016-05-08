@@ -1,0 +1,7 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
+
+PROJECT(readable C)
+
+ADD_EXECUTABLE(readable readable.c)
+
+INSTALL(TARGETS readable DESTINATION bin)
