@@ -3,6 +3,7 @@
 all:
 	$(MAKE) -C balance
 	$(MAKE) -C n7m
+	$(MAKE) -C readable
 
 install:
 	$(MAKE) -C balance install
