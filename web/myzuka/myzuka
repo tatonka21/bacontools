@@ -122,7 +122,7 @@ Capybara.current_driver        = :poltergeist
 Capybara.app_host              =  MYZUKA_HOME
 
 if ARGV.empty? then
-  Myzuka::Downloader.new.download(ask "Search for ")
+  Myzuka::Downloader.new.download((ask "Search for "), cli_options)
 end
 
 ARGV.each do |arg|
