@@ -27,6 +27,7 @@ Unreleased
 + Move text-related tools to `text/`.
 
 ### Fixed
++ `myzuka`: don't escape slashes in paths
 + `myzuka`: fix fatal error in search prompt
 + `togif`: check for unset variables
 
