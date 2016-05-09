@@ -2,7 +2,6 @@
 
 # -*- coding: UTF-8 -*-
 
-# TODO: columnize search results
 # TODO: output directory/filename option
 # TODO: handle [Утерян] (lost) uploads gracefully
 
@@ -49,7 +48,7 @@ module Myzuka
       sleep(10)
       session.execute_script('window.scrollBy(0,100000)')
 
-      results = session.all(:xpath, "//div[@class='players-list']//div[@class='player-inline']").map do |div|
+      results = session.all(:xpath, "//div[@class='players-list']//div[@class='player-inline']").take(MAX_RESULTS).map do |div|
         {
           :artist => a(div),
           :title  => t(div),
@@ -65,8 +64,17 @@ module Myzuka
 
       displayed_results = [results.size, MAX_RESULTS].min
 
+      idx_maxlen    = (results.size+1).to_s.length
+      artist_maxlen = results.map{|r| r[:artist].length}.max
+      title_maxlen  = results.map{|r| r[:title].length}.max
+      time_maxlen   = results.map{|r| r[:time].length}.max
+
       results.take(MAX_RESULTS).each_with_index do |hit, index|
-        puts("#{index+1}. #{hit[:artist]} - #{hit[:title]} (#{hit[:time]})")
+        idx    = (index+1).to_s.rjust(idx_maxlen)
+        artist = hit[:artist].ljust(artist_maxlen)
+        title  = hit[:title].ljust(title_maxlen)
+        time   = ("(" + hit[:time] + ")").rjust(time_maxlen + 2)
+        puts("#{idx}  #{artist}  #{title}  #{time}")
       end
 
       ask("Download track # ").split(/[,\s]+/).map{|i| Integer(i) rescue 0}.each do |i|

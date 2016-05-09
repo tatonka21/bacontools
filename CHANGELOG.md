@@ -21,6 +21,7 @@ Unreleased
 + `lines`
 
 ### Changed
++ `myzuka`: tabulate result list
 + `preptrack`: run MAT on converted files
 + Convert NOTES to CHANGELOG
 + Move text-related tools to `text/`.
