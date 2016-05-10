@@ -11,6 +11,7 @@
 # DCFLDD_STATINT=128          Override the default ('64') statusinterval if
 #                             DD_COMMAND equals 'dcfldd'.
 # CKSUM_COMMAND=md5sum        Override the default ('sha512sum') command.
+# IGNORE_CKSUMS=1             Do not exit on checksum mismatch.
 # ADD_PADDING=1               Add padding file (read from /dev/urandom) to
 #                             prevent size estimations.
 # PADDING_SIZE=1241M          Override padding file size.
@@ -33,7 +34,6 @@
 # gpg2
 # split
 #
-# TODO: Compare checksums and exit on mismatch
 # TODO: Infer ADD_PADDING=1 when PADDING_SIZE is specified
 # TODO: Implement optional compression
 
@@ -55,7 +55,18 @@ deedee() {
 		"$DD_COMMAND" if="$1" of="$2"
 	fi
 
-	"$CKSUM_COMMAND" "$1" "$2"
+	CHECKSUM_OUTPUT="$("$CKSUM_COMMAND" "$1" "$2")"
+	SRC_CHECKSUM="$(echo "$CHECKSUM_OUTPUT" | head -n1 | cut -d\  -f1)"
+	RST_CHECKSUM="$(echo "$CHECKSUM_OUTPUT" | tail -n1 | cut -d\  -f1)"
+
+	echo "$SRC_CHECKSUM: $1"
+	echo "$RST_CHECKSUM: $2"
+
+	if [[ ( "$SRC_CHECKSUM" != "$RST_CHECKSUM" ) && ( -z "$IGNORE_CKSUMS" ) ]]; then
+		echo "Checksum mismatch! Unmount source block devices, close file \
+descriptors, and start again." 1>&2
+		exit 1
+	fi
 }
 
 # No arguments provided, cry ourselves to sleep
