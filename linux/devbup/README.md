@@ -40,6 +40,12 @@ Override default (`sha512sum`) checksum command. Useful with large files, when
 SHA512 is too slow.
 
 ```
+$ IGNORE_CKSUMS=1 devbup /dev/sdb # I aint gonna unmount that
+```
+Ignore mismatched checksums on source and result files, don't exit, continue
+as if nothing went wrong.
+
+```
 $ ADD_PADDING=1 devbup ~/Documents/SizeSensitiveDocuments/*
 ```
 Add a randomized binary file to the archive.
