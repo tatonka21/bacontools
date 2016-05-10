@@ -33,11 +33,9 @@
 # gpg2
 # split
 #
-# To do
-# -----
-# Compare checksums and exit on mismatch
-# Infer ADD_PADDING=1 when PADDING_SIZE is specified
-# Implement optional compression
+# TODO: Compare checksums and exit on mismatch
+# TODO: Infer ADD_PADDING=1 when PADDING_SIZE is specified
+# TODO: Implement optional compression
 
 DCFLDD_STATINT="${DCFLDD_STATINT:-64}"
 NAME="${NAME:-$(date '+%s%z').devbup}"
