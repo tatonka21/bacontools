@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# TODO: accept optional user list, return 1 if any of these users doesn't exist
+
+cut -d: -f1 /etc/passwd

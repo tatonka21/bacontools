@@ -1,8 +1,8 @@
-.PHONY: all install checkreboot-install devbup-install netinfo-install
+.PHONY: all install checkreboot-install devbup-install netinfo-install userls-install
 
 all:
 
-install: checkreboot-install devbup-install netinfo-install
+install: checkreboot-install devbup-install netinfo-install userls-install
 
 checkreboot-install:
 	$(MAKE) -C "checkreboot" install
@@ -12,3 +12,6 @@ devbup-install:
 
 netinfo-install:
 	$(MAKE) -C "netinfo" install
+
+userls-install:
+	$(MAKE) -C "userls" install
