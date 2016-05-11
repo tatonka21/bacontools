@@ -57,7 +57,7 @@ Override default padding file size (which is `$(( RANDOM % 4096 ))M`,
 i.e. from 0 to 4 GB).
 
 ```
-$ RUN_MAT devbup ~/Torrents/SomePiratedMovie.mkv
+$ RUN_MAT=1 devbup ~/Torrents/SomePiratedMovie.mkv
 ```
 If installed, run MAT (Metadata anonymization toolkit) on the target tarball.
 
