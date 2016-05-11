@@ -1,5 +1,5 @@
-myzuka - download songs from myzuka.fm
-======================================
+myzuka - and who are you, the proud lord said
+=============================================
 
 `myzuka` is a CLI frontend for the music hosting website
 [myzuka.fm](https://myzuka.fm). It runs Capybara and Poltergeist, leveraging

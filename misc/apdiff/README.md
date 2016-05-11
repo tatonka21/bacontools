@@ -1,5 +1,5 @@
-apdiff (all paths' diff) - return the different part of the file path
-=====================================================================
+apdiff (all paths' diff) - all paths lead to inevitable demise
+==============================================================
 
 Find and print the longest contiguous differing subsequence among similarly
 named files in the same subdirectory.

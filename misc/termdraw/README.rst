@@ -1,5 +1,5 @@
-termdraw - ASCII/Unicode data visualizer
-========================================
+termdraw - drawing with own's blood doesn't make it prettier
+============================================================
 
 `termdraw` is a utility written in Python 3 that draws CSV data of form `x,y`
 as text graphs.
