@@ -15,9 +15,9 @@
 # ADD_PADDING=1               Add padding file (read from /dev/urandom) to
 #                             prevent size estimations.
 # PADDING_SIZE=1241M          Override padding file size.
-# RUN_MAT                     Do not run Metadata anonymization toolkit
+# RUN_MAT=1                   Do not run Metadata anonymization toolkit
 #                             on the resulting tarball.
-# GPG                         Override GnuPG command.
+# GPG=gpgv2                   Override GnuPG command.
 # SIGN_KEY="dr.no@acme.io"    Sign all input files with this gpg user-id.
 # DIGEST_ALGO=SHA512          Override gpg signing digest via '--digest-algo'
 #                             option.
@@ -31,11 +31,13 @@
 # sha512sum
 # dd
 # tar
-# gpg2
+# gnupg
 # split
 #
-# TODO: Infer ADD_PADDING=1 when PADDING_SIZE is specified
-# TODO: Implement optional compression
+# TODO: infer ADD_PADDING=1 when PADDING_SIZE is specified
+# TODO: implement optional compression
+# TODO: ddrescue support
+# TODO: shred copied files on checksum mismatch
 
 DCFLDD_STATINT="${DCFLDD_STATINT:-64}"
 NAME="${NAME:-$(date '+%s%z').devbup}"
