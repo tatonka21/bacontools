@@ -1,0 +1,14 @@
+diff --git a/misc/bananaglee/Makefile b/misc/bananaglee/Makefile
+index cb5e7aa..121e90e 100644
+--- a/misc/bananaglee/Makefile
++++ b/misc/bananaglee/Makefile
+@@ -3,7 +3,7 @@
+ all: bananaglee
+ 
+ bananaglee:
+-	runghc Setup.hs configure && runghc Setup.hs build
++	true
+ 
+ install: bananaglee
+-	runghc Setup.hs install
++	true
