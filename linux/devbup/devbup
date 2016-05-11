@@ -15,8 +15,8 @@
 # ADD_PADDING=1               Add padding file (read from /dev/urandom) to
 #                             prevent size estimations.
 # PADDING_SIZE=1241M          Override padding file size.
-# RUN_MAT=1                   Do not run Metadata anonymization toolkit
-#                             on the resulting tarball.
+# RUN_MAT=1                   Run Metadata anonymization toolkit on the
+#                             resulting tarball.
 # GPG=gpgv2                   Override GnuPG command.
 # SIGN_KEY="dr.no@acme.io"    Sign all input files with this gpg user-id.
 # DIGEST_ALGO=SHA512          Override gpg signing digest via '--digest-algo'
