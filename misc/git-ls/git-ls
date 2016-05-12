@@ -3,6 +3,8 @@
 # TODO: ls-like sorting arguments (passed directly to ls)
 # TODO: color
 # TODO: code-refactoring-cat.gif
+# FIXME: doesn't ls files and subpaths; what? (apparently a regression after
+# FIXME: argparse)
 
 
 import os
