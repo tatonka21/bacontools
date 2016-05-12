@@ -1,0 +1,30 @@
+.TH preptrack 1 "preptrack" "12 May 2016" "version 2016-05"
+
+.SH NAME
+preptrack - interactive audio reencoding script
+
+.SH SYNOPSIS
+preptrack
+.I file...
+
+.SH DESCRIPTION
+\fBpreptrack\fP is an audio reencoding frontend for \fBffmpeg\fP. It accepts a
+number of media files, strips them of all metadata, and creates MP3 files with
+selected bitrate in a predefined directory.
+
+.SH ENVIRONMENT VARIABLES
+.TP
+\fBDIR\fP
+Output directory. Defaults to \fB$HOME\fP/Music.
+
+.TP
+\fBDONT_MAT\fP
+If this variable is unset and Metadata Anonymization Toolit (\fBMAT\fP) is
+installed, \fBpreptrack\fP will run it on every file before writing ID3v2 tags.
+
+.SH AUTHOR
+Developed by Ilya Terentyev <bacondropped@gmail.com> as a part of the
+\fBbacontools\fP package <https://gitlab.com/bacondropped/bacontools>.
+
+.SH LICENSE
+\fBpreptrack\fP is distributed under the terms of the MIT license.

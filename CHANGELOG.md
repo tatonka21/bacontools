@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `preptrack`: man page
 + Tool maturity classification
 + `git-ls`: support arbitrary paths
 + `patches` directory, `no-haskell` patch
