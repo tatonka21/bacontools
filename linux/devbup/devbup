@@ -34,7 +34,6 @@
 # gnupg
 # split
 #
-# TODO: infer ADD_PADDING=1 when PADDING_SIZE is specified
 # TODO: implement optional compression
 # TODO: ddrescue support
 # TODO: shred copied files on checksum mismatch
@@ -104,7 +103,7 @@ for file in "$@"; do
 	shred -u "$TMP_FILE"
 done
 
-if [ -n "$ADD_PADDING" ]; then
+if [ -n "$ADD_PADDING" -o -n "$PADDING_SIZE" ]; then
 	PADDING_SIZE="${PADDING_SIZE:-"$(( RANDOM % 4096 ))M"}"
 
 	head -c"$PADDING_SIZE" /dev/urandom > random.bin
