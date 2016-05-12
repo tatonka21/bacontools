@@ -1,6 +1,5 @@
 bitdiff - your life doesn't make a difference
 =============================================
-
 Compare files byte-wise.
 
 ```

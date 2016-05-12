@@ -1,6 +1,5 @@
 bacontools/text - you can't read without eyes anyway
 ====================================================
-
 | Tool     | Maturity | Description                                          | Language    |
 |----------|----------|------------------------------------------------------|-------------|
 | balance  | Untested | Detect if strings contain balanced/unbalanced parens | C           |

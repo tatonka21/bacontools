@@ -1,6 +1,5 @@
 lines - of pure white cocaine
 =============================
-
 Print distribution of line lengths: line length, space, number of lines with
 that length.
 

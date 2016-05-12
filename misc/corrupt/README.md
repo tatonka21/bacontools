@@ -1,6 +1,5 @@
 corrupt - feels good, doesn't it?
 =================================
-
 ```
 % corrupt --help
 Usage: cat file1 | corrupt drop --ratio 0.01 >> file2

@@ -1,6 +1,5 @@
 byteat - why are you looking at me behind my back
 =================================================
-
 ```
  % byteat
 Usage: cat file | byteat 10

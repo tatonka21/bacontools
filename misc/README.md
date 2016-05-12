@@ -1,6 +1,5 @@
 bacontools/misc - chaos reigns
 ==============================
-
 | Tool              | Maturity | Description                                             | Language    |
 |-------------------|----------|---------------------------------------------------------|-------------|
 | EncodingConverter | Untested | Convert between different encodings                     | C#          |

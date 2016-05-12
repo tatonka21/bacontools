@@ -1,6 +1,5 @@
 togif - faces frozen in timeless agony
 ======================================
-
 togif.sh is a shell script that converts a video file to an animated gif with
 given number of frames.
 

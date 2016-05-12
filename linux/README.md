@@ -1,6 +1,5 @@
 bacontools/linux - gaze into the eyes of the penguin
 ====================================================
-
 | Tool        | Maturity | Description                                    | Language    |
 |-------------|----------|------------------------------------------------|-------------|
 | checkreboot | Hack     | Print whether reboot is required               | POSIX shell |

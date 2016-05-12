@@ -1,6 +1,5 @@
 myzuka - and who are you, the proud lord said
 =============================================
-
 `myzuka` is a CLI frontend for the music hosting website
 [myzuka.fm](https://myzuka.fm). It runs Capybara and Poltergeist, leveraging
 PhantomJS for web crawling. Yes, I know this might be an overkill. No, I'm
@@ -13,7 +12,6 @@ prompts the user for a search string.
 
 Usage example
 -------------
-
 ```
 $ myzuka "double trouble"
  1  Mike Mareen        Double Trouble                             (05:22)
@@ -50,7 +48,6 @@ Nicholas Hooper - Professor Umbridge.mp3: Audio file with ID3 version 2.3.0 <..>
 
 Downloading over Tor
 --------------------
-
 Supplying `-t`/`--tor` command line option to `myzuka` makes it download web
 pages and files over Tor, assuming it runs as a SOCKS5 proxy at
 `localhost:9050`. Note that `myzuka` will still leak your DNS requests to the

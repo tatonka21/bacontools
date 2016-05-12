@@ -1,6 +1,5 @@
 ruler - the one true king
 =========================
-
 `ruler` prints the length of the longest line of the input.
 
 ```

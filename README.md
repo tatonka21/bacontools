@@ -1,6 +1,5 @@
 bacontools - gradual descent into madness
 =========================================
-
 bacontools is a collection of small utilities I've written over the years.
 
 | Directory | Description                                         | Languages                           | Count |

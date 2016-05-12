@@ -1,6 +1,5 @@
 bacontools/media - see no evil, hear no evil, speak no evil
 ===========================================================
-
 | Tool           | Maturity   | Description                                        | Language    |
 |----------------|------------|----------------------------------------------------|-------------|
 | ImageValidator | Untested   | Detect corrupted images                            | C#          |

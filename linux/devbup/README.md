@@ -1,6 +1,5 @@
 devbup - how's the faith-based backup strategy working out for you?
 ===================================================================
-
 `devbup` (short for "device backup") accepts files (perhaps, block devices or
 large datasets), signs them, and creates a tarball, which is then compressed,
 encrypted, and split.

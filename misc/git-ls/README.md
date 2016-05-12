@@ -1,5 +1,5 @@
-git-ls: you can't read them all
-===============================
+git-ls - you can't read them all
+================================
 Print a Github-like human-readable Git repo directory listing.
 
 ```

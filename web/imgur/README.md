@@ -1,12 +1,10 @@
 imgur - surely these wallpapers will help with your existential crises
 ======================================================================
-
 Aptly named `imgur` downloads pics from an Imgur gallery album to a
 subdirectory.
 
 Usage
 -----
-
 ```
 $ imgur http://imgur.com/gallery/IVYHl
 ```
