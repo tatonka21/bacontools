@@ -36,6 +36,7 @@
 #
 # TODO: implement optional compression
 # TODO: ddrescue support
+# TODO: option to simply unlink instead of shredding
 
 DCFLDD_STATINT="${DCFLDD_STATINT:-64}"
 NAME="${NAME:-$(date '+%s%z').devbup}"
