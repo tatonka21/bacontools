@@ -36,7 +36,6 @@
 #
 # TODO: implement optional compression
 # TODO: ddrescue support
-# TODO: shred copied files on checksum mismatch
 
 DCFLDD_STATINT="${DCFLDD_STATINT:-64}"
 NAME="${NAME:-$(date '+%s%z').devbup}"
@@ -66,7 +65,7 @@ deedee() {
 	if [[ ( "$SRC_CHECKSUM" != "$RST_CHECKSUM" ) && ( -z "$IGNORE_CKSUMS" ) ]]; then
 		echo "Checksum mismatch! Unmount source block devices, close file \
 descriptors, and start again." 1>&2
-		exit 1
+		return 1
 	fi
 }
 
@@ -83,6 +82,20 @@ fi
 for file in "$@"; do
 	TMP_FILE="./$(basename "$file")"
 	deedee "$file" "$TMP_FILE"
+
+	if [ "$?" = 1 -a -z "$IGNORE_CKSUMS" ]; then
+		echo "Shredding all copied files and exiting." 1>&2
+
+		for file in "$@"; do
+			TMP_FILE="./$(basename "$file")"
+
+			if [ -e "$TMP_FILE" ]; then
+				shred -u "$TMP_FILE"
+			fi
+		done
+
+		exit 1
+	fi
 
 	tar -rvf "$TARBALL_NAME" "$TMP_FILE"
 
