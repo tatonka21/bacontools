@@ -8,7 +8,7 @@ Usage
 ```
 $ imgur-dl http://imgur.com/gallery/IVYHl
 ```
-Save one or several albums to the working directory, to subdirectories namedi
+Save one or several albums to the working directory, to subdirectories named
 like `IVYHl - Long time lurker wallpaper dump (+3500!)`.
 
 ```
