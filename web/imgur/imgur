@@ -1,4 +1,11 @@
 #!/usr/bin/env ruby
+#
+# TODO: Gemfile
+# TODO: Download groups of posts: user's submissions, faves, fp, by search, etc
+# TODO: Text search
+# TODO: Optional comment scraping for URLs
+# TODO: Optional post metadata export to JSON
+# FIXME: Some images yield a redirect loop; investigate
 
 require 'rubygems'
 require 'capybara'
