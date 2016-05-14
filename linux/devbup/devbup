@@ -17,6 +17,9 @@
 # PADDING_SIZE=1241M          Override padding file size.
 # RUN_MAT=1                   Run Metadata anonymization toolkit on the
 #                             resulting tarball.
+# COMPRESS=gzip               Compress the tarball. Available values:
+#                             gzip
+#                             none
 # GPG=gpgv2                   Override GnuPG command.
 # SIGN_KEY="dr.no@acme.io"    Sign all input files with this gpg user-id.
 # DIGEST_ALGO=SHA512          Override gpg signing digest via '--digest-algo'
@@ -67,6 +70,17 @@ deedee() {
 		echo "Checksum mismatch! Unmount source block devices, close file \
 descriptors, and start again." 1>&2
 		return 1
+	fi
+}
+
+db_compress() {
+	if [ "$COMPRESS" = "none" ]; then
+		echo "$1"
+	fi
+
+	if [ "$COMPRESS" = "gzip" ]; then
+		gzip -c "$1" > "$1.gzip"
+		echo "$1.gzip"
 	fi
 }
 
@@ -133,6 +147,10 @@ fi
 
 tar -tvf "$TARBALL_NAME"
 
+# Compress the tarball
+COMPRESSED_TARBALL="$(db_compress "$TARBALL_NAME")"
+shred -u "$TARBALL_NAME"
+
 if [ -n "$ENCRYPT_KEY" ]; then
 	if [ -n "$HIDE_RECIPIENT" ]; then
 		RECIP_OPTION='--hidden-recipient'
@@ -140,11 +158,11 @@ if [ -n "$ENCRYPT_KEY" ]; then
 		RECIP_OPTION='--recipient'
 	fi
 
-	"$GPG" --encrypt "$RECIP_OPTION"="$ENCRYPT_KEY" -o "$GPG_NAME" "$TARBALL_NAME"
-	shred -u "$TARBALL_NAME"
+	"$GPG" --encrypt "$RECIP_OPTION"="$ENCRYPT_KEY" -o "$GPG_NAME" "$COMPRESSED_TARBALL"
+	shred -u "$COMPRESSED_TARBALL"
 	split -b"$SPLIT_SIZE" "$GPG_NAME" "$SPLIT_NAME"
 	shred -u "$GPG_NAME"
 else
-	split -b"$SPLIT_SIZE" "$TARBALL_NAME" "$SPLIT_NAME"
-	shred -u "$TARBALL_NAME"
+	split -b"$SPLIT_SIZE" "$COMPRESSED_TARBALL" "$SPLIT_NAME"
+	shred -u "$COMPRESSED_TARBALL"
 fi

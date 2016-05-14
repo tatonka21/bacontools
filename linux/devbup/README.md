@@ -61,6 +61,12 @@ $ RUN_MAT=1 devbup ~/Torrents/SomePiratedMovie.mkv
 If installed, run MAT (Metadata anonymization toolkit) on the target tarball.
 
 ```
+$ COMPRESS=gzip devbup ~/Books/**.pdf
+```
+If set, `devbup` will compress resulting tarball. Supported values are `gzip`
+and `none`.
+
+```
 $ GPG=gpg2 devbup /dev/sdb
 ```
 Override default (`gpg`) GnuPG command.
