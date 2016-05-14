@@ -85,10 +85,12 @@ db_compress() {
 
 # No arguments provided, cry ourselves to sleep
 if [ "$#" -eq 0 ]; then
-	echo "Usage: devbup [files...]" 1>&2
+	echo "Usage: [VAR=value] devbup file ..." 1>&2
 	echo "Tarball devices or files together and split the archive." 1>&2
 	echo 1>&2
-	echo "Read the source for more information."
+	echo "Read the man page (\`man 1 devbup\`) or source for more information." 1>&2
+	echo "Also, refer to the README.md file from the bacontools package:
+https://github.com/bacondropped/bacontools/tree/master/linux/devbup" 1>&2
 
 	exit 1
 fi
