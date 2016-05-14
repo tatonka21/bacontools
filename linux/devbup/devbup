@@ -48,7 +48,7 @@ SPLIT_NAME="$NAME"
 SPLIT_SIZE="${SPLIT_SIZE:-256M}"
 GPG="${GPG:-gpg}"
 
-deedee() {
+db_deedee() {
 	DD_COMMAND="${DD_COMMAND:-dd}"
 	CKSUM_COMMAND="${CKSUM_COMMAND:-sha512sum}"
 
@@ -95,7 +95,7 @@ fi
 
 for file in "$@"; do
 	TMP_FILE="./$(basename "$file")"
-	deedee "$file" "$TMP_FILE"
+	db_deedee "$file" "$TMP_FILE"
 
 	if [ "$?" = 1 -a -z "$IGNORE_CKSUMS" ]; then
 		echo "Shredding all copied files and exiting." 1>&2
