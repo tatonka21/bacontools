@@ -19,8 +19,8 @@ require 'ostruct'
 require 'uri'
 require 'fileutils'
 
-TIMEOUT       = 60
-STDNULL       = File.open(File::NULL, 'w')
+TIMEOUT = 60
+STDNULL = File.open(File::NULL, 'w')
 
 module Imgur
   class Downloader
