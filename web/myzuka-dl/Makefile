@@ -3,4 +3,4 @@
 all:
 
 install:
-	install myzuka /usr/local/bin
+	install myzuka-dl /usr/local/bin

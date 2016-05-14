@@ -1,19 +1,19 @@
-myzuka - and who are you, the proud lord said
-=============================================
-`myzuka` is a CLI frontend for the music hosting website
+myzuka-dl - and who are you, the proud lord said
+================================================
+`myzuka-dl` is a CLI frontend for the music hosting website
 [myzuka.fm](https://myzuka.fm). It runs Capybara and Poltergeist, leveraging
 PhantomJS for web crawling. Yes, I know this might be an overkill. No, I'm
 probably not changing the architecture.
 
-For each command line option, `myzuka` queries the website, retrieves top 20
+For each command line option, `myzuka-dl` queries the website, retrieves top 20
 search results, and prompts the user for the exact track to download. The file
-will be saved to the working directory. If no arguments are supplied, `myzuka`
-prompts the user for a search string.
+will be saved to the working directory. If no arguments are supplied,
+`myzuka-dl` prompts the user for a search string.
 
 Usage example
 -------------
 ```
-$ myzuka "double trouble"
+$ myzuka-dl "double trouble"
  1  Mike Mareen        Double Trouble                             (05:22)
  2  Rob                Double Trouble                             (01:02)
  3  Double Trouble     Mary Has A Little Lamb                     (04:16)
@@ -36,7 +36,7 @@ $ myzuka "double trouble"
 20  Sterling Koch      Double Trouble                             (05:58)
 Download track # 4
 ./John Williams - Double Trouble.mp3
-$ myzuka
+$ myzuka-dl
 Search for professor umbridge
 1  Nicholas Hooper  Professor Umbridge  (02:33)
 Download track # 1
@@ -48,7 +48,7 @@ Nicholas Hooper - Professor Umbridge.mp3: Audio file with ID3 version 2.3.0 <..>
 
 Downloading over Tor
 --------------------
-Supplying `-t`/`--tor` command line option to `myzuka` makes it download web
-pages and files over Tor, assuming it runs as a SOCKS5 proxy at
-`localhost:9050`. Note that `myzuka` will still leak your DNS requests to the
-network, however, your IP will be masked from the target website.
+Supplying `-t`/`--tor` command line option to `myzuka-dl` makes it download
+webpages and files over Tor, assuming it runs as a SOCKS5 proxy at
+`localhost:9050`. Note that `myzuka-dl` will still leak your DNS requests to
+the network, however, your IP will be masked from the target website.
