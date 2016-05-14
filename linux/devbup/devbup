@@ -37,7 +37,6 @@
 # gnupg
 # split
 #
-# TODO: implement optional compression
 # TODO: ddrescue support
 # TODO: option to simply unlink instead of shredding
 
