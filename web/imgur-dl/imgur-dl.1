@@ -1,0 +1,32 @@
+.TH imgur-dl 1 "imgur-dl" "14 May 2016" "version 2016-05"
+
+.SH NAME
+imgur-dl - download albums from imgur.com
+
+.SH SYNOPSIS
+imgur-dl\~\fB[--dir=path]\fP\~[url ...]
+
+.SH DESCRIPTION
+\fBimgur-dl\fP downloads one or several Imgur albums to the current directory.
+If no URL is specified on the command line, Imgur interactively prompts the
+user instead.
+
+.SH OPTIONS
+.TP
+\fB--dir=PATH, -dPATH\fP
+Override default save path (which is a subdirectory of the working directory
+with the name equal to the album's title) and save to \fBPATH\fP. Note that
+\fBimgur-dl\fP won't create a subdirectory in this case, which means that
+\fBimgur\~-d.\~url\fP (or \fBimgur -d$(pwd) url\fP) and \fBimgur\~url\fP are
+not equivalent.
+
+.SH DEPENDENCIES
+\fBruby\fP, \fBcapybara\fP, \fBpoltergeist\fP, \fBhighline\fP, \fBopen-uri\fP,
+\fBopen_uri_redirections\fP
+
+.SH AUTHOR
+Developed by Ilya Terentyev <bacondropped@gmail.com> as a part of the
+\fBbacontools\fP package <https://gitlab.com/bacondropped/bacontools>.
+
+.SH LICENSE
+\fBimgur-dl\fP is distributed under the terms of the MIT license.
