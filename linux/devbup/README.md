@@ -15,10 +15,10 @@ them, and be on our way.
 Environment variables
 =====================
 ```
-$ NAME=music devbup ~/Music/*
+$ NAME=music. devbup ~/Music/*
 ```
 Override default naming scheme (`$(date +%s%z).devbup`). This will create split
-files with prefix `music`, like `musicaa`, `musicab`, etc.
+files with prefix `music.`, like `music.aa`, `music.ab`, etc.
 
 ```
 $ DD_COMMAND=dcfldd devbup /dev/sdb

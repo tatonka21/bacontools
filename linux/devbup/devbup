@@ -41,10 +41,10 @@
 # TODO: option to simply unlink instead of shredding
 
 DCFLDD_STATINT="${DCFLDD_STATINT:-64}"
-NAME="${NAME:-$(date '+%s%z').devbup}"
+NAME="${NAME:-$(date '+%s%z').devbup.}"
 TARBALL_NAME="$NAME.tar"
 GPG_NAME="$NAME.tar.gpg"
-SPLIT_NAME="$NAME."
+SPLIT_NAME="$NAME"
 SPLIT_SIZE="${SPLIT_SIZE:-256M}"
 GPG="${GPG:-gpg}"
 
