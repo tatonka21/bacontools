@@ -13,7 +13,7 @@ bacontools is a collection of small utilities I've written over the years.
 
 Tool maturity
 -------------
-`bacontools` have many utilities which are still in their early development
+`bacontools` has many utilities which are still in their early development
 phase. Different stages of a tool's development shall be outlined in parent
 directory READMEs as follows:
 
