@@ -6,6 +6,7 @@ require 'capybara/poltergeist'
 require 'highline/import'
 require 'net/http'
 require 'open-uri'
+require 'open_uri_redirections'
 require 'optparse'
 require 'ostruct'
 require 'uri'
@@ -54,7 +55,7 @@ module Imgur
 
       images.each_with_index do |img, index|
         image_url  = img.gsub("b.", ".")
-        request    = open(image_url)
+        request    = open(image_url, :allow_redirections => :all)
         basename   = File.basename(URI.parse(image_url).path)
         basename   = "#{index+1} - #{basename}".tr("/\000", "")
         final_path = File.join(path, basename)
