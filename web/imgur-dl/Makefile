@@ -3,4 +3,4 @@
 all:
 
 install:
-	install imgur /usr/local/bin
+	install imgur-dl /usr/local/bin

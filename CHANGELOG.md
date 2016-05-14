@@ -26,6 +26,7 @@ Unreleased
 + `lines`
 
 ### Changed
++ Rename `imgur` to `imgur-dl`
 + `myzuka`: tabulate result list
 + `preptrack`: run MAT on converted files
 + Convert NOTES to CHANGELOG
