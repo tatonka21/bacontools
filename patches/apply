@@ -1,7 +1,10 @@
 #!/bin/sh
 
 if [ "$(grep "Ubuntu" /etc/issue)" = "1" ]; then
+	echo "No patching required"
 	exit 0
 elif [ "$(grep "Raspbian" /etc/issue)" = "1" ]; then
 	git am "patches/0001-don-t-install-bananaglee-when-there-s-no-runghc.patch"
+	echo "You are recommended to run 'gem install nokogiri' before installing\
+bacontools"
 fi
