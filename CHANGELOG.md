@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `myzuka-dl`: Gemfile
 + `imgur-dl`: Gemfile
 + `preptrack`: man page
 + Tool maturity classification
