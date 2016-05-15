@@ -1,0 +1,33 @@
+From f67d2ceb98b4fa329c14bd5fcbeb4c800abc0552 Mon Sep 17 00:00:00 2001
+From: Ilya Terentyev <bacondropped@gmail.com>
+Date: Sun, 15 May 2016 21:21:48 +0300
+Subject: [PATCH] don't install bananaglee when there's no runghc
+
+bacontools refuse to build and install on certain systems.
+Specifically, current Haskell packages for Raspbian 8 cannot build
+bananaglee, since Cabal fails with a "double free or corruption
+error", and runghc is, apparently, not supplied for the ARMv7l
+architecture. This patch fixes it, disabling the build and install of
+bananaglee.
+
+---
+ misc/bananaglee/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/misc/bananaglee/Makefile b/misc/bananaglee/Makefile
+index cb5e7aa..121e90e 100644
+--- a/misc/bananaglee/Makefile
++++ b/misc/bananaglee/Makefile
+@@ -3,7 +3,7 @@
+ all: bananaglee
+ 
+ bananaglee:
+-	runghc Setup.hs configure && runghc Setup.hs build
++	true
+ 
+ install: bananaglee
+-	runghc Setup.hs install
++	true
+-- 
+2.7.4
+
