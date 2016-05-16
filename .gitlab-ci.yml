@@ -3,4 +3,5 @@ before_script:
 
 make:
   script:
+    - patches/apply
     - make

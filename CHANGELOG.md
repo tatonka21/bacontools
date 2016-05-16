@@ -28,6 +28,7 @@ Unreleased
 + `lines`
 
 ### Changed
++ `gitlab-ci`: run `patches/apply` in `make`
 + `imgur-dl`: don't print "Scrolling down" anymore
 + Rename `myzuka` to `myzuka-dl`
 + Rename `imgur` to `imgur-dl`
