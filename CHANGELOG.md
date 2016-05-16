@@ -28,6 +28,7 @@ Unreleased
 + `lines`
 
 ### Changed
++ `imgur-dl`: don't print "Scrolling down" anymore
 + Rename `myzuka` to `myzuka-dl`
 + Rename `imgur` to `imgur-dl`
 + `myzuka`: tabulate result list

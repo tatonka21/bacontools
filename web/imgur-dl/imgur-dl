@@ -43,7 +43,6 @@ module Imgur
         post_id = session.current_url[/(?<=\/a\/)([A-Za-z0-9]*)/, 1]
         STDERR.puts("Expecting #{expected_imgs} images")
         loop do
-          STDERR.puts("Scrolling down")
           session.execute_script('window.scrollBy(0,100000)')
           sleep 2
           images = session.all(:xpath, "//div[@class='posts']/div[.//img]//img").map{|i| i[:src]}
