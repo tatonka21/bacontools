@@ -52,8 +52,8 @@ module Imgur
         end
       end
 
-      post_title = session.find(:xpath, "//title").text.gsub(/ - ([Album|GIF] on)? Imgur$/, "").gsub(/ - Imgur/, "").strip
-      subdir = "#{post_id} #{("- " + post_title) unless post_title =~ /Imgur: The most awesome images on the Internet/ or post_title.empty?}".strip
+      post_title = session.find(:xpath, "//title").text.gsub(/ - ((Album|GIF) on)? Imgur$/, "").gsub(/ - Imgur/, "").strip
+      subdir = "#{post_id} #{("- " + post_title) unless post_title =~ /Imgur: The most awesome images on the Internet/ or post_title.empty?}".strip.tr("/\000", "")
       path = opts.path
       path = subdir if path == "."
       path = path.tr("\000", "")
