@@ -3,11 +3,11 @@
 # TODO: detect redirect, run non-interactively in this case
 # TODO: handle embedded picture metadata (such as album cover art)
 
-function trim() {
+trim() {
 	sed -e 's/^[[:space:]]*//' |  sed -e 's/[[:space:]]*$//'
 }
 
-function process() {
+process() {
 	DIR="${DIR:-$HOME/Music}"
 	FILE="$1"
 
