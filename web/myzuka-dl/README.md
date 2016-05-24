@@ -52,3 +52,9 @@ Supplying `-t`/`--tor` command line option to `myzuka-dl` makes it download
 webpages and files over Tor, assuming it runs as a SOCKS5 proxy at
 `localhost:9050`. Note that `myzuka-dl` will still leak your DNS requests to
 the network, however, your IP will be masked from the target website.
+
+Specifying default track number
+===============================
+Supplying `-nNUMBER`/`--index=NUMBER` command line option to `myzuka-dl` makes
+it download tracks with that number quetly. This option applies to all input
+queries.
