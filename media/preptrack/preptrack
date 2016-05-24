@@ -1,7 +1,6 @@
 #!/bin/bash
 #
 # TODO: detect redirect, run non-interactively in this case
-# TODO: handle embedded picture metadata (such as album cover art)
 
 trim() {
 	sed -e 's/^[[:space:]]*//' |  sed -e 's/[[:space:]]*$//'
@@ -24,6 +23,15 @@ process() {
 
 	TITLE="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Title: ).*$" | trim)"
 	read -e -p "Title: " -i "$TITLE" TITLE
+
+	# Extract embedded pictures
+	TMP_PIC_DIR="$(mktemp --directory)"
+	eyeD3 --write-images="$TMP_PIC_DIR" "$FILE"
+	FIRST_IMG="$(find "$TMP_PIC_DIR" -mindepth 1 | head -1)"
+
+	if [ -n "$FIRST_IMG" ] ; then
+		read -e -p "Embedded picture found; preserve it? (y/n) " PRESERVE_PIC
+	fi
 
 	if [ -n "$BITRATE" ] ; then
 		FINAL_BITRATE="$BITRATE"
@@ -48,6 +56,7 @@ process() {
 
 	if [ "$(type mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" -a \( -z "$DONT_MAT" \) ]; then
 		mat "$NEW_FILEPATH"
+		find "$TMP_PIC_DIR" -mindepth 1 -exec mat \{\} \;
 	fi
 
 	eyeD3 --remove-all "$NEW_FILEPATH"
@@ -62,6 +71,10 @@ process() {
 
 	if [ -n "$TITLE" ] ; then
 		eyeD3 --set-encoding=utf8 -t "$TITLE" "$NEW_FILEPATH"
+	fi
+
+	if [ "$PRESERVE_PIC" = "y" ]; then
+		find "$TMP_PIC_DIR" -mindepth 1 -exec bash -c 'eyeD3 --add-image="$1:$(basename "$1" | sed "s/\..*$//g")" "'"$NEW_FILEPATH"'"' funcname '{}' \;
 	fi
 
 	stat "$NEW_FILEPATH"

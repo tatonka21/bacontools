@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `preptrack`: handle embedded pictures
 + `myzuka-dl`: `-n`/`--index` option
 + `myzuka-dl`: Gemfile
 + `imgur-dl`: Gemfile
