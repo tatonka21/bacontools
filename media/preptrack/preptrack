@@ -30,7 +30,7 @@ process() {
 	FIRST_IMG="$(find "$TMP_PIC_DIR" -mindepth 1 | head -1)"
 
 	if [ -n "$FIRST_IMG" ] ; then
-		read -e -p "Embedded picture found; preserve it? (y/n) " PRESERVE_PIC
+		read -e -p "Embedded picture[s] found; preserve? (y/n) " PRESERVE_PIC
 	fi
 
 	if [ -n "$BITRATE" ] ; then
