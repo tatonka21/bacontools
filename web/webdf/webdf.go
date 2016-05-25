@@ -19,6 +19,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%d\n", getspace())
 }
 
+// TODO: cwd flag to specify working directory other than current
 func main() {
 	var port = flag.Int("port", 3000, "port to listen to")
 	flag.Parse()
