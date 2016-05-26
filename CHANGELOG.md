@@ -7,7 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
-+ `webdf`
++ `httpdf`
 + `TOOLS.md`
 + `preptrack`: handle embedded pictures
 + `myzuka-dl`: `-n`/`--index` option
