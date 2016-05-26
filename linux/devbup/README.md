@@ -67,7 +67,7 @@ If set, `devbup` will compress resulting tarball. Supported values are `gzip`
 and `none`.
 
 ```
-$ GPG=gpg2 devbup /dev/sdb
+$ GPG_COMMAND=gpg2 devbup /dev/sdb
 ```
 Override default (`gpg`) GnuPG command.
 
