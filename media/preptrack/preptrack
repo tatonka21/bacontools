@@ -24,14 +24,7 @@ process() {
 	TITLE="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Title: ).*$" | trim)"
 	read -e -p "Title: " -i "$TITLE" TITLE
 
-	# Extract embedded pictures
-	TMP_PIC_DIR="$(mktemp --directory)"
-	eyeD3 --write-images="$TMP_PIC_DIR" "$FILE" 1>/dev/zero 2>/dev/zero
-	FIRST_IMG="$(find "$TMP_PIC_DIR" -mindepth 1 | head -1)"
 
-	if [ -n "$FIRST_IMG" ] ; then
-		read -e -p "Embedded picture[s] found; preserve? (y/n) " PRESERVE_PIC
-	fi
 
 	if [ -n "$BITRATE" ] ; then
 		FINAL_BITRATE="$BITRATE"
@@ -47,6 +40,15 @@ process() {
 
 	if [ -n "$DETECTED_BITRATE" ] && [ "$FINAL_BITRATE" -gt "$DETECTED_BITRATE"  ] ; then
 		echo "Warning: encoding with higher bitrate than the source: $FINAL_BITRATE kb/s vs $DETECTED_BITRATE kb/s" 1>&2
+	fi
+
+	# Extract embedded pictures
+	TMP_PIC_DIR="$(mktemp --directory)"
+	eyeD3 --write-images="$TMP_PIC_DIR" "$FILE" 1>/dev/zero 2>/dev/zero
+	FIRST_IMG="$(find "$TMP_PIC_DIR" -mindepth 1 | head -1)"
+
+	if [ -n "$FIRST_IMG" ] ; then
+		read -e -p "Embedded picture[s] found; preserve? (y/n) " PRESERVE_PIC
 	fi
 
 	NEW_FILEPATH="$DIR/$(echo "$ARTIST - $TITLE" | sed 's/\///g').mp3"
