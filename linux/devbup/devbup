@@ -20,7 +20,7 @@
 # COMPRESS=gzip               Compress the tarball. Available values:
 #                             gzip
 #                             none
-# GPG=gpgv2                   Override GnuPG command.
+# GPG_COMMAND=gpg2            Override GnuPG command.
 # SIGN_KEY="dr.no@acme.io"    Sign all input files with this gpg user-id.
 # DIGEST_ALGO=SHA512          Override gpg signing digest via '--digest-algo'
 #                             option.
@@ -31,6 +31,7 @@
 # Requirements
 # ------------
 # bash
+# head
 # sha512sum
 # dd
 # tar
@@ -48,7 +49,7 @@ TARBALL_NAME="$(echo "$NAME" | sed 's/\.$//g').tar"
 GPG_NAME="$(echo "$NAME" | sed 's/\.$//g').tar.gpg"
 SPLIT_NAME="$NAME"
 SPLIT_SIZE="${SPLIT_SIZE:-256M}"
-GPG="${GPG:-gpg}"
+GPG_COMMAND="${GPG_COMMAND:-gpg}"
 
 db_deedee() {
 	DD_COMMAND="${DD_COMMAND:-dd}"
@@ -127,9 +128,9 @@ for file in "$@"; do
 		SIGFILE_NAME="$TMP_FILE.sig"
 
 		if [ -n "$DIGEST_ALGO" ]; then
-			"$GPG" --detach-sign -u "$SIGN_KEY" --digest-algo="$DIGEST_ALGO" -o "$SIGFILE_NAME" "$TMP_FILE"
+			"$GPG_COMMAND" --detach-sign -u "$SIGN_KEY" --digest-algo="$DIGEST_ALGO" -o "$SIGFILE_NAME" "$TMP_FILE"
 		else
-			"$GPG" --detach-sign -u "$SIGN_KEY" -o "$SIGFILE_NAME" "$TMP_FILE"
+			"$GPG_COMMAND" --detach-sign -u "$SIGN_KEY" -o "$SIGFILE_NAME" "$TMP_FILE"
 		fi
 
 		tar -rvf "$TARBALL_NAME" "$SIGFILE_NAME"
@@ -166,7 +167,7 @@ if [ -n "$ENCRYPT_KEY" ]; then
 		RECIP_OPTION='--recipient'
 	fi
 
-	"$GPG" --encrypt "$RECIP_OPTION"="$ENCRYPT_KEY" -o "$GPG_NAME" "$COMPRESSED_TARBALL"
+	"$GPG_COMMAND" --encrypt "$RECIP_OPTION"="$ENCRYPT_KEY" -o "$GPG_NAME" "$COMPRESSED_TARBALL"
 	shred -u "$COMPRESSED_TARBALL"
 	split -b"$SPLIT_SIZE" "$GPG_NAME" "$SPLIT_NAME"
 	shred -u "$GPG_NAME"

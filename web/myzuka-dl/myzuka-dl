@@ -68,15 +68,21 @@ module Myzuka
       title_maxlen  = results.map{|r| r[:title].length}.max
       time_maxlen   = results.map{|r| r[:time].length}.max
 
-      results.take(MAX_RESULTS).each_with_index do |hit, index|
-        idx    = (index+1).to_s.rjust(idx_maxlen)
-        artist = hit[:artist].ljust(artist_maxlen)
-        title  = hit[:title].ljust(title_maxlen)
-        time   = ("(" + hit[:time] + ")").rjust(time_maxlen + 2)
-        puts("#{idx}  #{artist}  #{title}  #{time}")
+      unless opts.index_list then
+        results.take(MAX_RESULTS).each_with_index do |hit, index|
+          idx    = (index+1).to_s.rjust(idx_maxlen)
+          artist = hit[:artist].ljust(artist_maxlen)
+          title  = hit[:title].ljust(title_maxlen)
+          time   = ("(" + hit[:time] + ")").rjust(time_maxlen + 2)
+          puts("#{idx}  #{artist}  #{title}  #{time}")
+        end
       end
 
-      ask("Download track # ").split(/[,\s]+/).map{|i| Integer(i) rescue 0}.each do |i|
+      idx_list = if opts.index_list then opts.index_list
+      else ask("Download track # ") end
+      idx_list = idx_list.split(/[,\s]+/).map{|i| Integer(i) rescue 0}
+
+      idx_list.each do |i|
         unless i >= 1 and i <= displayed_results
           puts "Invalid index #{i}, must be an integer from 1 to #{displayed_results}"
           next
@@ -98,10 +104,12 @@ module Myzuka
         final_path = File.join(directory, filename)
         puts("#{final_path}")
         IO.copy_stream(download, final_path)
-        end
+      end
     end
   end
 end
+
+$terminal = HighLine.new($stdin, $stderr)
 
 cli_options = OpenStruct.new
 phantom_opts = []
@@ -109,6 +117,7 @@ phantom_opts = []
 OptionParser.new do |option|
   option.on('-t', '--tor') {|o| cli_options.tor = true}
   option.on('-d PATH', '--dir PATH') {|o| cli_options.dir = o}
+  option.on('-n INDEX', '--index INDEX') {|o| cli_options.index_list = o}
 end.parse!
 
 phantom_opts = ['--proxy-type=socks5', '--proxy=127.0.0.1:9050'] if cli_options.tor

@@ -4,9 +4,13 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-Unreleased
-----------
+2016.05
+-------
 ### Added
++ `httpdf`
++ `TOOLS.md`
++ `preptrack`: handle embedded pictures
++ `myzuka-dl`: `-n`/`--index` option
 + `myzuka-dl`: Gemfile
 + `imgur-dl`: Gemfile
 + `preptrack`: man page
@@ -28,6 +32,8 @@ Unreleased
 + `lines`
 
 ### Changed
++ `imgur-dl`, `myzuka-dl`: print prompts to stderr
++ `preptrack`: silence unnecessary output
 + `gitlab-ci`: run `patches/apply` in `make`
 + `imgur-dl`: don't print "Scrolling down" anymore
 + Rename `myzuka` to `myzuka-dl`
