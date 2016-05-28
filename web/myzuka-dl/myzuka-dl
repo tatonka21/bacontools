@@ -109,6 +109,8 @@ module Myzuka
   end
 end
 
+$terminal = HighLine.new($stdin, $stderr)
+
 cli_options = OpenStruct.new
 phantom_opts = []
 
