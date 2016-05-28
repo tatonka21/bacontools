@@ -54,7 +54,7 @@ webpages and files over Tor, assuming it runs as a SOCKS5 proxy at
 the network, however, your IP will be masked from the target website.
 
 Specifying default track number
-===============================
+-------------------------------
 Supplying `-nNUMBER`/`--index=NUMBER` command line option to `myzuka-dl` makes
 it download tracks with that number quetly. This option applies to all input
 queries.
