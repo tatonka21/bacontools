@@ -4,8 +4,8 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-Unreleased
-----------
+2016.05
+-------
 ### Added
 + `httpdf`
 + `TOOLS.md`
