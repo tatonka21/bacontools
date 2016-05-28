@@ -32,6 +32,7 @@ Unreleased
 + `lines`
 
 ### Changed
++ `imgur-dl`, `myzuka-dl`: print prompts to stderr
 + `preptrack`: silence unnecessary output
 + `gitlab-ci`: run `patches/apply` in `make`
 + `imgur-dl`: don't print "Scrolling down" anymore
