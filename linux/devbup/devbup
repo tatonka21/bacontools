@@ -108,6 +108,10 @@ for file in "$@"; do
 	TMP_FILE="./$(basename "$file")"
 	db_deedee "$file" "$TMP_FILE"
 
+	if [ "$(type mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" -a \( -n "$RUN_MAT" \) ]; then
+		mat -a "$TMP_FILE"
+	fi
+
 	if [ "$?" = 1 -a -z "$IGNORE_CKSUMS" ]; then
 		echo "Shredding all copied files and exiting." 1>&2
 
@@ -149,10 +153,6 @@ if [ -n "$ADD_PADDING" -o -n "$PADDING_SIZE" ]; then
 	tar -rvf "$TARBALL_NAME" random.bin
 
 	shred -u random.bin
-fi
-
-if [ "$(type mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" -a \( -n "$RUN_MAT" \) ]; then
-	mat -a "$TARBALL_NAME"
 fi
 
 tar -tvf "$TARBALL_NAME"
