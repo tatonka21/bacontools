@@ -4,8 +4,15 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-2016.05
--------
+Unreleased
+----------
+### Fixed
++ `devbup`: run MAT on each file before tarballing
+
+***
+
+[2016.05] - 2016-05-28
+----------------------
 ### Added
 + `httpdf`
 + `TOOLS.md`
@@ -70,3 +77,4 @@ Notable changes to `bacontools` are documented in this file.
 + `preptrack`
 
 [2016.04]: https://gitlab.com/bacondropped/bacontools/tags/2016.04
+[2016.05]: https://gitlab.com/bacondropped/bacontools/tags/2016.05
