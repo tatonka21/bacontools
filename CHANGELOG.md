@@ -8,6 +8,7 @@ Unreleased
 ----------
 ### Added
 + `maturity.txt`
++ `devrestore`
 
 ### Fixed
 + `devbup`: run MAT on each file before tarballing
