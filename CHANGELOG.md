@@ -6,6 +6,9 @@ Notable changes to `bacontools` are documented in this file.
 
 Unreleased
 ----------
+### Added
++ `maturity.txt`
+
 ### Fixed
 + `devbup`: run MAT on each file before tarballing
 
