@@ -80,6 +80,10 @@ process() {
 
 	file "$NEW_FILEPATH"
 	eyeD3 "$NEW_FILEPATH"
+
+	if [ "$(type notify-send 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" ]; then
+		notify-send "preptrack: $TITLE completed"
+	fi
 }
 
 for file in "$@" ; do
