@@ -11,6 +11,9 @@ Unreleased
 + `maturity.txt`
 + `devrestore`
 
+### Changed
++ `devbup`: move up from Untested to Moving
+
 ### Fixed
 + `devbup`: run MAT on each file before tarballing
 

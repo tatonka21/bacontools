@@ -19,10 +19,10 @@ Untested    EncodingConverter
 Untested    ImageValidator
 Untested    balance
 Untested    corrupt
-Untested    devbup
 Untested    git-ls
 Untested    n7m
 Untested    tasktags
+Moving      devbup
 Moving      imgur-dl
 Moving      myzuka-dl
 Moving      preptrack
