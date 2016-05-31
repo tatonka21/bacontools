@@ -15,6 +15,7 @@ Unreleased
 + `devbup`: move up from Untested to Moving
 
 ### Fixed
++ `togif`: check if dependencies are installed
 + `devbup`: run MAT on each file before tarballing
 
 ***

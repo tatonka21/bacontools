@@ -7,6 +7,43 @@ HW_THREADS="${THREADS-"$(grep -c processor /proc/cpuinfo)"}"
 THREADS="${HW_THREADS-2}"
 DELAY="${DELAY-12}"
 
+try_notify() {
+	if [ "$(command -v notify-send)" = 0 ] ; then
+		notify-send "$1"
+	fi
+}
+
+is_video_file() {
+	VSTREAM_LINES="$(ffprobe "$1" 2>&1 | grep Video | grep -c Stream)"
+
+	if [ "$VSTREAM_LINES" = "0" ] ; then
+		exit
+	else
+		echo 1
+	fi
+}
+
+datediff() {
+	DATE1="$(date -d "$1" +%s)"
+	DATE2="$(date -d "$2" +%s)"
+	echo "$(( (DATE2 - DATE1) ))"
+}
+
+if [ "$(command -v ffmpeg)" = 1 ] ; then
+	echo "\`ffmpeg\' is required, but not installed" 1>&2
+	exit 1
+fi
+
+if [ "$(command -v convert)" = 1 ] ; then
+	echo "\`convert\' from ImageMagick is required, but not installed" 1>&2
+	exit 1
+fi
+
+if [ "$(command -v gifsicle)" = 1 ] ; then
+	echo "\`gifsicle\' is required, but not installed" 1>&2
+	exit 1
+fi
+
 if [ -e "$1" ]; then
 	true
 else
@@ -19,26 +56,10 @@ if [ -z "$2" ]; then
 	exit 1
 fi
 
-is_video_file() {
-	VSTREAM_LINES="$(ffprobe "$1" 2>&1 | grep Video | grep -c Stream)"
-
-	if [ "$VSTREAM_LINES" = "0" ] ; then
-		exit
-	else
-		echo 1
-	fi
-}
-
 if [ -z "$(is_video_file "$1")" ] ; then
 	echo "No video streams in $1" 1>&2
 	exit 1
 fi
-
-datediff() {
-	DATE1="$(date -d "$1" +%s)"
-	DATE2="$(date -d "$2" +%s)"
-	echo "$(( (DATE2 - DATE1) ))"
-}
 
 DURATION=${DURATION-"$(ffprobe -show_format -show_streams "$1" 2>/dev/null | grep -Po '(?<=duration=)[0-9.]*' | head -n 1 )"}
 WIDTH=${WIDTH-"$(ffprobe -show_format -show_streams "$1" 2>/dev/null | grep -Po '(?<=width=)[0-9.]*' | head -n 1)"}
@@ -105,7 +126,7 @@ echo "Scale: $SCALE"
 echo "Delay: $DELAY/100 seconds"
 echo "Threads: $THREADS"
 
-notify-send "$RESULT_FILENAME started at $STARTTIME"
+try_notify "$RESULT_FILENAME started at $STARTTIME"
 echo "$RESULT_FILENAME started at $STARTTIME"
 
 mkdir -p "$RESULT_FILENAME.frames"
@@ -120,7 +141,7 @@ gifsicle --info "$RESULT_FILENAME" | head -n2
 ENDTIME="$(date --rfc-3339=seconds)"
 TIMEELAPSED="$(datediff "$STARTTIME" "$ENDTIME")"
 COMPLETEMSG="$RESULT_FILENAME completed in $(( (TIMEELAPSED/60) ))m"
-notify-send "$COMPLETEMSG"
+try_notify "$COMPLETEMSG"
 echo "$RESULT_FILENAME ended at $ENDTIME, taking $(( (TIMEELAPSED/60) ))m"
 
 rm -r "$RESULT_FILENAME.frames"
