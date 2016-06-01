@@ -30,8 +30,15 @@ trim() {
 }
 
 try_verify() {
-	if [ -f "$1.sig" ] ; then
-		gpg --verify "$1.sig" "$1"
+	SIG_APPEND="$1.sig"
+	SIG_REMOVE="$(echo "$1" | rev | cut -d. -f2- | rev)"
+
+	if [ -f "$SIG_APPEND" ] ; then
+		gpg --verify "$SIG_APPEND" "$1"
+	fi
+
+	if [ -f "$SIG_REMOVE" ] ; then
+		gpg --verify "$1" "$SIG_REMOVE"
 	fi
 }
 
