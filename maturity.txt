@@ -1,5 +1,6 @@
 Hack        apdiff
 Hack        bananaglee
+Hack        bincounter
 Hack        bitdiff
 Hack        byteat
 Hack        checkreboot

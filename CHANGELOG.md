@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `bincounter`
 + `preptrack`: notify-send notification
 + `maturity.txt`
 + `devrestore`
