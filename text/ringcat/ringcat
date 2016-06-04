@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -x
-
 STDIN="$(cat)"
 RINGFILE="$1"
 RINGFILE_LINE_COUNT="$(wc -l < "$RINGFILE")"
