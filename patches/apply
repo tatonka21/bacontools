@@ -5,6 +5,5 @@ if [ "$(grep -c "Ubuntu" /etc/issue)" = "1" ]; then
 	exit 0
 elif [ "$(grep -c "Raspbian" /etc/issue)" = "1" ]; then
 	git am "patches/0001-don-t-install-bananaglee-when-there-s-no-runghc.patch"
-	echo "You are recommended to run 'gem install nokogiri' before installing \
-bacontools"
+	git am "0002-don-t-run-Bundler-when-it-s-problematic.patch"
 fi

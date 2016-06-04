@@ -1,0 +1,44 @@
+From f256376764a46cf296e74d89d0cd80878e72faff Mon Sep 17 00:00:00 2001
+From: Ilya Terentyev <bacondropped@gmail.com>
+Date: Sat, 4 Jun 2016 19:28:45 +0300
+Subject: [PATCH] don't run Bundler when it's problematic
+
+Running `bundle install` at a setup phase is likely to break things on
+platforms where Bundler is supported poorly; for instance, Bundler tends
+to die very frequently on Raspbian. This patch fixes it, removing
+`bundle install` and advising the user to install specified gems
+manually.
+---
+ web/imgur-dl/Makefile  | 3 ++-
+ web/myzuka-dl/Makefile | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/web/imgur-dl/Makefile b/web/imgur-dl/Makefile
+index 3ac2da4..89854cb 100644
+--- a/web/imgur-dl/Makefile
++++ b/web/imgur-dl/Makefile
+@@ -3,7 +3,8 @@
+ all:
+ 
+ install:
+-	bundle install
++	echo "Please install these gems manually:"
++	cat Gemfile
+ 	install imgur-dl /usr/local/bin
+ 	install imgur-dl.1 /usr/local/man/man1
+ 	mandb
+diff --git a/web/myzuka-dl/Makefile b/web/myzuka-dl/Makefile
+index a9f7a79..93abc26 100644
+--- a/web/myzuka-dl/Makefile
++++ b/web/myzuka-dl/Makefile
+@@ -3,5 +3,6 @@
+ all:
+ 
+ install:
+-	bundle install
++	echo "Please install these gems manually:"
++	cat Gemfile
+ 	install myzuka-dl /usr/local/bin
+-- 
+2.7.4
+
