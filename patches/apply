@@ -5,5 +5,5 @@ if [ "$(grep -c "Ubuntu" /etc/issue)" = "1" ]; then
 	exit 0
 elif [ "$(grep -c "Raspbian" /etc/issue)" = "1" ]; then
 	git am "patches/0001-don-t-install-bananaglee-when-there-s-no-runghc.patch"
-	git am "0002-don-t-run-Bundler-when-it-s-problematic.patch"
+	git am "patches/0002-don-t-run-Bundler-when-it-s-problematic.patch"
 fi
