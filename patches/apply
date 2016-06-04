@@ -4,6 +4,8 @@ if [ "$(grep -c "Ubuntu" /etc/issue)" = "1" ]; then
 	echo "No patching required"
 	exit 0
 elif [ "$(grep -c "Raspbian" /etc/issue)" = "1" ]; then
-	git am "patches/0001-don-t-install-bananaglee-when-there-s-no-runghc.patch"
-	git am "patches/0002-don-t-run-Bundler-when-it-s-problematic.patch"
+	for patch in "patches/0001-don-t-install-bananaglee-when-there-s-no-runghc.patch" "patches/0002-don-t-run-Bundler-when-it-s-problematic.patch" ; do
+		git am "$patch"
+		git show HEAD --stat
+	done
 fi
