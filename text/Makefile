@@ -10,5 +10,6 @@ install:
 	$(MAKE) -C lines install
 	$(MAKE) -C n7m install
 	$(MAKE) -C readable install
+	$(MAKE) -C ringcat install
 	$(MAKE) -C ruler install
 	$(MAKE) -C trimline install

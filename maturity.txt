@@ -11,6 +11,7 @@ Hack        maybe
 Hack        netinfo
 Hack        pip-upgrade-all
 Hack        readable
+Hack        ringcat
 Hack        ruler
 Hack        trimline
 Hack        update-all
