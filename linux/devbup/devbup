@@ -42,6 +42,8 @@
 # TODO: option to simply unlink instead of shredding
 # TODO: directory backup support
 # TODO: pipe mode (IO seems to be a bottleneck, I mean, no shit)
+# TODO: DEVBUP_PRESET=[lax|paranoid]
+# TODO: autodetect installed dcfldd
 
 DCFLDD_STATINT="${DCFLDD_STATINT:-64}"
 NAME="${NAME:-$(date '+%s%z').devbup.}"
