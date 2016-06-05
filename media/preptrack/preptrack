@@ -78,8 +78,7 @@ process() {
 		find "$TMP_PIC_DIR" -mindepth 1 -exec bash -c 'eyeD3 --add-image="$1:$(basename "$1" | sed "s/\..*$//g")" "'"$NEW_FILEPATH"'"' funcname '{}' \; 1>/dev/zero 2>/dev/zero
 	fi
 
-	file "$NEW_FILEPATH"
-	eyeD3 "$NEW_FILEPATH"
+	echo "$NEW_FILEPATH"
 
 	if [ "$(type notify-send 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" ]; then
 		notify-send "preptrack: $TITLE completed"
