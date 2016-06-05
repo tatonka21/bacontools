@@ -15,6 +15,7 @@ Unreleased
 + `devrestore`
 
 ### Changed
++ Makefile: run `patches/apply` on install
 + `devbup`: move up from Untested to Moving
 
 ### Fixed
