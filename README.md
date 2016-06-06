@@ -4,12 +4,12 @@ bacontools is a collection of small utilities I've written over the years.
 
 | Directory | Description                                         | Languages                           | Count |
 |-----------|-----------------------------------------------------|-------------------------------------|-------|
-| linux     | Tools specific to GNU/Linux distributions           | POSIX shell, Bash                   | 5     |
+| linux     | Tools specific to GNU/Linux distributions           | POSIX shell, Bash                   | 6     |
 | media     | Tools for editing media (audio, video, image) files | C#, POSIX shell, Bash               | 4     |
 | text      | Tools for working with text                         | C, POSIX shell                      | 6     |
 | web       | Internet-related tools                              | Go, Ruby                            | 4     |
 | misc      | Everything else                                     | Python, C#, C, Haskell, POSIX shell | 13    |
-|           |                                                     | *Total*                             | 32    |
+|           |                                                     | *Total*                             | 33    |
 
 Tool maturity
 -------------

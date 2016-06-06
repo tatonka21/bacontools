@@ -5,6 +5,7 @@ Hack        bitdiff
 Hack        byteat
 Hack        checkreboot
 Hack        devrestore
+Hack        du1
 Hack        httpdf
 Hack        lines
 Hack        maybe
