@@ -35,7 +35,7 @@ end
 module Myzuka
   class Downloader
     def download(s, opts)
-      output_path = opts.dir ? opts.dir : "."
+      output_path = opts.dir ? opts.dir : ENV.fetch('DIR', '.')
       FileUtils::mkdir_p(output_path)
 
       session = Capybara::Session.new(:poltergeist)

@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `myzuka-dl`: handle `DIR` environment variable
 + `du1`
 + `respcode`
 + `ringcat`

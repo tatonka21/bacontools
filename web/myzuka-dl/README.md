@@ -58,3 +58,9 @@ Specifying default track number
 Supplying `-nNUMBER`/`--index=NUMBER` command line option to `myzuka-dl` makes
 it download tracks with that number quetly. This option applies to all input
 queries.
+
+Environment
+-----------
+If `DIR` variable is specified in the environment, `myzuka-dl` will use its
+value as default path instead of current working directory, but only if `--dir`
+argument is not specified.
