@@ -110,10 +110,6 @@ for file in "$@"; do
 	TMP_FILE="./$(basename "$file")"
 	db_deedee "$file" "$TMP_FILE"
 
-	if [ "$(type mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" -a \( -n "$RUN_MAT" \) ]; then
-		mat -a "$TMP_FILE"
-	fi
-
 	if [ "$?" = 1 -a -z "$IGNORE_CKSUMS" ]; then
 		echo "Shredding all copied files and exiting." 1>&2
 
@@ -126,6 +122,10 @@ for file in "$@"; do
 		done
 
 		exit 1
+	fi
+
+	if [ "$(type mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" -a \( -n "$RUN_MAT" \) ]; then
+		mat -a "$TMP_FILE"
 	fi
 
 	tar -rvf "$TARBALL_NAME" "$TMP_FILE"

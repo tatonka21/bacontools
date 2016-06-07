@@ -21,6 +21,7 @@ Unreleased
 + `devbup`: move up from Untested to Moving
 
 ### Fixed
++ `devbup`: fix no shredding bug
 + `imgur-dl`, `myzuka-dl`: eschew Bundler on Raspbian with a patch
 + `togif`: check if dependencies are installed
 + `devbup`: run MAT on each file before tarballing
