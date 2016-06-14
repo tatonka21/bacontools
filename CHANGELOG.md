@@ -21,6 +21,7 @@ Unreleased
 + `devbup`: move up from Untested to Moving
 
 ### Fixed
++ `imgur-dl`: downgrade to commit dfd26dc
 + `devbup`: fix no shredding bug
 + `imgur-dl`, `myzuka-dl`: eschew Bundler on Raspbian with a patch
 + `togif`: check if dependencies are installed

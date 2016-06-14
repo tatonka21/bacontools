@@ -29,54 +29,33 @@ module Imgur
       session.visit(url)
       images = []
 
-      session.visit(session.current_url.gsub(/gallery/, "a").gsub(/(?<!\/layout\/grid)$/, '/layout/grid')) rescue nil
+      session.visit(session.current_url.gsub(/gallery/, "a").gsub(/(?<!\/layout\/grid)$/, '/layout/grid'))
 
-      eitext = session.find(:xpath, "//h2[contains(text(),'image')]")[0].text[/(\d+) image(s)?$/, 1] rescue session.visit(url)
+      expected_imgs = Integer session.find(:xpath, "//h2[contains(text(),'image')]").text[/(\d+) image(s)?$/, 1]
+      STDERR.puts("Expecting #{expected_imgs} images")
 
-      # TODO: more robust check
-      if session.find(:xpath, "//title").text =~ /404/ then
-        session.visit(url)
-        sleep(5)
-        eitext = "-1"
-        pi_url = session.find(:xpath, "//div[@class='post-image']/a")[:href] rescue nil
-        images = ["http://#{pi_url}"] unless pi_url.nil?
+      loop do
+        STDERR.puts("Scrolling down")
+        session.execute_script('window.scrollBy(0,100000)')
+        sleep 2
+        images = session.all(:xpath, "//div[@class='posts']/div[.//img]")
+        STDERR.puts("Found #{images.size} images out of expected #{expected_imgs}")
+        break unless images.size < expected_imgs
       end
 
-      expected_imgs = Integer(eitext) rescue begin
-        session.evaluate_script('window.history.back()')
-        sleep 5
-        post_id = session.current_url[/(?<=\/gallery\/)([A-Za-z0-9]*)/, 1]
-        images = [session.find(:xpath, "//meta[@property='og:video']")[:content]] rescue
-                 [session.find(:xpath, "//meta[@property='og:image']")[:content]] rescue
-                 [session.find(:xpath, "//div[@class='post-image']/a")[:href]]
-        expected_imgs = -1
-      end
+      post_id = session.current_url[/(?<=\/a\/)([A-Za-z0-9]*)/, 1]
+      post_title = session.find(:xpath, "//title").text.gsub("- Album on Imgur", "").strip
 
-      unless expected_imgs == -1 then
-        post_id = session.current_url[/(?<=\/a\/)([A-Za-z0-9]*)/, 1]
-        STDERR.puts("Expecting #{expected_imgs} images")
-        loop do
-          session.execute_script('window.scrollBy(0,100000)')
-          sleep 2
-          images += session.all(:xpath, "//div[@class='posts']/div[.//img]//img").map{|i| i[:src]}
-          STDERR.puts("Found #{images.size} images out of expected #{expected_imgs}")
-          break unless images.size < expected_imgs
-        end
-      end
-
-      post_title = session.find(:xpath, "//title").text.gsub(/ - ((Album|GIF) on)? Imgur$/, "").gsub(/ - Imgur/, "").strip
-      subdir = "#{post_id} #{("- " + post_title) unless post_title =~ /Imgur: The most awesome images on the Internet/ or post_title.empty?}".strip.tr("/\000", "")
+      subdir = "#{post_id} #{("- " + post_title) unless post_title =~ /Imgur: The most awesome images on the Internet/ or post_title.empty?}".strip
       path = opts.path
       path = subdir if path == "."
-      path = path.tr("\000", "")
+      path = path.tr("/\000", "")
 
       FileUtils::mkdir_p(path)
 
       images.each_with_index do |img, index|
-        next if img.nil?
-        image_url  = img.gsub("b.", ".")
-        STDERR.puts(image_url)
-        request    = open(image_url, :allow_redirections => :all)
+        image_url  = img.find(:xpath, ".//img")[:src].gsub("b.", ".")
+        request    = open(image_url)
         basename   = File.basename(URI.parse(image_url).path)
         basename   = "#{index+1} - #{basename}".tr("/\000", "")
         final_path = File.join(path, basename)
