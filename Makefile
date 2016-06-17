@@ -1,7 +1,10 @@
-.PHONY: all install linux media misc text web linux-install media-install misc-install text-install web-install
+.PHONY: all install patch linux media misc text web linux-install media-install misc-install text-install web-install
 
 all: linux media misc text web
-install: linux-install media-install misc-install text-install web-install
+install: patch linux-install media-install misc-install text-install web-install
+
+patch:
+	patches/apply
 
 linux:
 	$(MAKE) -C linux

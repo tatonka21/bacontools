@@ -1,9 +1,10 @@
 #!/bin/bash
 #
 # TODO: detect redirect, run non-interactively in this case
+# TODO: handle FLAC files via metaflac
 
 trim() {
-	sed -e 's/^[[:space:]]*//' |  sed -e 's/[[:space:]]*$//'
+	sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]]*$//'
 }
 
 process() {
@@ -55,7 +56,7 @@ process() {
 
 	ffmpeg -loglevel quiet -i "$FILE" -b:a "$FINAL_BITRATE"k "$NEW_FILEPATH"
 
-	if [ "$(type mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" -a \( -z "$DONT_MAT" \) ]; then
+	if [ "$(command -v mat &>/dev/zero ; echo $?)" = "0" -a \( -z "$DONT_MAT" \) ]; then
 		mat "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
 		find "$TMP_PIC_DIR" -mindepth 1 -exec mat \{\} \; 1>/dev/zero 2>/dev/zero
 	fi
@@ -78,8 +79,11 @@ process() {
 		find "$TMP_PIC_DIR" -mindepth 1 -exec bash -c 'eyeD3 --add-image="$1:$(basename "$1" | sed "s/\..*$//g")" "'"$NEW_FILEPATH"'"' funcname '{}' \; 1>/dev/zero 2>/dev/zero
 	fi
 
-	file "$NEW_FILEPATH"
-	eyeD3 "$NEW_FILEPATH"
+	echo "$NEW_FILEPATH"
+
+	if [ "$(type notify-send 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" ]; then
+		notify-send "preptrack: $TITLE completed"
+	fi
 }
 
 for file in "$@" ; do

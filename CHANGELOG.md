@@ -4,8 +4,34 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-2016.05
--------
+2016.06.17
+----------
+### Added
++ `myzuka-dl`: handle `DIR` environment variable
++ `du1`
++ `respcode`
++ `ringcat`
++ `bincounter`
++ `preptrack`: notify-send notification
++ `maturity.txt`
++ `devrestore`
+
+### Changed
++ Makefile: run `patches/apply` on install
++ `devbup`: move up from Untested to Moving
+
+### Fixed
++ `togif`, `preptrack`: fix `$(command ...)` invocations
++ `imgur-dl`: downgrade to commit dfd26dc
++ `devbup`: fix no shredding bug
++ `imgur-dl`, `myzuka-dl`: eschew Bundler on Raspbian with a patch
++ `togif`: check if dependencies are installed
++ `devbup`: run MAT on each file before tarballing
+
+***
+
+[2016.05] - 2016-05-28
+----------------------
 ### Added
 + `httpdf`
 + `TOOLS.md`
@@ -70,3 +96,4 @@ Notable changes to `bacontools` are documented in this file.
 + `preptrack`
 
 [2016.04]: https://gitlab.com/bacondropped/bacontools/tags/2016.04
+[2016.05]: https://gitlab.com/bacondropped/bacontools/tags/2016.05

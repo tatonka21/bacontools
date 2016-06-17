@@ -6,7 +6,9 @@ Linux utilities
 | Tool        | Maturity | Description                                    | Language    |
 |-------------|----------|------------------------------------------------|-------------|
 | checkreboot | Hack     | Print whether reboot is required               | POSIX shell |
-| devbup      | Untested | Backup, archive, and encrypt files and devices | Bash        |
+| devbup      | Moving   | Backup, archive, and encrypt files and devices | Bash        |
+| devrestore  | Hack     | Restore devbup archives                        | Bash        |
+| du1         | Hack     | Print sizes of top level directories           | POSIX shell |
 | netinfo     | Hack     | Print current WAN IP and nmcli connection name | POSIX shell |
 | userls      | Hack     | Print all users on the system                  | POSIX shell |
 
@@ -27,16 +29,18 @@ Text utilities
 | lines    | Hack     | Print distribution of input lines lengths            | POSIX shell |
 | n7m      | Untested | Generate a numeronym (i18n, l10n, etc.)              | C           |
 | readable | Hack     | Heuristically filter out garbage strings             | C           |
+| ringcat  | Hack     | Append stdin to the end of the file circularly       | POSIX shell |
 | ruler    | Hack     | Print length of the longest line                     | POSIX shell |
 | trimline | Hack     | Trim leading and trailing whitespaces                | POSIX shell |
 
 Web utilities
 -------------
-| Tool      | Maturity | Description                            | Language |
-|-----------|----------|----------------------------------------|----------|
-| myzuka-dl | Moving   | Download audio tracks from myzuka.fm   | Ruby     |
-| imgur-dl  | Moving   | Download Imgur albums                  | Ruby     |
-| httpdf    | Hack     | Listen to a port and return free space | Go       |
+| Tool      | Maturity | Description                            | Language    |
+|-----------|----------|----------------------------------------|-------------|
+| httpdf    | Hack     | Listen to a port and return free space | Go          |
+| myzuka-dl | Moving   | Download audio tracks from myzuka.fm   | Ruby        |
+| imgur-dl  | Moving   | Download Imgur albums                  | Ruby        |
+| respcode  | Hack     | Return HTTP response code              | POSIX shell |
 
 Miscellaneous utilities
 -----------------------
@@ -45,6 +49,7 @@ Miscellaneous utilities
 | EncodingConverter | Untested | Convert between different encodings                     | C#          |
 | apdiff            | Hack     | Print differing parts of similar file paths             | Python      |
 | bananaglee        | Hack     | Generate a USA federal agency-like project identifier   | Haskell     |
+| bincounter        | Hack     | Tally individual bits in stdin bytes                    | C           |
 | bitdiff           | Hack     | Detect different bytes in mostly similar files          | C           |
 | byteat            | Hack     | Print value of byte at index                            | C           |
 | corrupt           | Untested | Flip/remove random bits/bytes                           | C           |

@@ -1,0 +1,76 @@
+#!/bin/bash
+# Usage: devrestore files ...
+# Explode tarballs created with devbup.
+#
+# Environment variables
+# ---------------------
+# NAME=documents              Override the default naming scheme (name of the
+#                             first file sans its extension).
+# GPG_COMMAND=gpg2            Override the default (gpg) GnuPG command.
+#
+# Requirements
+# ------------
+# POSIX shell
+# echo
+# cat
+# rev
+# file
+# tar
+# gnupg
+#
+# TODO: decompression
+
+# NAME if defined, first file sans extension otherwise
+NAME="${NAME:-$(echo "$1" | rev | cut -d. -f2- | rev)}"
+GPG_COMMAND="${GPG_COMMAND:-gpg}"
+RM="rm"
+
+trim() {
+	sed -e 's/^[[:space:]]*//' |  sed -e 's/[[:space:]]*$//'
+}
+
+try_verify() {
+	SIG_APPEND="$1.sig"
+	SIG_REMOVE="$(echo "$1" | rev | cut -d. -f2- | rev)"
+
+	if [ -f "$SIG_APPEND" ] ; then
+		gpg --verify "$SIG_APPEND" "$1"
+	fi
+
+	if [ -f "$SIG_REMOVE" ] ; then
+		gpg --verify "$1" "$SIG_REMOVE"
+	fi
+}
+
+export -f try_verify
+
+process() {
+	# Detect MIME
+	MIME="$(file "$1" --mime-type | cut -d: -f2- | trim)"
+
+	if [ "$MIME" = "application/octet-stream" ] ; then
+		FILE="$(file "$1")"
+
+		if [ "$(echo "$FILE" | grep -c PGP)" = 1 ] ; then
+			"$GPG_COMMAND" -o "$NAME.tmp" --decrypt "$NAME"
+			"$RM" "$NAME"
+			mv "$NAME.tmp" "$NAME"
+			process "$1"
+		fi
+	fi
+
+	if [ "$MIME" = "application/x-tar" ] ; then
+		tar -xvf "$NAME" | tr '\n' '\0' | xargs -0 -i bash -c 'echo "{}" ; try_verify "{}"'
+	fi
+
+	exit 0
+}
+
+touch "$NAME"
+
+# Merge input files
+for arg in "$@" ; do
+	cat "$arg" >> "$NAME"
+done
+
+process "$NAME"
