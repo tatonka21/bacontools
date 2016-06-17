@@ -24,6 +24,7 @@ if xprop -id "$active_window_id" 2>/dev/null | \
 	grep -q '^WM_CLASS(STRING)[[:print:]]*'"$SINGLE_URXVT_WMCLASS"
 then
 	# hide active quake rxvt
+	# XXX: the hiding part doesn't seem to work on Kubuntu; investigate
 	wmctrl -i -r "$active_window_id" -b add,hidden
 elif ! wmctrl -R "$SINGLE_URXVT_WMCLASS" -x ; then
 # use the wmctrl to both focus and raise quake terminal as well as
