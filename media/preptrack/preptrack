@@ -13,6 +13,11 @@ process() {
 
 	echo "Processing file $1"
 
+	if [ ! -f "$FILE" ]; then
+		echo "File $FILE does not exist" 1>&2
+		return 1
+	fi
+
 	MAX_BITRATE="${MAX_BITRATE:-320}"
 	DETECTED_BITRATE="$(ffprobe -i "$FILE" 2>&1 | grep Stream | grep Audio | grep kb | head -n1 | grep -oP "(\d+)(?= kb\/s)")"
 

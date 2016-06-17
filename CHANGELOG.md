@@ -4,6 +4,13 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
+Unreleased
+----------
+### Fixed
++ `preptrack`: check if files exist
+
+***
+
 [2016.06.17] - 2016-06-17
 -------------------------
 ### Added
