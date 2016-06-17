@@ -4,7 +4,7 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-Unreleased
+2016.06.17
 ----------
 ### Added
 + `myzuka-dl`: handle `DIR` environment variable
