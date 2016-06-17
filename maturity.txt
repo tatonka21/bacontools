@@ -15,6 +15,7 @@ Hack        readable
 Hack        respcode
 Hack        ringcat
 Hack        ruler
+Hack        single-urxvt
 Hack        trimline
 Hack        update-all
 Hack        userls

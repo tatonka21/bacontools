@@ -6,6 +6,9 @@ Notable changes to `bacontools` are documented in this file.
 
 Unreleased
 ----------
+### Added
++ `single-urxvt`
+
 ### Fixed
 + `preptrack`: check if files exist
 
