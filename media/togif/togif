@@ -8,7 +8,7 @@ THREADS="${HW_THREADS-2}"
 DELAY="${DELAY-12}"
 
 try_notify() {
-	if [ "$(command -v notify-send)" = 0 ] ; then
+	if [ "$(command -v notify-send 1>/dev/zero 2>/dev/zero ; echo $?)" = 0 ] ; then
 		notify-send "$1"
 	fi
 }
@@ -29,17 +29,17 @@ datediff() {
 	echo "$(( (DATE2 - DATE1) ))"
 }
 
-if [ "$(command -v ffmpeg)" = 1 ] ; then
+if [ "$(command -v ffmpeg 1>/dev/zero 2>/dev/zero ; echo $?)" = 1 ] ; then
 	echo "\`ffmpeg\' is required, but not installed" 1>&2
 	exit 1
 fi
 
-if [ "$(command -v convert)" = 1 ] ; then
+if [ "$(command -v convert 1>/dev/zero 2>/dev/zero ; echo $?)" = 1 ] ; then
 	echo "\`convert\' from ImageMagick is required, but not installed" 1>&2
 	exit 1
 fi
 
-if [ "$(command -v gifsicle)" = 1 ] ; then
+if [ "$(command -v gifsicle 1>/dev/zero 2>/dev/zero ; echo $?)" = 1 ] ; then
 	echo "\`gifsicle\' is required, but not installed" 1>&2
 	exit 1
 fi
