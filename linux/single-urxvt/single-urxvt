@@ -12,8 +12,8 @@ SINGLE_URXVT_WMCLASS=single-urxvt
 # make sure wmctrl exists
 wmctrlpath="$(which wmctrl 2>/dev/null)"
 if ! [ -x "$wmctrlpath" ] ; then
-    echo Error: required dependency wmctrl not found. >&2
-    exit 1
+	echo Error: required dependency wmctrl not found. >&2
+	exit 1
 fi
 
 active_window_id=\
@@ -21,13 +21,13 @@ active_window_id=\
 
 # test: true if active window has WM_CLASS $SINGLE_URXVT_WMCLASS
 if xprop -id "$active_window_id" 2>/dev/null | \
-    grep -q '^WM_CLASS(STRING)[[:print:]]*'"$SINGLE_URXVT_WMCLASS"
+	grep -q '^WM_CLASS(STRING)[[:print:]]*'"$SINGLE_URXVT_WMCLASS"
 then
-    # hide active quake rxvt
-    wmctrl -i -r "$active_window_id" -b add,hidden
+	# hide active quake rxvt
+	wmctrl -i -r "$active_window_id" -b add,hidden
 elif ! wmctrl -R "$SINGLE_URXVT_WMCLASS" -x ; then
 # use the wmctrl to both focus and raise quake terminal as well as
 # test if it is already running; wmctrl returns nonzero/false if no matching
 # window is found, so we have to start it
-    urxvt -name "$SINGLE_URXVT_WMCLASS" &
+	urxvt -name "$SINGLE_URXVT_WMCLASS" &
 fi
