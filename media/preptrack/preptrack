@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # TODO: detect redirect, run non-interactively in this case
+# TODO: handle FLAC files via metaflac
 
 trim() {
 	sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]]*$//'
