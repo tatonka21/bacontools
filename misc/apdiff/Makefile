@@ -3,4 +3,4 @@
 all:
 
 install:
-	install apdiff /usr/local/bin
+	install apdiff $PREFIX/bin

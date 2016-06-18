@@ -3,4 +3,4 @@
 all:
 
 install:
-	install respcode /usr/local/bin
+	install respcode $PREFIX/bin

@@ -3,4 +3,4 @@
 all:
 
 install:
-	install togif /usr/local/bin
+	install togif $PREFIX/bin

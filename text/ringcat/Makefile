@@ -3,4 +3,4 @@
 all:
 
 install:
-	install ringcat /usr/local/bin
+	install ringcat $PREFIX/bin

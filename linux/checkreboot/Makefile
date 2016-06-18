@@ -3,4 +3,4 @@
 all:
 
 install:
-	install checkreboot /usr/local/bin
+	install checkreboot $PREFIX/bin

@@ -3,4 +3,4 @@
 all:
 
 install:
-	install tasktags /usr/local/bin
+	install tasktags $PREFIX/bin

@@ -3,4 +3,4 @@
 all:
 
 install:
-	install single-urxvt /usr/local/bin
+	install single-urxvt $PREFIX/bin

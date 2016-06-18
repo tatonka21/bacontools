@@ -3,4 +3,4 @@
 all:
 
 install:
-	install netinfo /usr/local/bin
+	install netinfo $PREFIX/bin

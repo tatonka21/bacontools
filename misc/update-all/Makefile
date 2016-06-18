@@ -3,4 +3,4 @@
 all:
 
 install:
-	install update-all /usr/local/bin
+	install update-all $PREFIX/bin

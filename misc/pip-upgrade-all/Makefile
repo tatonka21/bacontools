@@ -3,4 +3,4 @@
 all:
 
 install:
-	install pip-upgrade-all /usr/local/bin
+	install pip-upgrade-all $PREFIX/bin
