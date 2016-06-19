@@ -124,7 +124,7 @@ for file in "$@"; do
 		exit 1
 	fi
 
-	if [ "$(type mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" -a \( -n "$RUN_MAT" \) ]; then
+	if [ "$(command -v mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" -a \( -n "$RUN_MAT" \) ]; then
 		mat -a "$TMP_FILE"
 	fi
 

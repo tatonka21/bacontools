@@ -86,7 +86,7 @@ process() {
 
 	echo "$NEW_FILEPATH"
 
-	if [ "$(type notify-send 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" ]; then
+	if [ "$(command -v notify-send 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" ]; then
 		notify-send "preptrack: $TITLE completed"
 	fi
 }
