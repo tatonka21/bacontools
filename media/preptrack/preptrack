@@ -1,5 +1,8 @@
 #!/bin/bash
 #
+# Usage: preptrack FILE [FILE ...]
+# Extract first audio stream from media files with ffmpeg, recode to MP3, tag
+#
 # TODO: detect redirect, run non-interactively in this case
 # TODO: handle FLAC files via metaflac
 
