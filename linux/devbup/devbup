@@ -80,7 +80,6 @@ descriptors, and start again." 1>&2
 db_compress() {
 	if [ "$COMPRESS" = "none" ]; then
 		echo "$1"
-
 		return
 	fi
 
