@@ -35,7 +35,8 @@
 # sha512sum
 # dd
 # tar
-# gnupg
+# mat (optional)
+# gnupg (optional)
 # split
 #
 # TODO: ddrescue support
@@ -44,6 +45,8 @@
 # TODO: pipe mode (IO seems to be a bottleneck, I mean, no shit)
 # TODO: DEVBUP_PRESET=[lax|paranoid]
 # TODO: autodetect installed dcfldd
+# TODO: scale default padding size range to total file size
+# TODO: allow GPG to choose default encryption/signing key
 
 DCFLDD_STATINT="${DCFLDD_STATINT:-64}"
 NAME="${NAME:-$(date '+%s%z').devbup.}"
