@@ -30,5 +30,5 @@ elif ! wmctrl -R "$SINGLE_URXVT_WMCLASS" -x ; then
 # use the wmctrl to both focus and raise quake terminal as well as
 # test if it is already running; wmctrl returns nonzero/false if no matching
 # window is found, so we have to start it
-	urxvt -name "$SINGLE_URXVT_WMCLASS" &
+	urxvt -name "$SINGLE_URXVT_WMCLASS" "$@" &
 fi
