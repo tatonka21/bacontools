@@ -3,4 +3,4 @@
 all:
 
 install:
-	install du1 $PREFIX/bin
+	install du1 "${PREFIX}/bin"

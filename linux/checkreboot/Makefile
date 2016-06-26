@@ -3,4 +3,4 @@
 all:
 
 install:
-	install checkreboot $PREFIX/bin
+	install checkreboot "${PREFIX}/bin"

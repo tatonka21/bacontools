@@ -3,4 +3,4 @@
 all:
 
 install:
-	install lines $PREFIX/bin
+	install lines "${PREFIX}/bin"

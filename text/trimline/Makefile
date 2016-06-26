@@ -3,4 +3,4 @@
 all:
 
 install:
-	install trimline $PREFIX/bin
+	install trimline "${PREFIX}/bin"

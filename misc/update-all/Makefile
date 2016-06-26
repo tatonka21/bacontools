@@ -3,4 +3,4 @@
 all:
 
 install:
-	install update-all $PREFIX/bin
+	install update-all "${PREFIX}/bin"

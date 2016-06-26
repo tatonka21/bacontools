@@ -3,4 +3,4 @@
 all:
 
 install:
-	install vidinfo $PREFIX/bin
+	install vidinfo "${PREFIX}/bin"

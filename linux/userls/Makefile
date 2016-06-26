@@ -3,4 +3,4 @@
 all:
 
 install:
-	install userls $PREFIX/bin
+	install userls "${PREFIX}/bin"

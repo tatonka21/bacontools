@@ -4,4 +4,4 @@ all:
 
 install:
 	bundle install
-	install myzuka-dl $PREFIX/bin
+	install myzuka-dl "${PREFIX}/bin"

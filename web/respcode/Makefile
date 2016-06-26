@@ -3,4 +3,4 @@
 all:
 
 install:
-	install respcode $PREFIX/bin
+	install respcode "${PREFIX}/bin"

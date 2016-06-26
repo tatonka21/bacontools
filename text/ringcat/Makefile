@@ -3,4 +3,4 @@
 all:
 
 install:
-	install ringcat $PREFIX/bin
+	install ringcat "${PREFIX}/bin"

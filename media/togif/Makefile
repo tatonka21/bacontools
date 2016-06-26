@@ -3,4 +3,4 @@
 all:
 
 install:
-	install togif $PREFIX/bin
+	install togif "${PREFIX}/bin"

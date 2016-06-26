@@ -3,4 +3,4 @@
 all:
 
 install:
-	install tasktags $PREFIX/bin
+	install tasktags "${PREFIX}/bin"

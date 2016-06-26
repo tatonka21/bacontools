@@ -3,4 +3,4 @@
 all:
 
 install:
-	install apdiff $PREFIX/bin
+	install apdiff "${PREFIX}/bin"

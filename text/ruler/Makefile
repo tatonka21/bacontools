@@ -3,4 +3,4 @@
 all:
 
 install:
-	install ruler $PREFIX/bin
+	install ruler "${PREFIX}/bin"

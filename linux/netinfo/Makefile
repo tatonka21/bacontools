@@ -3,4 +3,4 @@
 all:
 
 install:
-	install netinfo $PREFIX/bin
+	install netinfo "${PREFIX}/bin"
