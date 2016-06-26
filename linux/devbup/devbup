@@ -56,6 +56,10 @@ SPLIT_NAME="$NAME"
 SPLIT_SIZE="${SPLIT_SIZE:-256M}"
 GPG_COMMAND="${GPG_COMMAND:-gpg}"
 
+if [ -z "$DD_COMMAND" -a "$(command -v dcfldd 1>/dev/zero 2>/dev/zero ; echo $?)" = 0 ]; then
+	DD_COMMAND=dcfldd
+fi
+
 db_deedee() {
 	DD_COMMAND="${DD_COMMAND:-dd}"
 	CKSUM_COMMAND="${CKSUM_COMMAND:-sha512sum}"
