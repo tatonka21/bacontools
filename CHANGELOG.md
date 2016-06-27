@@ -9,6 +9,9 @@ Unreleased
 ### Added
 + `single-urxvt`
 
+### Changed
++ `devbup`: prefer `dcfldd` if it's installed
+
 ### Fixed
 + `preptrack`: check if files exist
 
