@@ -2,6 +2,12 @@ bacontools - gradual descent into madness
 =========================================
 bacontools is a collection of small utilities I've written over the years.
 
+Status
+------
+![Travis][travis]
+
+Tool count
+----------
 | Directory | Description                                         | Languages                           | Count |
 |-----------|-----------------------------------------------------|-------------------------------------|-------|
 | linux     | Tools specific to GNU/Linux distributions           | POSIX shell, Bash                   | 7     |
@@ -31,3 +37,5 @@ License
 -------
 Unless otherwise specified in a tool's README, all tools included in this
 repository are distributed under the general license in the LICENSE file.
+
+[travis]: https://img.shields.io/travis/bacondropped/bacontools.svg
