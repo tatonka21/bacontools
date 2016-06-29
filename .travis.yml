@@ -3,18 +3,18 @@ dist: trusty
 language: python
 python:
   - "2.7"
-  - "3.6"
+  - "3.5"
 env:
   global:
     - CXX=g++-4.8
     - CC=gcc-4.8
 before_install:
-  - sudo apt-get clean -qq
-  - sudo apt-get update -qq
-  - sudo apt-get install -y -qq cmake
-  - sudo apt-get install -y -qq haskell-platform
-  - sudo apt-get install -y -qq golang
-  - sudo apt-get -y install python3-pip python-dev
+  - sudo apt-get clean
+  - sudo apt-get update
+  - sudo apt-get install -y cmake
+  - sudo apt-get install -y haskell-platform
+  - sudo apt-get install -y golang
+  - sudo apt-get install -y python3-pip python-dev
   - sudo pip3 install -U setuptools
   - sudo pip3 install -U virtualenvwrapper
   - python3 -V
