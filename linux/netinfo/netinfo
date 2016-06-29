@@ -1,7 +1,14 @@
 #!/bin/sh
 
-# TODO: use `ip link` information to deduce active network interface
-NETWORK_INTERFACE="${NETWORK_INTERFACE:-"wlp7s0"}"
+trim() {
+	sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]]*$//'
+}
+
+if [ "$(command -v ip 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" ]; then
+	NETWORK_INTERFACE="$(ip link | grep LOWER_UP | grep -v "1: lo" | head -1 | cut -d: -f2 | trim)"
+else
+	NETWORK_INTERFACE="${NETWORK_INTERFACE:-"wlp7s0"}"
+fi
 
 WAN_IP="$(curl icanhazip.com 2>/dev/zero)"
 PING_RETCODE="$(ping -c1 google.com 1>/dev/zero 2>/dev/zero ; echo $?)"

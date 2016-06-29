@@ -10,6 +10,7 @@ Unreleased
 + `single-urxvt`
 
 ### Changed
++ `netinfo`: deduce active interface via `ip link`
 + `devbup`: prefer `dcfldd` if it's installed
 
 ### Fixed
