@@ -1,5 +1,8 @@
 #!/bin/bash
 #
+# Usage: preptrack FILE [FILE ...]
+# Extract first audio stream from media files with ffmpeg, recode to MP3, tag
+#
 # TODO: detect redirect, run non-interactively in this case
 # TODO: handle FLAC files via metaflac
 
@@ -12,6 +15,11 @@ process() {
 	FILE="$1"
 
 	echo "Processing file $1"
+
+	if [ ! -f "$FILE" ]; then
+		echo "File $FILE does not exist" 1>&2
+		return 1
+	fi
 
 	MAX_BITRATE="${MAX_BITRATE:-320}"
 	DETECTED_BITRATE="$(ffprobe -i "$FILE" 2>&1 | grep Stream | grep Audio | grep kb | head -n1 | grep -oP "(\d+)(?= kb\/s)")"
@@ -81,7 +89,7 @@ process() {
 
 	echo "$NEW_FILEPATH"
 
-	if [ "$(type notify-send 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" ]; then
+	if [ "$(command -v notify-send 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" ]; then
 		notify-send "preptrack: $TITLE completed"
 	fi
 }

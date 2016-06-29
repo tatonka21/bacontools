@@ -6,4 +6,4 @@ httpdf:
 	go build httpdf.go
 
 install: httpdf
-	install httpdf /usr/local/bin
+	install httpdf "${PREFIX}/bin"

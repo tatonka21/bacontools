@@ -35,7 +35,8 @@
 # sha512sum
 # dd
 # tar
-# gnupg
+# mat (optional)
+# gnupg (optional)
 # split
 #
 # TODO: ddrescue support
@@ -44,6 +45,8 @@
 # TODO: pipe mode (IO seems to be a bottleneck, I mean, no shit)
 # TODO: DEVBUP_PRESET=[lax|paranoid]
 # TODO: autodetect installed dcfldd
+# TODO: scale default padding size range to total file size
+# TODO: allow GPG to choose default encryption/signing key
 
 DCFLDD_STATINT="${DCFLDD_STATINT:-64}"
 NAME="${NAME:-$(date '+%s%z').devbup.}"
@@ -52,6 +55,10 @@ GPG_NAME="$(echo "$NAME" | sed 's/\.$//g').tar.gpg"
 SPLIT_NAME="$NAME"
 SPLIT_SIZE="${SPLIT_SIZE:-256M}"
 GPG_COMMAND="${GPG_COMMAND:-gpg}"
+
+if [ -z "$DD_COMMAND" -a "$(command -v dcfldd 1>/dev/zero 2>/dev/zero ; echo $?)" = 0 ]; then
+	DD_COMMAND=dcfldd
+fi
 
 db_deedee() {
 	DD_COMMAND="${DD_COMMAND:-dd}"
@@ -80,7 +87,6 @@ descriptors, and start again." 1>&2
 db_compress() {
 	if [ "$COMPRESS" = "none" ]; then
 		echo "$1"
-
 		return
 	fi
 
@@ -124,7 +130,7 @@ for file in "$@"; do
 		exit 1
 	fi
 
-	if [ "$(type mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" -a \( -n "$RUN_MAT" \) ]; then
+	if [ "$(command -v mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" -a \( -n "$RUN_MAT" \) ]; then
 		mat -a "$TMP_FILE"
 	fi
 

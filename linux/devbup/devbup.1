@@ -1,4 +1,4 @@
-.TH devbup 1 "devbup" "17 Jun 2016" "version 2016.06.17"
+.TH devbup 1 "devbup" "29 Jun 2016" "version 2016.06.29"
 
 .SH NAME
 devbup - file and device backup script
@@ -28,6 +28,9 @@ Can be any non-empty string.
 \fBDD_COMMAND\fP
 Use another command instead of \fBdd\fP. \fBdevbup\fP will use the default
 syntax with \fBif=sourcefile\fP and \fBof=$(basename\~sourcefile)\fP arguments.
+
+If \fBdcfldd\fP is installed and \fBDD_COMMAND\fP is not specified,
+\fBdevbup\fP will try to use \fBdcfldd\fP instead of \fBdd\fP by default.
 
 If this variable equals to \fBdcfldd\fP, a \fBstatusinterval\fP option will
 also be used to monitor progress, with a default of \fB64\fP.
@@ -116,7 +119,7 @@ Must be a valid size specifier accepted by \fBsplit\fP.
 
 .SH DEPENDENCIES
 \fBdd\fP, \fBsha512sum\fP, \fBtar\fP, \fBsplit\fP, \fBgnupg\fP (optional),
-\fBgzip\fP (optional)
+\fBhead\fP (optional), \fBgzip\fP (optional)
 
 .SH AUTHOR
 Developed by Ilya Terentyev <bacondropped@gmail.com> as a part of the

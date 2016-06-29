@@ -24,8 +24,8 @@ index 3ac2da4..89854cb 100644
 -	bundle install
 +	echo "Please install these gems manually:"
 +	cat Gemfile
- 	install imgur-dl /usr/local/bin
- 	install imgur-dl.1 /usr/local/man/man1
+ 	install imgur-dl "${PREFIX}/bin"
+ 	install imgur-dl.1 "${PREFIX}/man/man1"
  	mandb
 diff --git a/web/myzuka-dl/Makefile b/web/myzuka-dl/Makefile
 index a9f7a79..93abc26 100644
@@ -38,7 +38,7 @@ index a9f7a79..93abc26 100644
 -	bundle install
 +	echo "Please install these gems manually:"
 +	cat Gemfile
- 	install myzuka-dl /usr/local/bin
+ 	install myzuka-dl "${PREFIX}/bin"
 -- 
 2.7.4
 

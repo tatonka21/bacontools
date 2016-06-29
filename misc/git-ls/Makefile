@@ -3,4 +3,4 @@
 all:
 
 install:
-	install git-ls /usr/local/bin
+	install git-ls "${PREFIX}/bin"

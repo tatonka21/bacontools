@@ -35,6 +35,10 @@ Features
 Requirements
 ------------
 + Bash (any version with the `read` built-in that allows default values)
++ file
++ mat (optional)
++ rev
++ cut
 + sed
 + grep
 + ffmpeg

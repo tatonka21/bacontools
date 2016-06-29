@@ -4,8 +4,23 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-2016.06.17
+2016.06.29
 ----------
+### Added
++ `single-urxvt`
+
+### Changed
++ `netinfo`: deduce active interface via `ip link`
++ `devbup`: prefer `dcfldd` if it's installed
+
+### Fixed
++ `netinfo`: check if nmcli is installed
++ `preptrack`: check if files exist
+
+***
+
+[2016.06.17] - 2016-06-17
+-------------------------
 ### Added
 + `myzuka-dl`: handle `DIR` environment variable
 + `du1`
@@ -97,3 +112,4 @@ Notable changes to `bacontools` are documented in this file.
 
 [2016.04]: https://gitlab.com/bacondropped/bacontools/tags/2016.04
 [2016.05]: https://gitlab.com/bacondropped/bacontools/tags/2016.05
+[2016.06.17]: https://gitlab.com/bacondropped/bacontools/tags/2016-06-17

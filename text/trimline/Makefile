@@ -3,4 +3,4 @@
 all:
 
 install:
-	install trimline /usr/local/bin
+	install trimline "${PREFIX}/bin"

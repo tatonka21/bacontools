@@ -1,8 +1,8 @@
-.PHONY: all install checkreboot-install devbup-install devrestore-install du1-install netinfo-install userls-install
+.PHONY: all install checkreboot-install devbup-install devrestore-install du1-install netinfo-install single-urxvt userls-install
 
 all:
 
-install: checkreboot-install devbup-install devrestore-install du1-install netinfo-install userls-install
+install: checkreboot-install devbup-install devrestore-install du1-install netinfo-install single-urxvt userls-install
 
 checkreboot-install:
 	$(MAKE) -C checkreboot install
@@ -18,6 +18,9 @@ du1-install:
 
 netinfo-install:
 	$(MAKE) -C netinfo install
+
+single-urxvt:
+	$(MAKE) -C single-urxvt install
 
 userls-install:
 	$(MAKE) -C userls install

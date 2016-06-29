@@ -3,4 +3,4 @@
 all:
 
 install:
-	install userls /usr/local/bin
+	install userls "${PREFIX}/bin"

@@ -3,4 +3,4 @@
 all:
 
 install:
-	install vidinfo /usr/local/bin
+	install vidinfo "${PREFIX}/bin"

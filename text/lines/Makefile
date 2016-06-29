@@ -3,4 +3,4 @@
 all:
 
 install:
-	install lines /usr/local/bin
+	install lines "${PREFIX}/bin"

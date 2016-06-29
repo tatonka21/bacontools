@@ -3,4 +3,4 @@
 all:
 
 install:
-	install ruler /usr/local/bin
+	install ruler "${PREFIX}/bin"

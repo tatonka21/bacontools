@@ -3,6 +3,6 @@
 all:
 
 install:
-	install devrestore /usr/local/bin
-	install devrestore.1 /usr/local/share/man/man1
+	install devrestore "${PREFIX}/bin"
+	install devrestore.1 "${PREFIX}/share/man/man1"
 	mandb

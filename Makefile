@@ -1,3 +1,5 @@
+export PREFIX ?= /usr/local
+
 .PHONY: all install patch linux media misc text web linux-install media-install misc-install text-install web-install
 
 all: linux media misc text web

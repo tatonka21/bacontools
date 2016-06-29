@@ -9,12 +9,12 @@ Hack        du1
 Hack        httpdf
 Hack        lines
 Hack        maybe
-Hack        netinfo
 Hack        pip-upgrade-all
 Hack        readable
 Hack        respcode
 Hack        ringcat
 Hack        ruler
+Hack        single-urxvt
 Hack        trimline
 Hack        update-all
 Hack        userls
@@ -25,6 +25,7 @@ Untested    balance
 Untested    corrupt
 Untested    git-ls
 Untested    n7m
+Untested    netinfo
 Untested    tasktags
 Moving      devbup
 Moving      imgur-dl
