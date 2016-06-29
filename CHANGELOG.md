@@ -13,6 +13,7 @@ Unreleased
 + `devbup`: prefer `dcfldd` if it's installed
 
 ### Fixed
++ `netinfo`: check if nmcli is installed
 + `preptrack`: check if files exist
 
 ***
