@@ -1,21 +1,13 @@
 sudo: required
 dist: trusty
-language: c
+language: python
 python:
   - "2.7"
   - "3.6"
 env:
   global:
     - CXX=g++-4.8
-    - NODE_ENV=development
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      # nodejs >v4 compiler requirements
-      - g++-4.8
-      - openjdk-7-jdk
+    - CC=gcc-4.8
 before_install:
   - sudo apt-get clean -qq
   - sudo apt-get update -qq
