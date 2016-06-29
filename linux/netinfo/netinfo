@@ -1,12 +1,21 @@
 #!/bin/sh
 
-WAN_IP=$(curl icanhazip.com 2>/dev/zero)
-PING_RETCODE=$(ping -c1 google.com 1>/dev/zero 2>/dev/zero ; echo $?)
+# TODO: use `ip link` information to deduce active network interface
+NETWORK_INTERFACE="${NETWORK_INTERFACE:-"wlp7s0"}"
+
+WAN_IP="$(curl icanhazip.com 2>/dev/zero)"
+PING_RETCODE="$(ping -c1 google.com 1>/dev/zero 2>/dev/zero ; echo $?)"
 
 if [ "$PING_RETCODE" = "0" ] ; then
-	NETWORKNAME="$WAN_IP@$(nmcli con show --active | grep wlp7s0 | cut -d' ' -f1)"
+	if [ "$(command -v nmcli 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" ]; then
+		NETWORKNAME="@$(nmcli con show --active | grep "$NETWORK_INTERFACE" | cut -d' ' -f1)"
+	else
+		NETWORKNAME=""
+	fi
+
+	OUTPUT="$WAN_IP$NETWORKNAME"
 else
-	NETWORKNAME="No network"
+	OUTPUT="No network"
 fi
 
-echo "$NETWORKNAME"
+echo "$OUTPUT"
