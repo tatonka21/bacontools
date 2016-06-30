@@ -2,6 +2,11 @@ bacontools change log
 =====================
 Notable changes to `bacontools` are documented in this file.
 
+Unreleased
+----------
+### Added
++ `snippets/shell.md`
+
 ***
 
 2016.06.29

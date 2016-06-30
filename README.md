@@ -33,6 +33,11 @@ directory READMEs as follows:
 Please note that, regardless of the tool's maturity label, the responsibility
 waiver in its license still applies, if present.
 
+Snippets
+--------
+Little code snippets that don't deserve a separate tool are saved to
+`snippets`. They are not included in total tool count.
+
 License
 -------
 Unless otherwise specified in a tool's README, all tools included in this
