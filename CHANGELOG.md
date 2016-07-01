@@ -5,6 +5,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `baconplaylist`
 + `vimless`
 + `CHECKLIST.md`
 + `togif`: implement `$QUIET` and `$NOSTATS`

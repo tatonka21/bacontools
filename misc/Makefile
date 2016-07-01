@@ -11,6 +11,7 @@ all:
 install:
 	$(MAKE) -C apdiff install
 	$(MAKE) -C bananaglee install
+	$(MAKE) -C baconplaylist install
 	$(MAKE) -C bincounter install
 	$(MAKE) -C bitdiff install
 	$(MAKE) -C byteat install
