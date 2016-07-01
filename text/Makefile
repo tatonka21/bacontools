@@ -13,3 +13,4 @@ install:
 	$(MAKE) -C ringcat install
 	$(MAKE) -C ruler install
 	$(MAKE) -C trimline install
+	$(MAKE) -C vimless install

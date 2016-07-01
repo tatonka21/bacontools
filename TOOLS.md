@@ -33,6 +33,7 @@ Text utilities
 | ringcat  | Hack     | Append stdin to the end of the file circularly       | POSIX shell |
 | ruler    | Hack     | Print length of the longest line                     | POSIX shell |
 | trimline | Hack     | Trim leading and trailing whitespaces                | POSIX shell |
+| vimless  | Hack     | Display vimcat output in less                        | POSIX shell |
 
 Web utilities
 -------------

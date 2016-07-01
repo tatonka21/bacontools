@@ -12,10 +12,10 @@ Tool count
 |-----------|-----------------------------------------------------|-------------------------------------|-------|
 | linux     | Tools specific to GNU/Linux distributions           | POSIX shell, Bash                   | 7     |
 | media     | Tools for editing media (audio, video, image) files | C#, POSIX shell, Bash               | 4     |
-| text      | Tools for working with text                         | C, POSIX shell                      | 7     |
+| text      | Tools for working with text                         | C, POSIX shell                      | 8     |
 | web       | Internet-related tools                              | Go, Ruby                            | 4     |
 | misc      | Everything else                                     | Python, C#, C, Haskell, POSIX shell | 13    |
-|           |                                                     | *Total*                             | 35    |
+|           |                                                     | *Total*                             | 36    |
 
 Tool maturity
 -------------
