@@ -11,3 +11,4 @@ The following steps must be taken before merging a new tool.
 6. Add an entry to the top-level `maturity.txt` file.
 7. Increment relevant tool category count and the total in the top-level
    `README`.
+8. Add a top-level `CHANGELOG` entry.
