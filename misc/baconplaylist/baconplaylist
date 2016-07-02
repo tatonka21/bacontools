@@ -8,18 +8,18 @@ if [ -z "$BACONPLAYLIST_FILE" ]; then
 	exit 1
 fi
 
-TRACKS="$(cut -d' '  -f2- "$BACONPLAYLIST_FILE" | grep -cPo "^.*(?= –)")"
-ARTISTS="$(cut -d' '  -f2- "$BACONPLAYLIST_FILE" | grep -Po "^.*(?= –)" | sort | uniq -c | wc -l)"
-ONETRACK_ARTISTS="$(cut -d' ' -f2- "$BACONPLAYLIST_FILE" | grep -Po "^.*(?= –)" | sort | uniq -c | grep -c "^\s*1 ")"
-
-# echo "Top 10 artists:"
-# cut -d' '  -f2- ~/Documents/baconplaylist/list.txt | grep -Po "^.*(?= –)" | sort | uniq -c | sort -hr | head -10
-
-echo "$TRACKS tracks"
-echo "$ARTISTS artists"
-echo "$ONETRACK_ARTISTS artists with one track"
-
 if [ ! "$#" = 0 ]; then
 	echo
 	grep --color=auto -i "$@" "$BACONPLAYLIST_FILE"
+else
+	# echo "Top 10 artists:"
+	# cut -d' '  -f2- ~/Documents/baconplaylist/list.txt | grep -Po "^.*(?= –)" | sort | uniq -c | sort -hr | head -10
+
+	TRACKS="$(cut -d' '  -f2- "$BACONPLAYLIST_FILE" | grep -cPo "^.*(?= –)")"
+	ARTISTS="$(cut -d' '  -f2- "$BACONPLAYLIST_FILE" | grep -Po "^.*(?= –)" | sort | uniq -c | wc -l)"
+	ONETRACK_ARTISTS="$(cut -d' ' -f2- "$BACONPLAYLIST_FILE" | grep -Po "^.*(?= –)" | sort | uniq -c | grep -c "^\s*1 ")"
+
+	echo "$TRACKS tracks"
+	echo "$ARTISTS artists"
+	echo "$ONETRACK_ARTISTS artists with one track"
 fi
