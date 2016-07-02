@@ -9,7 +9,6 @@ if [ -z "$BACONPLAYLIST_FILE" ]; then
 fi
 
 if [ ! "$#" = 0 ]; then
-	echo
 	grep --color=auto -i "$@" "$BACONPLAYLIST_FILE"
 else
 	# echo "Top 10 artists:"
