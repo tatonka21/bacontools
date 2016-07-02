@@ -1,5 +1,11 @@
 #!/bin/sh
-# ./togif.sh /home/user/video.mkv resultgifname
+# Usage: togif VIDEO OUTPUT_FILE
+# Convert video to gif with ffmpeg
+#
+# TODO: use set -e or otherwise check for errors
+# TODO: implement command line arguments in addition to existing env config
+# TODO: allow custom convert arguments
+# TODO: allow custom ffmpeg arguments
 
 FRAMES=${FRAMES-475}
 PIXELS=${PIXELS-100000}
