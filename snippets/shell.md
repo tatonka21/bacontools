@@ -30,3 +30,29 @@ Mount a FAT filesystem without having to use root.
 `sudo netstat -tulpn`
 
 List active Internet connections with server processes only.
+
+Media
+-----
+`env FRAMES=40 PIXELS=40000 DELAY=25 togif VIDEO PREFIX`
+
+Convert a video file to bacongifdiary format.
+
+***
+
+`env FRAMESETS="${FRAMESETS-"467 470 473 475 477 480 485 490"}" parallel -j2 bash -c 'FRAMES=$3 togif "$1" "$2"' funcname VIDEO PREFIX -- $FRAMESETS`
+
+Create several candidates for a `/r/fullmoviegifs` post.
+
+***
+
+```
+#!/bin/sh
+
+FRAMESETS="${FRAMESETS-"467 470 473 475 477 480 485 490"}"
+
+for f in $FRAMESETS; do
+       FRAMES=$f togif "$1" "$2"
+done
+```
+
+Same, but more boring and not in parallel.
