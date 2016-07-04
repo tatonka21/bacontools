@@ -5,6 +5,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `morseconv`
 + `baconplaylist`
 + `vimless`
 + `CHECKLIST.md`

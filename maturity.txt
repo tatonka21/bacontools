@@ -10,6 +10,7 @@ Hack        du1
 Hack        httpdf
 Hack        lines
 Hack        maybe
+Hack        morseconv
 Hack        pip-upgrade-all
 Hack        readable
 Hack        respcode

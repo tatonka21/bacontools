@@ -8,6 +8,7 @@ all:
 install:
 	$(MAKE) -C balance install
 	$(MAKE) -C lines install
+	$(MAKE) -C morseconv install
 	$(MAKE) -C n7m install
 	$(MAKE) -C readable install
 	$(MAKE) -C ringcat install
