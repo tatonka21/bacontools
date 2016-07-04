@@ -9,6 +9,12 @@ Find all files containing hello, print file names and line numbers.
 
 ***
 
+`env LC_COLLATE=C ls -lAXh --group-directories-first --color=auto "$@"`
+
+Pretty portable and intuitive `ls` in columns.
+
+***
+
 VCS
 ---
 `find -maxdepth 1 -mindepth 1 -type d -print0 |\
