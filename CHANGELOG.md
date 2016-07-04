@@ -5,6 +5,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `bincounter`: total bytes and normalized bit counts
 + `morseconv`
 + `baconplaylist`
 + `vimless`
