@@ -29,7 +29,7 @@ System
 ------
 `sudo mount /dev/sdb1 $MEDIA/sdb1 -o user,rw,auto,nofail,umask=111,dmask=000,flush`
 
-Mount a FAT filesystem without having to use root.
+Mount a FAT filesystem so that current user could use it without sudo.
 
 ***
 
