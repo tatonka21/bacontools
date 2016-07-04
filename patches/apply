@@ -1,11 +1,20 @@
 #!/bin/sh
+# Usage: patches/apply
+# Detect OS, apply necessary bacontools patches
 
-if [ "$(grep -c "Ubuntu" /etc/issue)" = "1" ]; then
-	echo "No patching required"
-	exit 0
-elif [ "$(grep -c "Raspbian" /etc/issue)" = "1" ]; then
-	for patch in "patches/0001-don-t-install-bananaglee-when-there-s-no-runghc.patch" "patches/0002-don-t-run-Bundler-when-it-s-problematic.patch" ; do
+set -e
+
+if [ "$(grep -c "Raspbian" /etc/issue)" = "1" ]; then
+	for patch in \
+	"patches/0001-don-t-install-bananaglee-when-there-s-no-runghc.patch" \
+	"patches/0002-don-t-run-Bundler-when-it-s-problematic.patch" \
+	; do
 		git am "$patch"
 		git show HEAD --stat
 	done
+
+	exit 0
+else
+	echo "No patching required"
+	exit 0
 fi
