@@ -33,6 +33,16 @@ Mount a FAT filesystem so that current user could use it without sudo.
 
 ***
 
+```
+#/etc/cron.d/oom_disable
+*/1 * * * * root pgrep -f "/usr/sbin/sshd" | while read PID; do echo -17 > /proc/$PID/oom_adj;
+done
+```
+
+Disable OOM killer for `sshd`.
+
+***
+
 `sudo netstat -tulpn`
 
 List active Internet connections with server processes only.
