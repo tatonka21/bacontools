@@ -44,7 +44,6 @@
 # TODO: directory backup support
 # TODO: pipe mode (IO seems to be a bottleneck, I mean, no shit)
 # TODO: DEVBUP_PRESET=[lax|paranoid]
-# TODO: autodetect installed dcfldd
 # TODO: scale default padding size range to total file size
 # TODO: allow GPG to choose default encryption/signing key
 
