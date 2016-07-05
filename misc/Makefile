@@ -2,7 +2,7 @@
 
 all:
 	$(MAKE) -C bananaglee
-	$(MAKE) -C bincounter
+	$(MAKE) -C bitcount
 	$(MAKE) -C bitdiff
 	$(MAKE) -C byteat
 	$(MAKE) -C corrupt
@@ -12,7 +12,7 @@ install:
 	$(MAKE) -C apdiff install
 	$(MAKE) -C bananaglee install
 	$(MAKE) -C baconplaylist install
-	$(MAKE) -C bincounter install
+	$(MAKE) -C bitcount install
 	$(MAKE) -C bitdiff install
 	$(MAKE) -C byteat install
 	$(MAKE) -C corrupt install

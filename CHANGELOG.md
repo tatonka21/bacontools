@@ -14,6 +14,9 @@ Unreleased
 + `togif`: implement `$QUIET` and `$NOSTATS`
 + `snippets/shell.md`
 
+### Changed
++ `bincounter` -> `bitcount`
+
 ***
 
 2016.06.29

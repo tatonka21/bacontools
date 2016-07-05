@@ -1,7 +1,7 @@
 Hack        apdiff
 Hack        bananaglee
 Hack        baconplaylist
-Hack        bincounter
+Hack        bitcount
 Hack        bitdiff
 Hack        byteat
 Hack        checkreboot
