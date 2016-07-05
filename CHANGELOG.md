@@ -2,8 +2,8 @@ bacontools change log
 =====================
 Notable changes to `bacontools` are documented in this file.
 
-2016.07.05
-----------
+[2016.07.05]
+------------
 ### Added
 + `curl-tt`
 + `bincounter`: total bytes and normalized bit counts
@@ -19,8 +19,8 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-2016.06.29
-----------
+[2016.06.29]
+------------
 ### Added
 + `single-urxvt`
 
@@ -34,8 +34,8 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-[2016.06.17] - 2016-06-17
--------------------------
+[2016.06.17]
+------------
 ### Added
 + `myzuka-dl`: handle `DIR` environment variable
 + `du1`
@@ -60,8 +60,8 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-[2016.05] - 2016-05-28
-----------------------
+[2016.05]
+---------
 ### Added
 + `httpdf`
 + `TOOLS.md`
@@ -107,8 +107,8 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-[2016.04] - 2016-05-01
-----------------------
+[2016.04]
+---------
 ### Added
 + `imgur`
 + `myzuka`
@@ -128,3 +128,5 @@ Notable changes to `bacontools` are documented in this file.
 [2016.04]: https://gitlab.com/bacondropped/bacontools/tags/2016.04
 [2016.05]: https://gitlab.com/bacondropped/bacontools/tags/2016.05
 [2016.06.17]: https://gitlab.com/bacondropped/bacontools/tags/2016-06-17
+[2016.06.29]: https://github.com/bacondropped/bacontools/releases/tag/2016.06.29
+[2016.07.05]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.05
