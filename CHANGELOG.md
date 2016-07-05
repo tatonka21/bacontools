@@ -2,7 +2,7 @@ bacontools change log
 =====================
 Notable changes to `bacontools` are documented in this file.
 
-Unreleased
+2016.07.05
 ----------
 ### Added
 + `curl-tt`
