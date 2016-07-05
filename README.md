@@ -4,7 +4,7 @@ bacontools is a collection of small utilities I've written over the years.
 
 Status
 ------
-![Travis][travis]
+[![Travis][travis]](https://travis-ci.org/bacondropped/bacontools/)
 
 Tool count
 ----------
