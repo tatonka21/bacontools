@@ -29,14 +29,14 @@ int main(int argc, char **argv) {
 		count[7]);
 
 	printf("norm: MSB %f %f %f %f %f %f %f %f LSB\n",
-		(double)count[0]/total_bits/8,
-		(double)count[1]/total_bits/8,
-		(double)count[2]/total_bits/8,
-		(double)count[3]/total_bits/8,
-		(double)count[4]/total_bits/8,
-		(double)count[5]/total_bits/8,
-		(double)count[6]/total_bits/8,
-		(double)count[7]/total_bits/8);
+		(double)count[0]/total_bits,
+		(double)count[1]/total_bits,
+		(double)count[2]/total_bits,
+		(double)count[3]/total_bits,
+		(double)count[4]/total_bits,
+		(double)count[5]/total_bits,
+		(double)count[6]/total_bits,
+		(double)count[7]/total_bits);
 
 	return 0;
 };
