@@ -1,0 +1,87 @@
+#!/usr/bin/env python
+# Usage: command | morseconv
+# Convert text to Morse code
+#
+# TODO: reverse convert
+# TODO: implement non-printing symbols
+# TODO: Wabun
+# TODO: reimplement in C for speed, perhaps?
+
+import re
+import sys
+
+
+morse_dict = {
+    'a': '.-',
+    'b': '-...',
+    'c': '-.-.',
+    'd': '-..',
+    'e': '.',
+    'f': '..-.',
+    'g': '--.',
+    'h': '....',
+    'i': '..',
+    'j': '.---',
+    'k': '-.-',
+    'l': '.-..',
+    'm': '--',
+    'n': '-.',
+    'o': '---',
+    'p': '.--.',
+    'q': '--.-',
+    'r': '.-.',
+    's': '...',
+    't': '-',
+    'u': '..-',
+    'v': '...-',
+    'w': '.--',
+    'x': '-..-',
+    'y': '-.--',
+    'z': '--..',
+    '0': '-----',
+    '1': '.----',
+    '2': '..---',
+    '3': '...--',
+    '4': '....-',
+    '5': '.....',
+    '6': '-....',
+    '7': '--...',
+    '8': '---..',
+    '9': '----.',
+    '.': '.-.-.-',
+    ',': '--..--',
+    ':': '---...',
+    '?': '..--..',
+    '\'': '.----.',
+    '-': '-....-',
+    '/': '-..-.',
+    '(': '-.--.-',
+    ')': '-.--.-',
+    '"': '.-..-.',
+    '@': '.--.-.',
+    '=': '-...-'
+}
+
+
+def replace_all(d, s):
+    # return re.compile(
+    # '|'.join(morse_dict.keys())).sub(lambda m: morse_dict[m.group(0)], s)
+
+    res = ''
+
+    for c in s:
+        res += d.get(c, c)
+        res += ' '
+
+    return res
+
+
+if __name__ == '__main__':
+    s = replace_all(morse_dict, sys.stdin.read().lower().rstrip())
+
+    sys.stdout.write(s)
+
+    if not s.endswith('\n'):
+        sys.stdout.write('\n')
+
+    exit(0)

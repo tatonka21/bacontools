@@ -1,0 +1,2 @@
+#!/bin/sh
+vimcat -o - "$@" | sed 's/$/\x1B[0m/' | less -rN

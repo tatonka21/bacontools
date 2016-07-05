@@ -1,9 +1,9 @@
 .PHONY: all install
 
-all: build/bincounter
+all: build/bitcount
 
-build/bincounter:
+build/bitcount:
 	mkdir -p build && cd build && cmake .. && $(MAKE)
 
-install: build/bincounter
+install: build/bitcount
 	cd build && make install

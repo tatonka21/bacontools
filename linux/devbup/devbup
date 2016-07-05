@@ -44,7 +44,6 @@
 # TODO: directory backup support
 # TODO: pipe mode (IO seems to be a bottleneck, I mean, no shit)
 # TODO: DEVBUP_PRESET=[lax|paranoid]
-# TODO: autodetect installed dcfldd
 # TODO: scale default padding size range to total file size
 # TODO: allow GPG to choose default encryption/signing key
 
@@ -60,6 +59,8 @@ if [ -z "$DD_COMMAND" -a "$(command -v dcfldd 1>/dev/zero 2>/dev/zero ; echo $?)
 	DD_COMMAND=dcfldd
 fi
 
+# Copy file to the destination directory, verify checksums, return 1 on
+# checksum mismatch
 db_deedee() {
 	DD_COMMAND="${DD_COMMAND:-dd}"
 	CKSUM_COMMAND="${CKSUM_COMMAND:-sha512sum}"

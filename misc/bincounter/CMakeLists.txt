@@ -1,4 +1,0 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
-PROJECT(bincounter)
-ADD_EXECUTABLE(bincounter bincounter.c)
-INSTALL(TARGETS bincounter DESTINATION bin)

@@ -1,20 +1,11 @@
-.PHONY: all install httpdf httpdf-install imgur-dl-install myzuka-dl-install respcode-install
+.PHONY: all install httpdf
 
 all: httpdf
 
-install: httpdf-install imgur-dl-install myzuka-dl-install respcode-install
-
-httpdf:
+install:
 	$(MAKE) -C httpdf
-
-httpdf-install:
+	$(MAKE) -C curl-tt install
 	$(MAKE) -C httpdf install
-
-imgur-dl-install:
 	$(MAKE) -C imgur-dl install
-
-myzuka-dl-install:
 	$(MAKE) -C myzuka-dl install
-
-respcode-install:
 	$(MAKE) -C respcode install

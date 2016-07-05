@@ -1,0 +1,24 @@
+sudo: required
+dist: trusty
+language: python
+python:
+  - "2.7"
+  - "3.5"
+env:
+  global:
+    - CXX=g++-4.8
+    - CC=gcc-4.8
+before_install:
+  - sudo apt-get clean
+  - sudo apt-get update
+  - sudo apt-get install -y cmake
+  - sudo apt-get install -y haskell-platform
+  - sudo apt-get install -y golang
+  - sudo apt-get install -y python3-pip python-dev
+  - sudo pip3 install -U setuptools
+  - sudo pip3 install -U virtualenvwrapper
+  - python3 -V
+  - pip3 -V
+script:
+  - patches/apply
+  - make

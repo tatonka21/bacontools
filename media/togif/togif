@@ -1,11 +1,23 @@
 #!/bin/sh
-# ./togif.sh /home/user/video.mkv resultgifname
+# Usage: togif VIDEO OUTPUT_FILE
+# Convert video to gif with ffmpeg
+#
+# TODO: use set -e or otherwise check for errors
+# TODO: implement command line arguments in addition to existing env config
+# TODO: allow custom convert arguments
+# TODO: allow custom ffmpeg arguments
 
 FRAMES=${FRAMES-475}
 PIXELS=${PIXELS-100000}
 HW_THREADS="${THREADS-"$(grep -c processor /proc/cpuinfo)"}"
 THREADS="${HW_THREADS-2}"
 DELAY="${DELAY-12}"
+
+quiet_echo() {
+	if [ -z "$QUIET" ]; then
+		echo "$@"
+	fi
+}
 
 try_notify() {
 	if [ "$(command -v notify-send 1>/dev/zero 2>/dev/zero ; echo $?)" = 0 ] ; then
@@ -114,24 +126,28 @@ if [ -z "$SCALE" -o "$SCALE" = 0 ]; then
 	exit 1
 fi
 
-echo "File: $1"
-echo "Output name: $RESULT_FILENAME"
-echo "Frame count: $FRAMES"
-echo "Pixel count: $PIXELS"
-echo "Duration: $DURATION"
-echo "Width: $WIDTH"
-echo "Height: $HEIGHT"
-echo "FPS: $FPS"
-echo "Scale: $SCALE"
-echo "Delay: $DELAY/100 seconds"
-echo "Threads: $THREADS"
+if [ -n "$NOSTATS" -o -n "$QUIET" ]; then
+	NOSTATS=no
+fi
+
+quiet_echo "File: $1"
+quiet_echo "Output name: $RESULT_FILENAME"
+quiet_echo "Frame count: $FRAMES"
+quiet_echo "Pixel count: $PIXELS"
+quiet_echo "Duration: $DURATION"
+quiet_echo "Width: $WIDTH"
+quiet_echo "Height: $HEIGHT"
+quiet_echo "FPS: $FPS"
+quiet_echo "Scale: $SCALE"
+quiet_echo "Delay: $DELAY/100 seconds"
+quiet_echo "Threads: $THREADS"
 
 try_notify "$RESULT_FILENAME started at $STARTTIME"
-echo "$RESULT_FILENAME started at $STARTTIME"
+quiet_echo "$RESULT_FILENAME started at $STARTTIME"
 
 mkdir -p "$RESULT_FILENAME.frames"
 
-ffmpeg -v quiet -stats -threads "$THREADS" -i "$1" -threads "$THREADS" -r "$FPS" -vf scale=iw*"$SCALE":-1 "$RESULT_FILENAME.frames/%04d.png" #2>/dev/null
+ffmpeg -v quiet -"$NOSTATS"stats -threads "$THREADS" -i "$1" -threads "$THREADS" -r "$FPS" -vf scale=iw*"$SCALE":-1 "$RESULT_FILENAME.frames/%04d.png" #2>/dev/null
 convert -delay "$DELAY" -loop 0 "$RESULT_FILENAME.frames/*.png" -verbose -limit memory 200MB -limit disk 200MB -limit map 75MB "$RESULT_FILENAME"
 
 stat "$RESULT_FILENAME" | head -n4
@@ -142,6 +158,6 @@ ENDTIME="$(date --rfc-3339=seconds)"
 TIMEELAPSED="$(datediff "$STARTTIME" "$ENDTIME")"
 COMPLETEMSG="$RESULT_FILENAME completed in $(( (TIMEELAPSED/60) ))m"
 try_notify "$COMPLETEMSG"
-echo "$RESULT_FILENAME ended at $ENDTIME, taking $(( (TIMEELAPSED/60) ))m"
+quiet_echo "$RESULT_FILENAME ended at $ENDTIME, taking $(( (TIMEELAPSED/60) ))m"
 
 rm -r "$RESULT_FILENAME.frames"

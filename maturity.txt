@@ -1,14 +1,17 @@
 Hack        apdiff
 Hack        bananaglee
-Hack        bincounter
+Hack        baconplaylist
+Hack        bitcount
 Hack        bitdiff
 Hack        byteat
 Hack        checkreboot
+Hack        curl-tt
 Hack        devrestore
 Hack        du1
 Hack        httpdf
 Hack        lines
 Hack        maybe
+Hack        morseconv
 Hack        pip-upgrade-all
 Hack        readable
 Hack        respcode
@@ -19,6 +22,7 @@ Hack        trimline
 Hack        update-all
 Hack        userls
 Hack        vidinfo
+Hack        vimless
 Untested    EncodingConverter
 Untested    ImageValidator
 Untested    balance

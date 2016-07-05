@@ -1,0 +1,18 @@
+#!/bin/sh
+# Usage: curl-tt URL [SLEEP_INTERVAL]
+# Test server response time with sleeping.
+
+if [ "$#" != 1 -a "$#" != 2 ]; then
+	echo "Usage: curl-tt URL [SLEEP_INTERVAL]" 1>&2
+	echo "Test server response time with sleeping." 1>&2
+	exit 1
+fi
+
+SLEEP_INTERVAL="${2-5s}"
+
+echo "testing $1, sleep $SLEEP_INTERVAL"
+
+while true ; do
+	curl -s -w "%{time_total}\\n" -o /dev/null "$1"
+	sleep "$SLEEP_INTERVAL"
+done

@@ -2,6 +2,21 @@ bacontools change log
 =====================
 Notable changes to `bacontools` are documented in this file.
 
+2016.07.05
+----------
+### Added
++ `curl-tt`
++ `bincounter`: total bytes and normalized bit counts
++ `morseconv`
++ `baconplaylist`
++ `vimless`
++ `CHECKLIST.md`
++ `togif`: implement `$QUIET` and `$NOSTATS`
++ `snippets/shell.md`
+
+### Changed
++ `bincounter` -> `bitcount`
+
 ***
 
 2016.06.29
