@@ -5,6 +5,7 @@ Hack        bincounter
 Hack        bitdiff
 Hack        byteat
 Hack        checkreboot
+Hack        curl-tt
 Hack        devrestore
 Hack        du1
 Hack        httpdf

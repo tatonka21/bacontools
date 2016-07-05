@@ -40,6 +40,7 @@ Web utilities
 -------------
 | Tool      | Maturity | Description                            | Language    |
 |-----------|----------|----------------------------------------|-------------|
+| curl-tt   | Hack     | Test server response time              | POSIX shell |
 | httpdf    | Hack     | Listen to a port and return free space | Go          |
 | myzuka-dl | Moving   | Download audio tracks from myzuka.fm   | Ruby        |
 | imgur-dl  | Moving   | Download Imgur albums                  | Ruby        |

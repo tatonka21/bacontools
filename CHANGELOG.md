@@ -5,6 +5,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `curl-tt`
 + `bincounter`: total bytes and normalized bit counts
 + `morseconv`
 + `baconplaylist`
