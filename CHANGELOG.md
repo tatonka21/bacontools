@@ -2,6 +2,15 @@ bacontools change log
 =====================
 Notable changes to `bacontools` are documented in this file.
 
+***
+
+Unreleased
+----------
+### Added
++ `vimless`: `-N` option for less; line numbers are now not printed by default
+
+***
+
 [2016.07.05]
 ------------
 ### Added

@@ -1,2 +1,22 @@
 #!/bin/sh
-vimcat -o - "$@" | sed 's/$/\x1B[0m/' | less -rN
+# Usage: [command | ] vimless [-N] [FILE...]
+# Pass output of vimcat (from vimpager package) to less.
+#
+# OPTIONS:
+#  -N                 Pass -N to less, which will make it print line numbers
+
+LESS_N=""
+
+while getopts N f ; do
+	case "$f" in
+		N) LESS_N=1 ;;
+	esac
+done
+
+shift "$(( OPTIND - 1 ))"
+
+if [ "$LESS_N" = "1" ] ; then
+	LESS_N="-N"
+fi
+
+vimcat -o - "$@" | sed 's/$/\x1B[0m/' | less -r $LESS_N
