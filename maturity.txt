@@ -1,6 +1,6 @@
 Hack        apdiff
-Hack        bananaglee
 Hack        baconplaylist
+Hack        bananaglee
 Hack        bitcount
 Hack        bitdiff
 Hack        byteat
