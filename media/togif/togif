@@ -1,11 +1,12 @@
 #!/bin/sh
 # Usage: togif VIDEO OUTPUT_FILE
-# Convert video to gif with ffmpeg
+# Convert video to gif with ffmpeg.
 #
-# TODO: use set -e or otherwise check for errors
 # TODO: implement command line arguments in addition to existing env config
 # TODO: allow custom convert arguments
 # TODO: allow custom ffmpeg arguments
+
+set -e
 
 FRAMES=${FRAMES-475}
 PIXELS=${PIXELS-100000}
@@ -25,13 +26,13 @@ try_notify() {
 	fi
 }
 
-is_video_file() {
+test_for_video_streams() {
 	VSTREAM_LINES="$(ffprobe "$1" 2>&1 | grep Video | grep -c Stream)"
 
 	if [ "$VSTREAM_LINES" = "0" ] ; then
-		exit
+		return 0
 	else
-		echo 1
+		return 1
 	fi
 }
 
@@ -68,7 +69,7 @@ if [ -z "$2" ]; then
 	exit 1
 fi
 
-if [ -z "$(is_video_file "$1")" ] ; then
+if [ "$(test_for_video_streams "$1" ; echo $?)" ] ; then
 	echo "No video streams in $1" 1>&2
 	exit 1
 fi

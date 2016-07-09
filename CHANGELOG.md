@@ -9,6 +9,9 @@ Unreleased
 ### Added
 + `vimless`: `-N` option for less; line numbers are now not printed by default
 
+### Changed
++ `togif`: use `set -e` to check for failing commands
+
 ***
 
 [2016.07.05]
