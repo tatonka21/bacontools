@@ -57,7 +57,7 @@ module Myzuka
       end
 
       unless results.any? then
-        puts("No results for query #{s}")
+        STDERR.puts("No results for query #{s}")
         return
       end
 
@@ -74,7 +74,7 @@ module Myzuka
           artist = hit[:artist].ljust(artist_maxlen)
           title  = hit[:title].ljust(title_maxlen)
           time   = ("(" + hit[:time] + ")").rjust(time_maxlen + 2)
-          puts("#{idx}  #{artist}  #{title}  #{time}")
+          STDERR.puts("#{idx}  #{artist}  #{title}  #{time}")
         end
       end
 
@@ -84,7 +84,7 @@ module Myzuka
 
       idx_list.each do |i|
         unless i >= 1 and i <= displayed_results
-          puts "Invalid index #{i}, must be an integer from 1 to #{displayed_results}"
+          STDERR.puts "Invalid index #{i}, must be an integer from 1 to #{displayed_results}"
           next
         end
 
@@ -96,7 +96,10 @@ module Myzuka
         session.execute_script('window.scrollBy(0,100000)')
         sleep(5)
 
-        down_link = session.find(:xpath, "//div[@class='aside']/a", :visible => :all)[:href]
+        down_link = session.find(:xpath, "//div[@class='aside']/a", :visible => :all)[:href] rescue begin
+          STDERR.puts "Unable to find download link on page #{session.current_url}"
+          return
+        end
 
         download = open(Net::HTTP.get_response(URI(down_link))['location'])
         directory = output_path.tr("\000", "")

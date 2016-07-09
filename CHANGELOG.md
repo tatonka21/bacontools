@@ -10,6 +10,7 @@ Unreleased
 + `vimless`: `-N` option for less; line numbers are now not printed by default
 
 ### Changed
++ `myzuka`: print output except filenames to stderr
 + `togif`: use `set -e` to check for failing commands
 
 ***
