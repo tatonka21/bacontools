@@ -13,7 +13,6 @@ Hack        lines
 Hack        maybe
 Hack        morseconv
 Hack        pip-upgrade-all
-Hack        readable
 Hack        respcode
 Hack        ringcat
 Hack        ruler
@@ -30,6 +29,7 @@ Untested    corrupt
 Untested    git-ls
 Untested    n7m
 Untested    netinfo
+Untested    readable
 Untested    tasktags
 Moving      devbup
 Moving      imgur-dl

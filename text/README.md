@@ -6,7 +6,7 @@ bacontools/text - you can't read without eyes anyway
 | lines     | Hack     | Print distribution of input lines lengths            | POSIX shell |
 | morseconv | Hack     | Convert text to Morse                                | Python      |
 | n7m       | Untested | Generate a numeronym (i18n, l10n, etc.)              | C           |
-| readable  | Hack     | Heuristically filter out garbage strings             | C           |
+| readable  | Untested | Heuristically filter out garbage strings             | C           |
 | ringcat   | Hack     | Append stdin to the end of the file circularly       | POSIX shell |
 | ruler     | Hack     | Print length of the longest line                     | POSIX shell |
 | trimline  | Hack     | Trim leading and trailing whitespaces                | POSIX shell |
