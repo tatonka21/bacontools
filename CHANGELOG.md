@@ -19,6 +19,7 @@ Unreleased
 + `togif`: use `set -e` to check for failing commands
 
 ### Fixed
++ `git-ls`: verify that argument paths exist
 + `git-ls`: list subdirectories and files correctly
 
 ***

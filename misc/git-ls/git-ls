@@ -52,6 +52,10 @@ if __name__ == '__main__':
     rows  = []
 
     for p in args.path:
+        if not os.path.exists(p):
+            sys.stderr.write('path \'{}\' does not exist\n'.format(p))
+            exit(1)
+
         parent = os.path.dirname(os.path.abspath(p)) if os.path.isfile(p) else os.path.abspath(p)
         filepath = os.path.curdir if os.path.isdir(p) else os.path.relpath(p, parent)
 
