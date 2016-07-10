@@ -38,6 +38,11 @@ Snippets
 Little code snippets that don't deserve a separate tool are saved to
 `snippets`. They are not included in total tool count.
 
+What's up with the creepy README headers?
+-----------------------------------------
+I've got no idea what you're talking about. Looks good to me. Perhaps your
+computer is infected?
+
 License
 -------
 Unless otherwise specified in a tool's README, all tools included in this
