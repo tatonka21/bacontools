@@ -12,6 +12,7 @@ Unreleased
 + `vimless`: `-N` option for less; line numbers are now not printed by default
 
 ### Changed
++ `vimless`: exit if $# = 0 and stdin is a tty
 + `myzuka`: print output except filenames to stderr
 + `togif`: use `set -e` to check for failing commands
 
