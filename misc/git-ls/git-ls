@@ -53,24 +53,32 @@ if __name__ == '__main__':
         parent = os.path.dirname(os.path.abspath(p)) if os.path.isfile(p) else os.path.abspath(p)
         filepath = os.path.curdir if os.path.isdir(p) else os.path.relpath(p, parent)
 
-        git_files = set(
-            subprocess.check_output(
-                ['git', 'ls-tree', '--name-only', 'HEAD', filepath],
-                cwd=parent,
-            ).
-            split('\n')[:-1]
-        )
+        try:
+            git_files = set(
+                subprocess.check_output(
+                    ['git', 'ls-tree', '--name-only', 'HEAD', filepath],
+                    cwd=parent,
+                ).
+                split('\n')[:-1]
+            )
+        except subprocess.CalledProcessError:
+            sys.stderr.write("`cd {} ; git ls-tree --name-only HEAD {}` exited with a non-zero status\n".format(parent, filepath))
+            exit(1)
 
         for f in git_files:
-            rows.append(f+'\t'+subprocess.check_output([
-                'git',
-                'log',
-                '-1',
-                '--pretty=format:%cr%x09%h%x09%s%x09%cn',
-                '--',
-                f],
-                cwd=parent).
-            strip())
+            try:
+                rows.append(f+'\t'+subprocess.check_output([
+                    'git',
+                    'log',
+                    '-1',
+                    '--pretty=format:%cr%x09%h%x09%s%x09%cn',
+                    '--',
+                    f],
+                    cwd=parent).
+                strip())
+            except subprocess.CalledProcessError:
+                sys.stderr.write("`cd {} ; git log -1 --pretty=format:%cr%x09%h%x09%s%x09%cn -- {}` exited with a non-zero status\n".format(parent, f))
+                exit(1)
 
     for r in columnize(rows, {}):
         print(r)
