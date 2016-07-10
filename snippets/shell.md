@@ -72,3 +72,10 @@ done
 ```
 
 Same, but more boring and not in parallel.
+
+***
+
+`ROOTDIR="$(dirname "$(readlink -f "$0")")" find "$1" -path "$2" -exec bash -c "$ROOTDIR"'/s "$1" '"$3"'"$(apdiff "$1")"' funcname \{\} \;`
+
+Batch process several files with a script `s` that's located in the same
+directory as the invoking script.
