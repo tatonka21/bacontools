@@ -4,6 +4,8 @@
 #
 # OPTIONS:
 #  -N                 Pass -N to less, which will make it print line numbers
+#
+# TODO: position-independent flags, refer to the "right now" comment
 
 LESS_N=""
 
