@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#define READABLE_VERSION "1"
+
 const char *short_options = "hc:";
 
 struct option long_options[] = {
@@ -12,7 +14,7 @@ struct option long_options[] = {
 };
 
 const char *help_text = ""\
-"bacontools readable v1\n"
+"bacontools readable v" READABLE_VERSION "\n"
 "Usage: strings some_file | readable [options...]\n"\
 "Filter out unreadable (garbage) lines.\n\n"\
 "COMMAND LINE OPTIONS:\n"\
