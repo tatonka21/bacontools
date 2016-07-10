@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `stopwatch`
 + `readable`: manpage
 + `vimless`: `-N` option for less; line numbers are now not printed by default
 

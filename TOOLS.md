@@ -61,6 +61,7 @@ Miscellaneous utilities
 | git-ls            | Untested | Github-like human-readable Git repo directory listing   | Python      |
 | maybe             | Hack     | Prints yes and no randomly interleaved                  | C           |
 | pip-upgrade-all   | Hack     | Upgrade all local PIP packages                          | Python      |
+| stopwatch         | Hack     | Count elapsed time                                      | POSIX shell |
 | tasktags          | Untested | Search for tags like TODO                               | POSIX shell |
 | termdraw          | Moving   | Print ASCII-art graphs                                  | Python      |
 | update-all        | Hack     | Update all Git repositories in level 1 subdirectories   | POSIX shell |

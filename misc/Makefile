@@ -19,6 +19,7 @@ install:
 	$(MAKE) -C git-ls install
 	$(MAKE) -C maybe install
 	$(MAKE) -C pip-upgrade-all install
+	$(MAKE) -C stopwatch install
 	$(MAKE) -C tasktags install
 	$(MAKE) -C termdraw install
 	$(MAKE) -C update-all install
