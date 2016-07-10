@@ -25,7 +25,7 @@ def align_field(string, width, alignment='r'):
         raise ValueError('Alignment is "'+ alignment +'", must be "r" or "l"')
 
 
-def columnize(row_list, alignments, separator_string='  '):
+def columnize(row_list, alignments, separator_string=' '):
     result = []
     maxlen = {}
 
