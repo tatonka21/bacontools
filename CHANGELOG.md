@@ -14,6 +14,9 @@ Unreleased
 + `myzuka`: print output except filenames to stderr
 + `togif`: use `set -e` to check for failing commands
 
+### Fixed
++ `git-ls`: list subdirectories and files correctly
+
 ***
 
 [2016.07.05]

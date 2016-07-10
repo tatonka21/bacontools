@@ -3,9 +3,6 @@
 # TODO: ls-like sorting arguments (passed directly to ls)
 # TODO: color
 # TODO: code-refactoring-cat.gif
-# FIXME: doesn't ls files and subpaths; what? (apparently a regression after
-# FIXME: argparse)
-
 
 import os
 import sys
@@ -51,11 +48,12 @@ if __name__ == '__main__':
     rows  = []
 
     for p in args.path:
-        parent = os.path.dirname(p) if os.path.isfile(p) else os.path.normpath(p)
+        parent = os.path.dirname(os.path.abspath(p)) if os.path.isfile(p) else os.path.abspath(p)
+        filepath = os.path.curdir if os.path.isdir(p) else os.path.relpath(p, parent)
 
         git_files = set(
             subprocess.check_output(
-                ['git', 'ls-tree', '--name-only', 'HEAD', p],
+                ['git', 'ls-tree', '--name-only', 'HEAD', filepath],
                 cwd=parent,
             ).
             split('\n')[:-1]
