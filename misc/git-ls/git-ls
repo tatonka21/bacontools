@@ -1,10 +1,12 @@
 #!/usr/bin/env python
-# Usage: git-ls [DIRECTORY]
-# List all Git-tracked files in a directory in a Github manner
+# Usage: git-ls [DIR | FILE ...]
+# List all Git-tracked files in a directory in a Github style.
 #
 # TODO: ls-like sorting arguments (passed directly to ls)
 # TODO: color
 # TODO: code-refactoring-cat.gif
+# TODO: print argument paths when there are multiple, like ls does
+# XXX: could the current algorithm be optimized? Takes infinity to run on active projects like Linux
 
 import os
 import sys
