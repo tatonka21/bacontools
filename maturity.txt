@@ -23,6 +23,7 @@ Hack        update-all
 Hack        userls
 Hack        vidinfo
 Hack        vimless
+Hack        wget-page
 Untested    EncodingConverter
 Untested    ImageValidator
 Untested    balance

@@ -9,3 +9,4 @@ install:
 	$(MAKE) -C imgur-dl install
 	$(MAKE) -C myzuka-dl install
 	$(MAKE) -C respcode install
+	$(MAKE) -C wget-page install
