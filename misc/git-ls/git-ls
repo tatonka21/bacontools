@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-
+# Usage: git-ls [DIRECTORY]
+# List all Git-tracked files in a directory in a Github manner
+#
 # TODO: ls-like sorting arguments (passed directly to ls)
 # TODO: color
 # TODO: code-refactoring-cat.gif
