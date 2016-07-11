@@ -13,6 +13,7 @@ Unreleased
 + `vimless`: `-N` option for less; line numbers are now not printed by default
 
 ### Changed
++ `vimless`: loop over each file argument
 + `baconplaylist`: ignore case in artist names
 + `baconplaylist`: display top N artists
 + `git-ls`: separate cols with 1 space instead of 2
