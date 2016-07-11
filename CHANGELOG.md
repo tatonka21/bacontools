@@ -13,6 +13,7 @@ Unreleased
 + `vimless`: `-N` option for less; line numbers are now not printed by default
 
 ### Changed
++ `baconplaylist`: ignore case in artist names
 + `baconplaylist`: display top N artists
 + `git-ls`: separate cols with 1 space instead of 2
 + `vimless`: exit if $# = 0 and stdin is a tty

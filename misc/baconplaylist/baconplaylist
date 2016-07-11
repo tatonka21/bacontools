@@ -14,8 +14,8 @@ else
 	TOP_ARTIST_COUNT="${TOP_ARTIST_COUNT-10}"
 
 	TRACKS="$(cut -d' '  -f2- "$BACONPLAYLIST_FILE" | grep -cPo "^.*(?= –)")"
-	ARTISTS="$(cut -d' '  -f2- "$BACONPLAYLIST_FILE" | grep -Po "^.*(?= –)" | sort | uniq -c | wc -l)"
-	ONETRACK_ARTISTS="$(cut -d' ' -f2- "$BACONPLAYLIST_FILE" | grep -Po "^.*(?= –)" | sort | uniq -c | grep -c "^\s*1 ")"
+	ARTISTS="$(cut -d' '  -f2- "$BACONPLAYLIST_FILE" | grep -Po "^.*(?= –)" | sort | uniq -ci | wc -l)"
+	ONETRACK_ARTISTS="$(cut -d' ' -f2- "$BACONPLAYLIST_FILE" | grep -Po "^.*(?= –)" | sort | uniq -ci | grep -c "^\s*1 ")"
 
 	echo "$TRACKS tracks"
 	echo "$ARTISTS artists"
@@ -24,6 +24,6 @@ else
 	if [ -n "$TOP_ARTIST_COUNT" ]; then
 		echo
 		echo "Top $TOP_ARTIST_COUNT artists:"
-		cut -d' '  -f2- ~/Documents/baconplaylist/list.txt | grep -Po "^.*(?= –)" | sort | uniq -c | sort -hr | head -"$TOP_ARTIST_COUNT"
+		cut -d' '  -f2- ~/Documents/baconplaylist/list.txt | grep -Po "^.*(?= –)" | sort | uniq -ci | sort -hr | head -"$TOP_ARTIST_COUNT"
 	fi
 fi
