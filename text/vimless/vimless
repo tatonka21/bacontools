@@ -7,6 +7,10 @@
 #
 # TODO: position-independent flags, refer to the "right now" comment
 
+vimcat_less() {
+	vimcat -o - "$@" | sed 's/$/\x1B[0m/' | less -r $LESS_N
+}
+
 LESS_N=""
 
 # Exit if no arguments were passed and stdin is attached to a tty
@@ -29,6 +33,10 @@ if [ "$LESS_N" = "1" ] ; then
 	LESS_N="-N"
 fi
 
-for FILE in "$@" ; do
-	vimcat -o - "$FILE" | sed 's/$/\x1B[0m/' | less -r $LESS_N
-done
+if [ ! -t 0 ] ; then
+	vimcat_less
+else
+	for FILE in "$@" ; do
+		vimcat_less "$FILE"
+	done
+fi
