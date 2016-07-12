@@ -13,8 +13,8 @@ if [ ! "$#" = 0 ]; then
 else
 	TOP_ARTIST_COUNT="${TOP_ARTIST_COUNT-10}"
 
-	TRACKS="$(cut -d' '  -f2- "$BACONPLAYLIST_FILE" | grep -cPo "^.*(?= –)")"
-	ARTISTS="$(cut -d' '  -f2- "$BACONPLAYLIST_FILE" | grep -Po "^.*(?= –)" | sort | uniq -ci | wc -l)"
+	TRACKS="$(cut -d' ' -f2- "$BACONPLAYLIST_FILE" | grep -cPo "^.*(?= –)")"
+	ARTISTS="$(cut -d' ' -f2- "$BACONPLAYLIST_FILE" | grep -Po "^.*(?= –)" | sort | uniq -ci | wc -l)"
 	ONETRACK_ARTISTS="$(cut -d' ' -f2- "$BACONPLAYLIST_FILE" | grep -Po "^.*(?= –)" | sort | uniq -ci | grep -c "^\s*1 ")"
 
 	echo "$TRACKS tracks"
