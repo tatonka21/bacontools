@@ -1,0 +1,48 @@
+#!/bin/sh
+# Usage: git repo-list FILE
+# Clone/pull all Git remotes listed in a file to cwd.
+#
+# TODO: implement optional parent DIRECTORY argument
+# TODO: SHUFFLE_LINES environment variable to randomize repo order
+
+trim() {
+	sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]]*$//'
+}
+
+if [ "$#" != 1 ]; then
+	echo "Usage: git repo-list FILE" 1>&2
+	echo "Clone/pull all Git remotes listed in a file to cwd." 1>&2
+	exit 1
+fi
+
+CURRENT_DIRECTORY="$(pwd)"
+LIST_FILE="$1"
+
+if [ ! -r "$LIST_FILE" ]; then
+	echo "Unreadable file: $LIST_FILE" 1>&2
+	exit 1
+fi
+
+LIST_FILE_LINES="$(wc -l < "$LIST_FILE")"
+
+if [ "$LIST_FILE_LINES" = 0 ]; then
+	echo "File is empty: $LIST_FILE" 1>&2
+	exit 1
+fi
+
+for LINE_NO in $(seq 1 "$LIST_FILE_LINES") ; do
+	LINE_TEXT="$(sed "$LINE_NO"'q;d' "$LIST_FILE" | trim)"
+
+	set +e
+	git clone "$LINE_TEXT" 2>&1
+
+	if [ "$?" != 0 ]; then
+		REPO_NAME="$(git clone "$LINE_TEXT" 2>&1 | grep -Po "(?<=path ').*(?=' already)")"
+
+		if [ -d "$REPO_NAME" ]; then
+			cd "$REPO_NAME"
+			git pull
+			cd "$CURRENT_DIRECTORY"
+		fi
+	fi
+done

@@ -14,8 +14,8 @@ Tool count
 | media     | Tools for editing media (audio, video, image) files | C#, POSIX shell, Bash               | 4     |
 | text      | Tools for working with text                         | Python, C, POSIX shell              | 9     |
 | web       | Internet-related tools                              | Go, Ruby, POSIX shell               | 6     |
-| misc      | Everything else                                     | Python, C#, C, Haskell, POSIX shell | 15    |
-|           |                                                     | *Total*                             | 41    |
+| misc      | Everything else                                     | Python, C#, C, Haskell, POSIX shell | 16    |
+|           |                                                     | *Total*                             | 42    |
 
 Tool maturity
 -------------

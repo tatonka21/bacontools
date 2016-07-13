@@ -17,6 +17,7 @@ install: all
 	$(MAKE) -C byteat install
 	$(MAKE) -C corrupt install
 	$(MAKE) -C git-ls install
+	$(MAKE) -C git-repo-list install
 	$(MAKE) -C maybe install
 	$(MAKE) -C pip-upgrade-all install
 	$(MAKE) -C stopwatch install
