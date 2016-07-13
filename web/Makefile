@@ -2,8 +2,10 @@
 
 all: httpdf
 
-install:
+httpdf:
 	$(MAKE) -C httpdf
+
+install: all
 	$(MAKE) -C curl-tt install
 	$(MAKE) -C httpdf install
 	$(MAKE) -C imgur-dl install
