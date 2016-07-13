@@ -8,7 +8,7 @@ all:
 	$(MAKE) -C corrupt
 	$(MAKE) -C maybe
 
-install:
+install: all
 	$(MAKE) -C apdiff install
 	$(MAKE) -C bananaglee install
 	$(MAKE) -C baconplaylist install

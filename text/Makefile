@@ -5,7 +5,7 @@ all:
 	$(MAKE) -C n7m
 	$(MAKE) -C readable
 
-install:
+install: all
 	$(MAKE) -C balance install
 	$(MAKE) -C lines install
 	$(MAKE) -C morseconv install
