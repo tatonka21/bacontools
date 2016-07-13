@@ -14,6 +14,7 @@ Unreleased
 + `vimless`: `-N` option for less; line numbers are now not printed by default
 
 ### Changed
++ `bitcount`: display true bits / all bits ratio
 + `vimless`: loop over each file argument
 + `baconplaylist`: ignore case in artist names
 + `baconplaylist`: display top N artists
