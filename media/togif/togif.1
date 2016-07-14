@@ -1,0 +1,92 @@
+.TH togif 1 "togif" "14 Jul 2016" "version 2016.07.14"
+
+.SH NAME
+togif - convert video to animated gif
+
+.SH SYNOPSIS
+[\fBVAR=\fP\fIVALUE\fP] togif \fBVIDEO_FILE\fP \fBGIF_NAME\fP
+
+.SH DESCRIPTION
+\fBtogif\fP accepts two arguments: path to the video file, and name prefix of
+the generated GIF. It will generate a name for the GIF based on the following
+template:
+
+\fB$GIF_NAME\fP.\fB$FRAMES\fP
+
+After that, \fBtogif\fP will explode \fB$VIDEO_FILE\fP into \fB$FRAMES\fP
+frames, taken with an equal FPS and stored into a temporary directory
+
+\fB$(pwd)\fP/\fB$GIF_NAME\fP.\fB$FRAMES\fP.frames/
+
+\fBtogif\fP will resize these frames so that each of them has roughly
+\fB$PIXELS\fP pixels in total. After frame extraction, it will create an
+animated looping GIF, where every frame has a delay of \fB$DELAY\fP hundredths
+of a second.
+
+.SH ENVIRONMENT VARIABLES
+.TP
+\fBFRAMES\fP
+
+Number of frames in the output GIF file.
+
+Note that since the algorithm for calculating FPS is inexact, \fBtogif\fP may
+sometimes produce an off-by-one number of frames. I don't know how to fix this
+yet.
+
+Default: \fB475\fP
+
+.TP
+\fBPIXELS\fP
+
+Number of pixels in each frame (equal to width multiplied by height).
+
+Note that \fBtogif\fP preserves original aspect ratio and does not crop the
+output, which means that the scaling ratio it calculates based on this value
+will not guarantee this exact number of pixels. I don't think this behavior
+should be amended.
+
+Default: \fB100000\fP
+
+.TP
+\fBTHREADS\fP
+
+Number of \fBffmpeg\fP processing threads.
+
+Default: \fB$(grep -c processor /proc/cpuinfo)\fP or 2
+
+.TP
+\fBDELAY\fP
+
+Delay of each GIF frame in hundredths of a second.
+
+Default: \fB12\fP
+
+.TP
+\fBQUIET\fP
+
+If this variable is set, \fBtogif\fP won't print calculated values for width,
+height, etc.
+
+Default: unset
+
+.SH DEPENDENCIES
+\fBffmpeg\fP
+
+\fBffprobe\fP
+
+\fBpython\fP
+
+\fBconvert\fP (from the \fBimagemagick\fP package)
+
+\fBgifsicle\fP
+
+\fBdate\fP
+
+\fBnotify-send\fP (optional)
+
+.SH AUTHOR
+Developed by Ilya Terentyev <bacondropped@gmail.com> as a part of the
+\fBbacontools\fP package <https://gitlab.com/bacondropped/bacontools>.
+
+.SH LICENSE
+\fBtogif\fP is distributed under the terms of the MIT license.

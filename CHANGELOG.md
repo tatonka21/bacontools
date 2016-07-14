@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `togif`: manpage
 + `git-repo-list`
 + `wget-page`
 + `stopwatch`
