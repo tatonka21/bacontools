@@ -6,6 +6,9 @@ Notable changes to `bacontools` are documented in this file.
 
 Unreleased
 ----------
+### Added
++ `myzuka-dl`: `MAX_RESULTS` and `TIMEOUT` environment variables
+
 ### Fixed
 + `myzuka-dl`: don't exit when unable to download one track
 

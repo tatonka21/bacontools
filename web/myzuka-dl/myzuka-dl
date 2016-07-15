@@ -15,8 +15,8 @@ require 'fileutils'
 
 MYZUKA_DOMAIN = "myzuka.fm"
 MYZUKA_HOME   = "https://#{MYZUKA_DOMAIN}/"
-MAX_RESULTS   = 20
-TIMEOUT       = 60
+MAX_RESULTS   = Integer(ENV.fetch('MAX_RESULTS', '20'))
+TIMEOUT       = Integer(ENV.fetch('TIMEOUT', '60'))
 
 def a(node)
   node.find(:xpath, './/p').text
