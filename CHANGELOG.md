@@ -4,8 +4,8 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-Unreleased
-----------
+[2016.07.15]
+------------
 ### Added
 + `togif`: manpage
 + `git-repo-list`
@@ -159,3 +159,4 @@ Unreleased
 [2016.06.17]: https://gitlab.com/bacondropped/bacontools/tags/2016-06-17
 [2016.06.29]: https://github.com/bacondropped/bacontools/releases/tag/2016.06.29
 [2016.07.05]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.05
+[2016.07.15]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.15
