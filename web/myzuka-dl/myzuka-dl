@@ -2,8 +2,6 @@
 
 # -*- coding: UTF-8 -*-
 
-# TODO: handle [Утерян] (lost) uploads gracefully
-
 require 'rubygems'
 require 'capybara'
 require 'capybara/poltergeist'
