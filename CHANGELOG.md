@@ -15,6 +15,7 @@ Unreleased
 + `vimless`: `-N` option for less; line numbers are now not printed by default
 
 ### Changed
++ `checkreboot`: don't print "reboot-required.pkgs" prompt
 + `bitcount`: display true bits / all bits ratio
 + `vimless`: loop over each file argument
 + `baconplaylist`: ignore case in artist names
