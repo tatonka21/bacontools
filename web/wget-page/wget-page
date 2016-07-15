@@ -1,0 +1,21 @@
+#!/bin/sh
+# Usage: wget-page URL DOMAIN
+# Download webpage with all resources, convert links.
+
+if [ "$#" != "2" ]; then
+	echo "Usage: wget-page URL DOMAIN" 1>&2
+	exit 1
+fi
+
+DOMAIN="$2"
+URL="$1"
+
+wget "$URL" \
+	--recursive \
+	--no-clobber \
+	--page-requisites \
+	--html-extension \
+	--convert-links \
+	--restrict-file-names=windows \
+	--no-parent \
+	--domains "$DOMAIN"

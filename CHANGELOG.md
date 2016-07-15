@@ -2,8 +2,37 @@ bacontools change log
 =====================
 Notable changes to `bacontools` are documented in this file.
 
-2016.07.05
-----------
+***
+
+[2016.07.15]
+------------
+### Added
++ `togif`: manpage
++ `git-repo-list`
++ `wget-page`
++ `stopwatch`
++ `readable`: manpage
++ `vimless`: `-N` option for less; line numbers are now not printed by default
+
+### Changed
++ `checkreboot`: don't print "reboot-required.pkgs" prompt
++ `bitcount`: display true bits / all bits ratio
++ `vimless`: loop over each file argument
++ `baconplaylist`: ignore case in artist names
++ `baconplaylist`: display top N artists
++ `git-ls`: separate cols with 1 space instead of 2
++ `vimless`: exit if $# = 0 and stdin is a tty
++ `myzuka`: print output except filenames to stderr
++ `togif`: use `set -e` to check for failing commands
+
+### Fixed
++ `git-ls`: verify that argument paths exist
++ `git-ls`: list subdirectories and files correctly
+
+***
+
+[2016.07.05]
+------------
 ### Added
 + `curl-tt`
 + `bincounter`: total bytes and normalized bit counts
@@ -19,8 +48,8 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-2016.06.29
-----------
+[2016.06.29]
+------------
 ### Added
 + `single-urxvt`
 
@@ -34,8 +63,8 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-[2016.06.17] - 2016-06-17
--------------------------
+[2016.06.17]
+------------
 ### Added
 + `myzuka-dl`: handle `DIR` environment variable
 + `du1`
@@ -60,8 +89,8 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-[2016.05] - 2016-05-28
-----------------------
+[2016.05]
+---------
 ### Added
 + `httpdf`
 + `TOOLS.md`
@@ -107,8 +136,8 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-[2016.04] - 2016-05-01
-----------------------
+[2016.04]
+---------
 ### Added
 + `imgur`
 + `myzuka`
@@ -128,3 +157,6 @@ Notable changes to `bacontools` are documented in this file.
 [2016.04]: https://gitlab.com/bacondropped/bacontools/tags/2016.04
 [2016.05]: https://gitlab.com/bacondropped/bacontools/tags/2016.05
 [2016.06.17]: https://gitlab.com/bacondropped/bacontools/tags/2016-06-17
+[2016.06.29]: https://github.com/bacondropped/bacontools/releases/tag/2016.06.29
+[2016.07.05]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.05
+[2016.07.15]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.15

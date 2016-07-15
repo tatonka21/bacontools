@@ -4,7 +4,7 @@ bacontools is a collection of small utilities I've written over the years.
 
 Status
 ------
-![Travis][travis]
+[![Travis][travis]](https://travis-ci.org/bacondropped/bacontools/)
 
 Tool count
 ----------
@@ -13,9 +13,9 @@ Tool count
 | linux     | Tools specific to GNU/Linux distributions           | POSIX shell, Bash                   | 7     |
 | media     | Tools for editing media (audio, video, image) files | C#, POSIX shell, Bash               | 4     |
 | text      | Tools for working with text                         | Python, C, POSIX shell              | 9     |
-| web       | Internet-related tools                              | Go, Ruby, POSIX shell               | 5     |
-| misc      | Everything else                                     | Python, C#, C, Haskell, POSIX shell | 14    |
-|           |                                                     | *Total*                             | 39    |
+| web       | Internet-related tools                              | Go, Ruby, POSIX shell               | 6     |
+| misc      | Everything else                                     | Python, C#, C, Haskell, POSIX shell | 16    |
+|           |                                                     | *Total*                             | 42    |
 
 Tool maturity
 -------------
@@ -37,6 +37,11 @@ Snippets
 --------
 Little code snippets that don't deserve a separate tool are saved to
 `snippets`. They are not included in total tool count.
+
+What's up with the creepy README headers?
+-----------------------------------------
+I've got no idea what you're talking about. Looks good to me. Perhaps your
+computer is infected?
 
 License
 -------

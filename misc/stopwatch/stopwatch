@@ -1,0 +1,17 @@
+#!/bin/sh
+# Usage: stopwatch
+# Print an ascending time counter.
+#
+# TODO: laps
+# TODO: optional date announcement at startup
+
+date1="$(date +%s)"
+
+echo
+
+while true ; do
+	tput cuu 1
+	tput el
+	printf "%s\n" "$(date -u --date @$(( $(date +%s) - date1)) +%H:%M:%S)" ;
+	sleep 1
+done

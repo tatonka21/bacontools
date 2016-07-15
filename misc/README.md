@@ -11,8 +11,10 @@ bacontools/misc - chaos reigns
 | byteat            | Hack     | Print value of byte at index                            | C           |
 | corrupt           | Untested | Flip/remove random bits/bytes                           | C           |
 | git-ls            | Untested | Github-like human-readable Git repo directory listing   | Python      |
+| git-repo-list     | Hack     | Clone or pull all repos from a remote list              | POSIX shell |
 | maybe             | Hack     | Prints yes and no randomly interleaved                  | C           |
 | pip-upgrade-all   | Hack     | Upgrade all local PIP packages                          | Python      |
+| stopwatch         | Hack     | Count elapsed time                                      | POSIX shell |
 | tasktags          | Untested | Search for tags like TODO                               | POSIX shell |
 | termdraw          | Moving   | Print ASCII-art graphs                                  | Python      |
 | update-all        | Hack     | Update all Git repositories in level 1 subdirectories   | POSIX shell |

@@ -1,0 +1,37 @@
+.TH readable 1 "readable" "15 Jul 2016" "v1 2016.07.15"
+
+.SH NAME
+readable - heuristic garbage string filter
+
+.SH SYNOPSIS
+command | \fBreadable\fP [\fB-c\fP CUTOFF]
+
+.SH DESCRIPTION
+\fBreadable\fP reads standard input line by line, computes "readability index"
+for each one of them, normalizes it to the unit interval [\fB0\fP, \fB1\fP],
+discards lines below a certain readability index, and prints remaining ones.
+
+.SH ALGORITHM
+This version of \fBreadable\fP implements a rather naive readability index
+algorithm. It only looks at kinds of characters present, favoring letters and
+disliking other symbols, and does not take into account their order or
+grouping.
+
+.SH OPTIONS
+.TP
+\fB\-c\fP CUTOFF, \fB\-\-cutoff\fP=CUTOFF
+Set the cutoff readability index. All lines with index less than \fBCUTOFF\fP
+will be discarded. This must be a floating-point number between 0 and 1.
+
+Default: \fB0.5\fP.
+
+.TP
+\fB\-h\fP, \fB\-\-help\fP
+Print a short help message.
+
+.SH AUTHOR
+Developed by Ilya Terentyev <bacondropped@gmail.com> as a part of the
+\fBbacontools\fP package <https://gitlab.com/bacondropped/bacontools>.
+
+.SH LICENSE
+\fBreadable\fP is distributed under the terms of the MIT license.

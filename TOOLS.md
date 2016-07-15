@@ -30,7 +30,7 @@ Text utilities
 | lines     | Hack     | Print distribution of input lines lengths            | POSIX shell |
 | morseconv | Hack     | Convert text to Morse                                | Python      |
 | n7m       | Untested | Generate a numeronym (i18n, l10n, etc.)              | C           |
-| readable  | Hack     | Heuristically filter out garbage strings             | C           |
+| readable  | Untested | Heuristically filter out garbage strings             | C           |
 | ringcat   | Hack     | Append stdin to the end of the file circularly       | POSIX shell |
 | ruler     | Hack     | Print length of the longest line                     | POSIX shell |
 | trimline  | Hack     | Trim leading and trailing whitespaces                | POSIX shell |
@@ -45,6 +45,7 @@ Web utilities
 | myzuka-dl | Moving   | Download audio tracks from myzuka.fm   | Ruby        |
 | imgur-dl  | Moving   | Download Imgur albums                  | Ruby        |
 | respcode  | Hack     | Return HTTP response code              | POSIX shell |
+| wget-page | Hack     | Download a web page                    | POSIX shell |
 
 Miscellaneous utilities
 -----------------------
@@ -59,8 +60,10 @@ Miscellaneous utilities
 | byteat            | Hack     | Print value of byte at index                            | C           |
 | corrupt           | Untested | Flip/remove random bits/bytes                           | C           |
 | git-ls            | Untested | Github-like human-readable Git repo directory listing   | Python      |
+| git-repo-list     | Hack     | Clone or pull all repos from a remote list              | POSIX shell |
 | maybe             | Hack     | Prints yes and no randomly interleaved                  | C           |
 | pip-upgrade-all   | Hack     | Upgrade all local PIP packages                          | Python      |
+| stopwatch         | Hack     | Count elapsed time                                      | POSIX shell |
 | tasktags          | Untested | Search for tags like TODO                               | POSIX shell |
 | termdraw          | Moving   | Print ASCII-art graphs                                  | Python      |
 | update-all        | Hack     | Update all Git repositories in level 1 subdirectories   | POSIX shell |

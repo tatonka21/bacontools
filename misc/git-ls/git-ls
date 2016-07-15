@@ -1,11 +1,12 @@
 #!/usr/bin/env python
-
+# Usage: git-ls [DIR | FILE ...]
+# List all Git-tracked files in a directory in a Github style.
+#
 # TODO: ls-like sorting arguments (passed directly to ls)
 # TODO: color
 # TODO: code-refactoring-cat.gif
-# FIXME: doesn't ls files and subpaths; what? (apparently a regression after
-# FIXME: argparse)
-
+# TODO: print argument paths when there are multiple, like ls does
+# XXX: could the current algorithm be optimized? Takes infinity to run on active projects like Linux
 
 import os
 import sys
@@ -24,7 +25,7 @@ def align_field(string, width, alignment='r'):
         raise ValueError('Alignment is "'+ alignment +'", must be "r" or "l"')
 
 
-def columnize(row_list, alignments, separator_string='  '):
+def columnize(row_list, alignments, separator_string=' '):
     result = []
     maxlen = {}
 
@@ -51,26 +52,39 @@ if __name__ == '__main__':
     rows  = []
 
     for p in args.path:
-        parent = os.path.dirname(p) if os.path.isfile(p) else os.path.normpath(p)
+        if not os.path.exists(p):
+            sys.stderr.write('path \'{}\' does not exist\n'.format(p))
+            exit(1)
 
-        git_files = set(
-            subprocess.check_output(
-                ['git', 'ls-tree', '--name-only', 'HEAD', p],
-                cwd=parent,
-            ).
-            split('\n')[:-1]
-        )
+        parent = os.path.dirname(os.path.abspath(p)) if os.path.isfile(p) else os.path.abspath(p)
+        filepath = os.path.curdir if os.path.isdir(p) else os.path.relpath(p, parent)
+
+        try:
+            git_files = set(
+                subprocess.check_output(
+                    ['git', 'ls-tree', '--name-only', 'HEAD', filepath],
+                    cwd=parent,
+                ).
+                split('\n')[:-1]
+            )
+        except subprocess.CalledProcessError:
+            sys.stderr.write("`cd {} ; git ls-tree --name-only HEAD {}` exited with a non-zero status\n".format(parent, filepath))
+            exit(1)
 
         for f in git_files:
-            rows.append(f+'\t'+subprocess.check_output([
-                'git',
-                'log',
-                '-1',
-                '--pretty=format:%cr%x09%h%x09%s%x09%cn',
-                '--',
-                f],
-                cwd=parent).
-            strip())
+            try:
+                rows.append(f+'\t'+subprocess.check_output([
+                    'git',
+                    'log',
+                    '-1',
+                    '--pretty=format:%cr%x09%h%x09%s%x09%cn',
+                    '--',
+                    f],
+                    cwd=parent).
+                strip())
+            except subprocess.CalledProcessError:
+                sys.stderr.write("`cd {} ; git log -1 --pretty=format:%cr%x09%h%x09%s%x09%cn -- {}` exited with a non-zero status\n".format(parent, f))
+                exit(1)
 
     for r in columnize(rows, {}):
         print(r)

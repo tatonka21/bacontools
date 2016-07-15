@@ -10,3 +10,6 @@ build/readable:
 
 install: clean build/readable
 	cd build && make install
+	# XXX: should we do this in CMakeLists.txt?
+	install readable.1 "${PREFIX}/share/man/man1"
+	mandb

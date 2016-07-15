@@ -7,3 +7,4 @@ bacontools/web - welcome to the lair of Ungoliant
 | myzuka-dl | Moving   | Download audio tracks from myzuka.fm   | Ruby        |
 | imgur-dl  | Moving   | Download Imgur albums                  | Ruby        |
 | respcode  | Hack     | Return HTTP response code              | POSIX shell |
+| wget-page | Hack     | Download a web page                    | POSIX shell |
