@@ -4,6 +4,13 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
+Unreleased
+----------
+### Fixed
++ `myzuka-dl`: don't exit when unable to download one track
+
+***
+
 [2016.07.15]
 ------------
 ### Added

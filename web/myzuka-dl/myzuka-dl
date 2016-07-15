@@ -98,7 +98,7 @@ module Myzuka
 
         down_link = session.find(:xpath, "//div[@class='aside']/a", :visible => :all)[:href] rescue begin
           STDERR.puts "Unable to find download link on page #{session.current_url}"
-          return
+          next
         end
 
         download = open(Net::HTTP.get_response(URI(down_link))['location'])
