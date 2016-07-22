@@ -11,6 +11,7 @@ Unreleased
 + `myzuka-dl`: `MAX_RESULTS` and `TIMEOUT` environment variables
 
 ### Fixed
++ `imgur-dl`: specify correct manpage directory
 + `devbup`: support non-root execution
 + `git-ls`: specify Python 2 in shebang (helps when default Python is v3)
 + `myzuka-dl`: don't exit when unable to download one track
