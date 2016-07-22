@@ -6,7 +6,6 @@ license=('mit')
 url='https://github.com/bacondropped/bacontools'
 makedepends=('cmake' 'ruby-bundler' 'go' 'ghc')
 #source=()
-sha1sums=('SKIP')
 source=(bacontools-$pkgver.tar.gz::https://github.com/bacondropped/bacontools/archive/$pkgver.tar.gz)
 sha1sums=('SKIP')
 
