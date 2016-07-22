@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `PKGBUILD`
 + `myzuka-dl`: `MAX_RESULTS` and `TIMEOUT` environment variables
 
 ### Fixed
