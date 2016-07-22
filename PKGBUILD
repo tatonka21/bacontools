@@ -1,3 +1,4 @@
+# TODO: conform to AUR packaging standards
 pkgname=bacontools
 pkgver=2016.07.15
 pkgrel=1
@@ -5,13 +6,8 @@ arch=('i686' 'x86_64')
 license=('mit')
 url='https://github.com/bacondropped/bacontools'
 makedepends=('cmake' 'ruby-bundler' 'go' 'ghc')
-#source=()
 source=(bacontools-$pkgver.tar.gz::https://github.com/bacondropped/bacontools/archive/$pkgver.tar.gz)
 sha1sums=('SKIP')
-
-prepare() {
-	true
-}
 
 build() {
 	cd "${srcdir}"/bacontools-$pkgver
@@ -20,10 +16,6 @@ build() {
 	sed -i 's/configure/configure --user/' Makefile
 	cd ../../
 	make
-}
-
-check() {
-	true
 }
 
 package_bacontools() {
