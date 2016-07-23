@@ -31,13 +31,10 @@
 # Requirements
 # ------------
 # bash
-# head
-# sha512sum
-# dd
+# coreutils
 # tar
 # mat (optional)
 # gnupg (optional)
-# split
 #
 # TODO: ddrescue support
 # TODO: option to simply unlink instead of shredding
