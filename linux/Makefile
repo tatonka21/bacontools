@@ -4,6 +4,7 @@ all:
 
 install:
 	$(MAKE) -C checkreboot install
+	$(MAKE) -C cptemp install
 	$(MAKE) -C devbup install
 	$(MAKE) -C devrestore install
 	$(MAKE) -C du1 install

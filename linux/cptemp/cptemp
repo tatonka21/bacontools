@@ -1,0 +1,33 @@
+#!/bin/sh
+# Usage: cptemp [FILE|DIR]
+# Create a temporary directory and copy argument file or directory to it.
+
+# TODO: We don't support multiple arguments yet
+if [ "$#" -gt 1 ]; then
+	echo "$(basename "$0") does not support multiple arguments" 1>&2
+	echo "Rerun this command in a loop." 1>&2
+	exit 1
+fi
+
+# If no arguments are passed, run self with "$(pwd)"; this is done to avoid
+# ugly checks for the number of arguments
+if [ "$#" = 0 ]; then
+	"$0" "$(pwd)"
+	exit 0
+fi
+
+# Exit if $1 does not exist
+if [ ! -e "$1" ]; then
+	echo "Path does not exist: $1" 1>&2
+	exit
+fi
+
+if [ -f "$1" ]; then
+	TMP_FILENAME="$(mktemp)"
+	cp "$1" "$TMP_FILENAME"
+	echo "$TMP_FILENAME"
+elif [ -d "$1" ]; then
+	TMP_DIRNAME="$(mktemp -d)"
+	find "$1" -maxdepth 1 | tail -n+2 | xargs -I"{}" -n1 cp -r "{}" "$TMP_DIRNAME"
+	echo "$TMP_DIRNAME"
+fi

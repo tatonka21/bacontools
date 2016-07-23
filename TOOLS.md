@@ -6,6 +6,7 @@ Linux utilities
 | Tool         | Maturity | Description                                    | Language    |
 |--------------|----------|------------------------------------------------|-------------|
 | checkreboot  | Hack     | Print whether reboot is required               | POSIX shell |
+| cptemp       | Hack     | Copy file/directory to /tmp                    | POSIX shell |
 | devbup       | Moving   | Backup, archive, and encrypt files and devices | Bash        |
 | devrestore   | Hack     | Restore devbup archives                        | Bash        |
 | du1          | Hack     | Print sizes of top level directories           | POSIX shell |
