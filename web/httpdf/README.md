@@ -22,4 +22,4 @@ $ killall httpdf
 ```
 
 The filesystem `/home/user` is located on has 20GiB of free space, and the
-`/run` filesystem has 20GiB free space.
+`/run` filesystem has 2GiB free space.
