@@ -1,9 +1,11 @@
 # TODO: conform to AUR packaging standards
+# Maintainer: Ilya Terentyev <bacondropped at gmail dot com>
 pkgname=bacontools
 pkgver=2016.07.15
 pkgrel=1
+pkgdesc="Collection of small, unrelated utilities"
 arch=('i686' 'x86_64')
-license=('mit')
+license=('MIT')
 url='https://github.com/bacondropped/bacontools'
 makedepends=('cmake' 'ruby-bundler' 'go' 'ghc')
 source=(bacontools-$pkgver.tar.gz::https://github.com/bacondropped/bacontools/archive/$pkgver.tar.gz)
@@ -19,17 +21,17 @@ build() {
 }
 
 package_bacontools() {
-	pkgdesc='A collection of small, unrelated utilities'
-	depends=('python2' 'python3' 'ruby' 'go' 'ghc')
+	pkgdesc='Collection of small, unrelated utilities'
+	depends=('python3' 'ruby')
 
 	mkdir -p "${pkgdir}"/usr/share/man/man1
-	mkdir -p "${pkgdir}"/usr/share/man/man3
 	mkdir -p "${pkgdir}"/usr/bin
 
 	cd "${srcdir}"/bacontools-$pkgver
 
 	# There are problems with installation at the moment; perhaps, termdraw
 	# should be adapted for a standalone installation?
+	# Do not install termdraw for the moment.
 	rm -r misc/termdraw
 	sed -i '/termdraw/d' **/Makefile
 
