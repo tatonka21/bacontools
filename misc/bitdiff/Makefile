@@ -6,4 +6,4 @@ build/bitdiff:
 	mkdir -p build && cd build && cmake .. && $(MAKE)
 
 install: build/bitdiff
-	cd build && make install
+	install build/bitdiff "${PREFIX}/bin"

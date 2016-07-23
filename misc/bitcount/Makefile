@@ -6,4 +6,4 @@ build/bitcount:
 	mkdir -p build && cd build && cmake .. && $(MAKE)
 
 install: build/bitcount
-	cd build && make install
+	install build/bitcount "${PREFIX}/bin"

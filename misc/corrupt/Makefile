@@ -6,4 +6,4 @@ build/corrupt:
 	mkdir -p build && cd build && cmake .. && $(MAKE)
 
 install: build/corrupt
-	cd build && make install
+	install build/corrupt "${PREFIX}/bin"
