@@ -13,6 +13,7 @@ Unreleased
 + `myzuka-dl`: `MAX_RESULTS` and `TIMEOUT` environment variables
 
 ### Fixed
++ `single-urxvt`: minimize properly on KDE (requires `xdotool`)
 + `imgur-dl`: specify correct manpage directory
 + `devbup`: support non-root execution
 + `git-ls`: specify Python 2 in shebang (helps when default Python is v3)
