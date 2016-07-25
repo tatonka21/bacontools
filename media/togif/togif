@@ -42,20 +42,12 @@ datediff() {
 	echo "$(( (DATE2 - DATE1) ))"
 }
 
-if [ "$(command -v ffmpeg 1>/dev/zero 2>/dev/zero ; echo $?)" = 1 ] ; then
-	echo "\`ffmpeg\' is required, but not installed" 1>&2
-	exit 1
-fi
-
-if [ "$(command -v convert 1>/dev/zero 2>/dev/zero ; echo $?)" = 1 ] ; then
-	echo "\`convert\' from ImageMagick is required, but not installed" 1>&2
-	exit 1
-fi
-
-if [ "$(command -v gifsicle 1>/dev/zero 2>/dev/zero ; echo $?)" = 1 ] ; then
-	echo "\`gifsicle\' is required, but not installed" 1>&2
-	exit 1
-fi
+for REQUISITE in ffmpeg ffprobe convert gifsicle ; do
+	if [ "$(command -v $REQUISITE 1>/dev/zero 2>/dev/zero ; echo $?)" = 1 ] ; then
+		echo "\`$REQUISITE\' is required, but not installed" 1>&2
+		exit 1
+	fi
+done
 
 if [ -e "$1" ]; then
 	true
