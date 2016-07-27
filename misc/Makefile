@@ -15,6 +15,7 @@ install: all
 	$(MAKE) -C bitcount install
 	$(MAKE) -C bitdiff install
 	$(MAKE) -C byteat install
+	$(MAKE) -C clone-github-user install
 	$(MAKE) -C corrupt install
 	$(MAKE) -C git-ls install
 	$(MAKE) -C git-repo-list install

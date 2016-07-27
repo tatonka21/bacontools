@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `clone-github-user`
 + `httpdf`: `-path` command line argument
 + `cptemp`
 + `PKGBUILD`
