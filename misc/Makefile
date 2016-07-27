@@ -10,8 +10,8 @@ all:
 
 install: all
 	$(MAKE) -C apdiff install
-	$(MAKE) -C bananaglee install
 	$(MAKE) -C baconplaylist install
+	$(MAKE) -C bananaglee install
 	$(MAKE) -C bitcount install
 	$(MAKE) -C bitdiff install
 	$(MAKE) -C byteat install
