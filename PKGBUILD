@@ -1,18 +1,18 @@
 # TODO: conform to AUR packaging standards
 # Maintainer: Ilya Terentyev <bacondropped at gmail dot com>
 pkgname=bacontools
-pkgver=2016.07.15
+pkgver=$(date +%Y-%M-%d)
 pkgrel=1
 pkgdesc="Collection of small, unrelated utilities"
 arch=('i686' 'x86_64')
 license=('MIT')
 url='https://github.com/bacondropped/bacontools'
 makedepends=('cmake' 'ruby-bundler' 'go' 'ghc')
-source=(bacontools-$pkgver.tar.gz::https://github.com/bacondropped/bacontools/archive/$pkgver.tar.gz)
+source=(bacontools-dev-main.tar.gz::https://github.com/bacondropped/bacontools/archive/dev/main.tar.gz)
 sha1sums=('SKIP')
 
 build() {
-	cd "${srcdir}"/bacontools-$pkgver
+	cd "${srcdir}"/bacontools-dev-main
 	patches/apply
 	cd misc/bananaglee
 	sed -i 's/configure/configure --user/' Makefile
@@ -27,7 +27,7 @@ package_bacontools() {
 	mkdir -p "${pkgdir}"/usr/share/man/man1
 	mkdir -p "${pkgdir}"/usr/bin
 
-	cd "${srcdir}"/bacontools-$pkgver
+	cd "${srcdir}"/bacontools-dev-main
 
 	# There are problems with installation at the moment; perhaps, termdraw
 	# should be adapted for a standalone installation?

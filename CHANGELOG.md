@@ -4,6 +4,13 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
+Unreleased
+----------
+### Changed
++ `PKGBUILD`: install `dev/main` version
+
+***
+
 [2016.07.27]
 ------------
 ### Added
