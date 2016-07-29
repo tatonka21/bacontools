@@ -1,7 +1,7 @@
 # TODO: conform to AUR packaging standards
 # Maintainer: Ilya Terentyev <bacondropped at gmail dot com>
 pkgname=bacontools
-pkgver=$(date +%Y-%M-%d)
+pkgver=$(date +%Y.%m.%d)
 pkgrel=1
 pkgdesc="Collection of small, unrelated utilities"
 arch=('i686' 'x86_64')
