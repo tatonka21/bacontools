@@ -25,6 +25,15 @@ NAME="${NAME:-$(echo "$1" | rev | cut -d. -f2- | rev)}"
 GPG_COMMAND="${GPG_COMMAND:-gpg}"
 RM="rm"
 
+print_command() {
+	echo "$@" 1>&2
+}
+
+run_command() {
+	print_command "$@"
+	"$@"
+}
+
 trim() {
 	sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]]*$//'
 }
@@ -51,10 +60,14 @@ process() {
 	if [ "$MIME" = "application/octet-stream" ] ; then
 		FILE="$(file "$1")"
 
+		if [ "$(echo "$FILE" | grep -c "keyid: 0 0")" = 1 ]; then
+			TRY_ALL_SECRETS="--try-all-secrets"
+		fi
+
 		if [ "$(echo "$FILE" | grep -c PGP)" = 1 ] ; then
-			"$GPG_COMMAND" -o "$NAME.tmp" --decrypt "$NAME"
-			"$RM" "$NAME"
-			mv "$NAME.tmp" "$NAME"
+			run_command "$GPG_COMMAND" $TRY_ALL_SECRETS -o "$NAME.tmp" --decrypt "$NAME"
+			run_command "$RM" "$NAME"
+			run_command mv "$NAME.tmp" "$NAME"
 			process "$1"
 		fi
 	fi
@@ -66,11 +79,10 @@ process() {
 	exit 0
 }
 
-touch "$NAME"
+run_command touch "$NAME"
 
 # Merge input files
-for arg in "$@" ; do
-	cat "$arg" >> "$NAME"
-done
+print_command "cat" "$@" "> $NAME"
+cat "$@" > "$NAME"
 
 process "$NAME"

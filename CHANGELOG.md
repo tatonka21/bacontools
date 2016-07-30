@@ -6,6 +6,9 @@ Notable changes to `bacontools` are documented in this file.
 
 Unreleased
 ----------
+### Fixed
++ `devrestore`: fix GPG decryption with anon recipients
+
 ### Changed
 + `devbup`: don't split when `SPLIT_SIZE` = `0`
 + `PKGBUILD`: install `dev/main` version
