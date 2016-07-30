@@ -27,6 +27,7 @@
 # ENCRYPT_KEY="dr.no@acme.io" Encrypt the tarball with this gpg user-id.
 # HIDE_RECIPIENT=1            Use --hidden-recipient during encryption.
 # SPLIT_SIZE=512M             Override the default ('256M') split size.
+#                             If it equals to 0, no split will be performed.
 #
 # Requirements
 # ------------
@@ -183,9 +184,20 @@ if [ -n "$ENCRYPT_KEY" ]; then
 
 	"$GPG_COMMAND" --encrypt "$RECIP_OPTION"="$ENCRYPT_KEY" -o "$GPG_NAME" "$COMPRESSED_TARBALL"
 	shred -u "$COMPRESSED_TARBALL"
-	split -b"$SPLIT_SIZE" "$GPG_NAME" "$SPLIT_NAME"
+
+	if [ "$SPLIT_SIZE" = "0" ]; then
+		mv "$GPG_NAME" "$SPLIT_NAME"
+	else
+		split -b"$SPLIT_SIZE" "$GPG_NAME" "$SPLIT_NAME"
+	fi
+
 	shred -u "$GPG_NAME"
 else
-	split -b"$SPLIT_SIZE" "$COMPRESSED_TARBALL" "$SPLIT_NAME"
+	if [ "$SPLIT_SIZE" = "0" ]; then
+		mv "$COMPRESSED_TARBALL" "$SPLIT_NAME"
+	else
+		split -b"$SPLIT_SIZE" "$COMPRESSED_TARBALL" "$SPLIT_NAME"
+	fi
+
 	shred -u "$COMPRESSED_TARBALL"
 fi
