@@ -6,4 +6,4 @@ build/byteat:
 	mkdir -p build && cd build && cmake .. && $(MAKE)
 
 install: build/byteat
-	cd build && make install
+	install build/byteat "${PREFIX}/bin"

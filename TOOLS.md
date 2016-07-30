@@ -6,6 +6,7 @@ Linux utilities
 | Tool         | Maturity | Description                                    | Language    |
 |--------------|----------|------------------------------------------------|-------------|
 | checkreboot  | Hack     | Print whether reboot is required               | POSIX shell |
+| cptemp       | Hack     | Copy file/directory to /tmp                    | POSIX shell |
 | devbup       | Moving   | Backup, archive, and encrypt files and devices | Bash        |
 | devrestore   | Hack     | Restore devbup archives                        | Bash        |
 | du1          | Hack     | Print sizes of top level directories           | POSIX shell |
@@ -58,6 +59,7 @@ Miscellaneous utilities
 | bitcount          | Hack     | Tally individual bits in stdin bytes                    | C           |
 | bitdiff           | Hack     | Detect different bytes in mostly similar files          | C           |
 | byteat            | Hack     | Print value of byte at index                            | C           |
+| clone-github-user | Hack     | Clone all repositories of a single Github user          | POSIX shell |
 | corrupt           | Untested | Flip/remove random bits/bytes                           | C           |
 | git-ls            | Untested | Github-like human-readable Git repo directory listing   | Python      |
 | git-repo-list     | Hack     | Clone or pull all repos from a remote list              | POSIX shell |

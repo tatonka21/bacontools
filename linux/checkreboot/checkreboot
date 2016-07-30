@@ -2,7 +2,8 @@
 
 if [ -e "/var/run/reboot-required" ] ; then
 	echo "Reboot required"
-	cat "/var/run/reboot-required.pkgs"
+	echo
+	uniq "/var/run/reboot-required.pkgs"
 else
 	echo "Reboot not required"
 fi

@@ -5,6 +5,8 @@ Hack       bitcount
 Hack       bitdiff
 Hack       byteat
 Hack       checkreboot
+Hack       clone-github-user
+Hack       cptemp
 Hack       curl-tt
 Hack       devrestore
 Hack       du1

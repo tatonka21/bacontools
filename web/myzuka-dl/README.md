@@ -64,3 +64,9 @@ Environment
 If `DIR` variable is specified in the environment, `myzuka-dl` will use its
 value as default path instead of current working directory, but only if `--dir`
 argument is not specified.
+
+If `MAX_RESULTS` variable is specified, `myzuka-dl` will display this number of
+top search results for each query, instead of default `20`.
+
+If `TIMEOUT` variable is specified, this value (assuming an integral number of
+seconds) will be used as PhantomJS timeout instead of default `60`.

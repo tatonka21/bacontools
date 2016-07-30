@@ -1,8 +1,5 @@
 #!/usr/bin/env ruby
-
 # -*- coding: UTF-8 -*-
-
-# TODO: handle [Утерян] (lost) uploads gracefully
 
 require 'rubygems'
 require 'capybara'
@@ -17,8 +14,8 @@ require 'fileutils'
 
 MYZUKA_DOMAIN = "myzuka.fm"
 MYZUKA_HOME   = "https://#{MYZUKA_DOMAIN}/"
-MAX_RESULTS   = 20
-TIMEOUT       = 60
+MAX_RESULTS   = Integer(ENV.fetch('MAX_RESULTS', '20'))
+TIMEOUT       = Integer(ENV.fetch('TIMEOUT', '60'))
 
 def a(node)
   node.find(:xpath, './/p').text
@@ -98,7 +95,7 @@ module Myzuka
 
         down_link = session.find(:xpath, "//div[@class='aside']/a", :visible => :all)[:href] rescue begin
           STDERR.puts "Unable to find download link on page #{session.current_url}"
-          return
+          next
         end
 
         download = open(Net::HTTP.get_response(URI(down_link))['location'])

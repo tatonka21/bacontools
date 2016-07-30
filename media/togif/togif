@@ -42,20 +42,12 @@ datediff() {
 	echo "$(( (DATE2 - DATE1) ))"
 }
 
-if [ "$(command -v ffmpeg 1>/dev/zero 2>/dev/zero ; echo $?)" = 1 ] ; then
-	echo "\`ffmpeg\' is required, but not installed" 1>&2
-	exit 1
-fi
-
-if [ "$(command -v convert 1>/dev/zero 2>/dev/zero ; echo $?)" = 1 ] ; then
-	echo "\`convert\' from ImageMagick is required, but not installed" 1>&2
-	exit 1
-fi
-
-if [ "$(command -v gifsicle 1>/dev/zero 2>/dev/zero ; echo $?)" = 1 ] ; then
-	echo "\`gifsicle\' is required, but not installed" 1>&2
-	exit 1
-fi
+for REQUISITE in ffmpeg ffprobe convert gifsicle ; do
+	if [ "$(command -v $REQUISITE 1>/dev/zero 2>/dev/zero ; echo $?)" = 1 ] ; then
+		echo "\`$REQUISITE\' is required, but not installed" 1>&2
+		exit 1
+	fi
+done
 
 if [ -e "$1" ]; then
 	true
@@ -69,7 +61,7 @@ if [ -z "$2" ]; then
 	exit 1
 fi
 
-if [ "$(test_for_video_streams "$1" ; echo $?)" ] ; then
+if [ "$(test_for_video_streams "$1" ; echo $?)" = "0" ] ; then
 	echo "No video streams in $1" 1>&2
 	exit 1
 fi
@@ -107,27 +99,27 @@ if [ -z "$DELAY" ]; then
 	exit 1
 fi
 
-if [ -z "$WIDTH" -o "$WIDTH" = 0 ]; then
+if [ -z "$WIDTH" ] || [ "$WIDTH" = 0 ]; then
 	echo "\$WIDTH is \'$WIDTH\', must be a natural integer; problematic input?"
 	exit 1
 fi
 
-if [ -z "$HEIGHT" -o "$HEIGHT" = 0 ]; then
+if [ -z "$HEIGHT" ] || [ "$HEIGHT" = 0 ]; then
 	echo "\$HEIGHT is \'$HEIGHT\', must be a natural integer; problematic input?"
 	exit 1
 fi
 
-if [ -z "$FPS" -o "$FPS" = 0 ]; then
+if [ -z "$FPS" ] || [ "$FPS" = 0 ]; then
 	echo "\$FPS is \'$HEIGHT\', must be a natural integer; problematic input?"
 	exit 1
 fi
 
-if [ -z "$SCALE" -o "$SCALE" = 0 ]; then
+if [ -z "$SCALE" ] || [ "$SCALE" = 0 ]; then
 	echo "\$SCALE is \'$SCALE\', shouldn't be unset or zero; problems with Python?"
 	exit 1
 fi
 
-if [ -n "$NOSTATS" -o -n "$QUIET" ]; then
+if [ -n "$NOSTATS" ] || [ -n "$QUIET" ]; then
 	NOSTATS=no
 fi
 

@@ -4,6 +4,24 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
+[2016.07.27]
+------------
+### Added
++ `clone-github-user`
++ `httpdf`: `-path` command line argument
++ `cptemp`
++ `PKGBUILD`
++ `myzuka-dl`: `MAX_RESULTS` and `TIMEOUT` environment variables
+
+### Fixed
++ `single-urxvt`: minimize properly on KDE (requires `xdotool`)
++ `imgur-dl`: specify correct manpage directory
++ `devbup`: support non-root execution
++ `git-ls`: specify Python 2 in shebang (helps when default Python is v3)
++ `myzuka-dl`: don't exit when unable to download one track
+
+***
+
 [2016.07.15]
 ------------
 ### Added
@@ -160,3 +178,4 @@ Notable changes to `bacontools` are documented in this file.
 [2016.06.29]: https://github.com/bacondropped/bacontools/releases/tag/2016.06.29
 [2016.07.05]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.05
 [2016.07.15]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.15
+[2016.07.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.27

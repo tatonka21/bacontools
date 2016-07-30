@@ -31,13 +31,10 @@
 # Requirements
 # ------------
 # bash
-# head
-# sha512sum
-# dd
+# coreutils
 # tar
 # mat (optional)
 # gnupg (optional)
-# split
 #
 # TODO: ddrescue support
 # TODO: option to simply unlink instead of shredding
@@ -55,8 +52,12 @@ SPLIT_NAME="$NAME"
 SPLIT_SIZE="${SPLIT_SIZE:-256M}"
 GPG_COMMAND="${GPG_COMMAND:-gpg}"
 
-if [ -z "$DD_COMMAND" -a "$(command -v dcfldd 1>/dev/zero 2>/dev/zero ; echo $?)" = 0 ]; then
+if [ -z "$DD_COMMAND" ] && [ "$(command -v dcfldd 1>/dev/zero 2>/dev/zero ; echo $?)" = 0 ]; then
 	DD_COMMAND=dcfldd
+fi
+
+if [ "$(id -u)" != "0" ]; then
+	_SUDO="sudo"
 fi
 
 # Copy file to the destination directory, verify checksums, return 1 on
@@ -66,9 +67,13 @@ db_deedee() {
 	CKSUM_COMMAND="${CKSUM_COMMAND:-sha512sum}"
 
 	if [ "$DD_COMMAND" = "dcfldd" ]; then
-		"$DD_COMMAND" if="$1" of="$2" statusinterval="$DCFLDD_STATINT"
+		$_SUDO "$DD_COMMAND" if="$1" of="$2" statusinterval="$DCFLDD_STATINT"
 	else
-		"$DD_COMMAND" if="$1" of="$2"
+		$_SUDO "$DD_COMMAND" if="$1" of="$2"
+	fi
+
+	if [ "$(id -u)" != "0" ]; then
+		$_SUDO chown "$(whoami)": "$2"
 	fi
 
 	CHECKSUM_OUTPUT="$("$CKSUM_COMMAND" "$1" "$2")"
@@ -117,11 +122,11 @@ for file in "$@"; do
 	TMP_FILE="./$(basename "$file")"
 	db_deedee "$file" "$TMP_FILE"
 
-	if [ "$?" = 1 -a -z "$IGNORE_CKSUMS" ]; then
+	if [ "$?" = 1 ] && [ -z "$IGNORE_CKSUMS" ]; then
 		echo "Shredding all copied files and exiting." 1>&2
 
-		for file in "$@"; do
-			TMP_FILE="./$(basename "$file")"
+		for file_to_remove in "$@"; do
+			TMP_FILE="./$(basename "$file_to_remove")"
 
 			if [ -e "$TMP_FILE" ]; then
 				shred -u "$TMP_FILE"
@@ -131,7 +136,7 @@ for file in "$@"; do
 		exit 1
 	fi
 
-	if [ "$(command -v mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" -a \( -n "$RUN_MAT" \) ]; then
+	if [ "$(command -v mat 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" ] && [ \( -n "$RUN_MAT" \) ]; then
 		mat -a "$TMP_FILE"
 	fi
 
@@ -154,7 +159,7 @@ for file in "$@"; do
 	shred -u "$TMP_FILE"
 done
 
-if [ -n "$ADD_PADDING" -o -n "$PADDING_SIZE" ]; then
+if [ -n "$ADD_PADDING" ] || [ -n "$PADDING_SIZE" ]; then
 	PADDING_SIZE="${PADDING_SIZE:-"$(( RANDOM % 4096 ))M"}"
 
 	head -c"$PADDING_SIZE" /dev/urandom > random.bin
