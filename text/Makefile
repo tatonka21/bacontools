@@ -7,6 +7,7 @@ all:
 
 install: all
 	$(MAKE) -C balance install
+	$(MAKE) -C center install
 	$(MAKE) -C lines install
 	$(MAKE) -C morseconv install
 	$(MAKE) -C n7m install

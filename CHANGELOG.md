@@ -6,6 +6,9 @@ Notable changes to `bacontools` are documented in this file.
 
 Unreleased
 ----------
+### Added
++ `center`
+
 ### Fixed
 + `devrestore`: fix GPG decryption with anon recipients
 

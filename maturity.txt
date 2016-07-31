@@ -4,6 +4,7 @@ Hack       bananaglee
 Hack       bitcount
 Hack       bitdiff
 Hack       byteat
+Hack       center
 Hack       checkreboot
 Hack       clone-github-user
 Hack       cptemp
