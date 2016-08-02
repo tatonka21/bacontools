@@ -36,6 +36,7 @@
 # tar
 # mat (optional)
 # gnupg (optional)
+# gzip (optional)
 #
 # TODO: ddrescue support
 # TODO: option to simply unlink instead of shredding
