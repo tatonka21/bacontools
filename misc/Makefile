@@ -19,6 +19,7 @@ install: all
 	$(MAKE) -C corrupt install
 	$(MAKE) -C git-ls install
 	$(MAKE) -C git-repo-list install
+	$(MAKE) -C git-stat-atr install
 	$(MAKE) -C maybe install
 	$(MAKE) -C pip-upgrade-all install
 	$(MAKE) -C stopwatch install
