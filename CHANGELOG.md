@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `devbup`: implement `DONT_SHRED`
 + `git-stat-atr`
 + `center`
 
