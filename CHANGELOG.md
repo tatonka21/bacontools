@@ -12,6 +12,7 @@ Unreleased
 + `center`
 
 ### Fixed
++ `devbup`: run checksum under sudo to avoid permission problems
 + `devrestore`: fix GPG decryption with anon recipients
 
 ### Changed

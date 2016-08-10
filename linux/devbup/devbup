@@ -89,7 +89,7 @@ db_deedee() {
 		$_SUDO chown "$(whoami)": "$2"
 	fi
 
-	CHECKSUM_OUTPUT="$("$CKSUM_COMMAND" "$1" "$2")"
+	CHECKSUM_OUTPUT="$($_SUDO "$CKSUM_COMMAND" "$1" "$2")"
 	SRC_CHECKSUM="$(echo "$CHECKSUM_OUTPUT" | head -n1 | cut -d\  -f1)"
 	RST_CHECKSUM="$(echo "$CHECKSUM_OUTPUT" | tail -n1 | cut -d\  -f1)"
 
