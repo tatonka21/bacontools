@@ -1,0 +1,134 @@
+.TH bacontools 7 "bacontools" "27 Jul 2016" "version 2016.07.27"
+
+.SH NAME
+\fBbacontools\fP - Collection of small, unrelated utilities
+
+.SH DESCRIPTION
+\fBbacontools\fB are utilities I've written over the years and gathered into a
+single package.
+
+.SH TOOL MATURITY
+\fBbacontools\fP have many utilities which are still in their early development
+phase. Different stages of a tool's development shall be outlined in parent
+directory READMEs as follows:
+
+.TS
+tab (@);
+l l.
+Maturity@Description
+_
+Hack@Solution to a single specific problem.
+Untested@Some extensions and options have been implemented
+Moving@Some testing/debugging was performed, and new features are being implemented
+Maintained@No new features are currently implemented, debugging and testing may continue
+.TE
+.ad
+
+.SH TOOLS
+.TP
+\fBLINUX UTILITIES\fP
+.TS
+tab (@);
+l l l l.
+Tool@Maturity@Description@Language
+_
+checkreboot@Hack@Print whether reboot is required@POSIX shell
+cptemp@Hack@Copy file/directory to /tmp@POSIX shell
+devbup@Moving@Backup, archive, and encrypt files and devices@Bash
+devrestore@Hack@Restore devbup archives@Bash
+du1@Hack@Print sizes of top level directories@POSIX shell
+netinfo@Untested@Print current WAN IP and nmcli connection name@POSIX shell
+single-urxvt@Hack@Launch a singleton urxvt instance@POSIX shell
+userls@Hack@Print all users on the system@POSIX shell
+.TE
+.ad
+
+.TP
+\fBMEDIA UTILITIES\fP
+.TS
+tab (@);
+l l l l.
+Tool@Maturity@Description@Language
+_
+ImageValidator@Untested@Detect corrupted images@C#
+preptrack@Moving@Reencode files to MP3s, rewrite ID3V2 tags@Bash
+togif@Maintained@Convert videos to animated GIFs@POSIX shell
+vidinfo@Hack@Print video size, FPS, dimensions, and stream info@POSIX shell
+.TE
+.ad
+
+.TP
+\fBTEXT UTILITIES\fP
+.TS
+tab (@);
+l l l l.
+Tool@Maturity@Description@Language
+_
+balance@Untested@Detect if strings contain balanced/unbalanced parens@C
+center@Hack@Center text@POSIX shell
+lines@Hack@Print distribution of input lines lengths@POSIX shell
+morseconv@Hack@Convert text to Morse@Python
+n7m@Untested@Generate a numeronym (i18n, l10n, etc.)@C
+readable@Untested@Heuristically filter out garbage strings@C
+ringcat@Hack@Append stdin to the end of the file circularly@POSIX shell
+ruler@Hack@Print length of the longest line@POSIX shell
+trimline@Hack@Trim leading and trailing whitespaces@POSIX shell
+vimless@Hack@Display vimcat output in less@POSIX shell
+.TE
+.ad
+
+.TP
+\fBWEB UTILITIES\fP
+.TS
+tab (@);
+l l l l.
+Tool@Maturity@Description@Language
+_
+curl-tt@Hack@Test server response time@POSIX shell
+httpdf@Hack@Listen to a port and return free space@Go
+myzuka-dl@Moving@Download audio tracks from myzuka.fm@Ruby
+imgur-dl@Moving@Download Imgur albums@Ruby
+respcode@Hack@Return HTTP response code@POSIX shell
+wget-page@Hack@Download a web page@POSIX shell
+.TE
+.ad
+
+.TP
+\fBMISCELLANEOUS UTILITIES\fP
+.TS
+tab (@);
+l l l l.
+Tool@Maturity@Description@Language
+_
+EncodingConverter@Untested@Convert between different encodings@C#
+apdiff@Hack@Print differing parts of similar file paths@Python
+baconplaylist@Hack@Query a list in a specific format@POSIX shell
+bananaglee@Hack@Generate a USA federal agency-like project identifier@Haskell
+bitcount@Hack@Tally individual bits in stdin bytes@C
+bitdiff@Hack@Detect different bytes in mostly similar files@C
+byteat@Hack@Print value of byte at index@C
+clone-github-user@Hack@Clone all repositories of a single Github user@POSIX shell
+corrupt@Untested@Flip/remove random bits/bytes@C
+git-ls@Untested@Github-like human-readable Git repo directory listing@Python
+git-repo-list@Hack@Clone or pull all repos from a remote list@POSIX shell
+git-stat-atr@Hack@Sort output of `git diff --stat` by added/total ratio@POSIX shell
+maybe@Hack@Prints yes and no randomly interleaved@C
+pip-upgrade-all@Hack@Upgrade all local PIP packages@Python
+stopwatch@Hack@Count elapsed time@POSIX shell
+tasktags@Untested@Search for tags like TODO@POSIX shell
+termdraw@Moving@Print ASCII-art graphs@Python
+update-all@Hack@Update all Git repositories in level 1 subdirectories@POSIX shell
+.TE
+.ad
+
+.SH AUTHOR
+\fBbacontools\fP are developed by Ilya Terentyev <bacondropped@gmail.com> and
+are available at <https://github.com/bacondropped/bacontools>.
+
+.SH LICENSE
+\fBbacontools\fP are distributed under the terms of the MIT license, unless
+a specific tool overrides that with its own license.
+
+.SH SEE ALSO
+\fBimgur-dl\fP(1), \fBpreptrack\fP(1), \fBtogif\fP(1), \fBreadable\fP(1),
+\fBdevbup\fP(1), \fBdevrestore\fP(1)

@@ -16,3 +16,8 @@ install:
 	$(MAKE) -C misc install
 	$(MAKE) -C text install
 	$(MAKE) -C web install
+	install bacontools.7 "${PREFIX}/share/man/man7"
+	mandb
+
+test: all
+	./test-all

@@ -25,6 +25,7 @@ package_bacontools() {
 	depends=('python3' 'ruby')
 
 	mkdir -p "${pkgdir}"/usr/share/man/man1
+	mkdir -p "${pkgdir}"/usr/share/man/man7
 	mkdir -p "${pkgdir}"/usr/bin
 
 	cd "${srcdir}"/bacontools-dev-main
