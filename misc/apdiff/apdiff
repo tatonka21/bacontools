@@ -4,26 +4,27 @@
 # TODO: Tokenize file paths, so paths like "01 - Some long episode title.ext"\
 # and "12 - Some other long episode title.ext" don't confuse apdiff and/or\
 # require a small cutoff which won't probably work anyway
-# TODO: file extension/path filter (maybe, glob?)
 
 import os
 import sys
 import difflib
+import fnmatch
 import itertools
 
 
-max_neighbors   = int(os.environ.get('MAX_NEIGHBORS', 1000))
-neighbor_cutoff = float(os.environ.get('CUTOFF', 0.7))
+MAX_NEIGHBORS   = int(os.environ.get('MAX_NEIGHBORS', 1000))
+NEIGHBOR_CUTOFF = float(os.environ.get('CUTOFF', 0.7))
+GLOB            = str(os.environ.get('GLOB', '*'))
 
 
 def apdiff_process(arg):
     basename      = os.path.basename(arg)
     parent_path   = os.path.abspath(os.path.join(arg, os.pardir))
-    sibling_files = os.listdir(parent_path)
+    sibling_files = [f for f in os.listdir(parent_path) if fnmatch.fnmatch(f, GLOB)]
     close_paths   = difflib.get_close_matches(basename,
                                               sibling_files,
-                                              max_neighbors,
-                                              neighbor_cutoff)
+                                              MAX_NEIGHBORS,
+                                              NEIGHBOR_CUTOFF)
     diff_subseqs = []
 
     for neighbor in close_paths:

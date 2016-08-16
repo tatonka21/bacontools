@@ -4,6 +4,7 @@ Hack       bananaglee
 Hack       bitcount
 Hack       bitdiff
 Hack       byteat
+Hack       center
 Hack       checkreboot
 Hack       clone-github-user
 Hack       cptemp
@@ -11,6 +12,7 @@ Hack       curl-tt
 Hack       devrestore
 Hack       du1
 Hack       git-repo-list
+Hack       git-stat-atr
 Hack       httpdf
 Hack       lines
 Hack       maybe

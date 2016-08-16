@@ -1,10 +1,10 @@
-.TH devbup 1 "devbup" "27 Jul 2016" "version 2016.07.27"
+.TH devbup 1 "devbup" "17 Aug 2016" "version 2016.08.17"
 
 .SH NAME
 devbup - file and device backup script
 
 .SH SYNOPSIS
-[\fBVAR=value\fP] devbup \fBfile ...\fP
+[\fBVAR=value\fP] devbup \fBFILE...\fP
 
 .SH DESCRIPTION
 \fBdevbup\fP accepts files (usual files or block devices), creates a tarball,
@@ -35,10 +35,15 @@ If \fBdcfldd\fP is installed and \fBDD_COMMAND\fP is not specified,
 If this variable equals to \fBdcfldd\fP, a \fBstatusinterval\fP option will
 also be used to monitor progress, with a default of \fB64\fP.
 
+Must be a valid command.
+
 .TP
 \fBDCFLDD_STATINT\fP
 Override default \fBstatusinterval\fP argument value for \fBdcfldd\fP, in case
 \fBDD_COMMAND\fP is set to \fBdcfldd\fP.
+
+Must be a valid string accepted by \fBdcfldd\fP as the value for its
+\fBstatusinterval\fP argument.
 
 .TP
 \fBCKSUM_COMMAND\fP
@@ -47,6 +52,8 @@ unavailable, or somehow inappropriate.
 
 \fBdevbup\fP will expect the default Linux checksum output syntax, i.e.
 \fBCHECKSUM\~\~filepath\fP.
+
+Must be a valid command.
 
 .TP
 \fBIGNORE_CKSUMS\fP
@@ -74,6 +81,8 @@ Must be a size specifier accepted by \fBhead\fP.
 If \fBmat\fP (Metadata Anonymization Toolkit) is installed in \fBPATH\fP, run
 it on the resulting tarball.
 
+Can be any non-empty string.
+
 .TP
 \fBCOMPRESS\fP
 Compress the resulting tarball.
@@ -87,6 +96,8 @@ Must be one of the following strings:
 .TP
 \fBGPG_COMMAND\fP
 Override default GnuPG command (\fBgpg\fP).
+
+Must be a valid command.
 
 .TP
 \fBSIGN_KEY\fP
@@ -111,15 +122,25 @@ Must be a valid GnuPG user-id.
 Use \fB--hidden-recipient\fP instead of \fB--recipient\fP when encrypting, so
 that the user-id is not leaked.
 
+Can be any non-empty string.
+
 .TP
 \fBSPLIT_SIZE\fP
 Override default split size (\fB256M\fP).
 
+When this value equals to "\fB0\fP", no split is performed.
+
 Must be a valid size specifier accepted by \fBsplit\fP.
 
+.TP
+\fBDONT_SHRED\fP
+Do not shred temporary files; simply \fBrm\fP them instead.
+
+Can be any non-empty string.
+
 .SH DEPENDENCIES
-\fBbash\fP, \fBcoreutils\fP, \fBtar\fP, \fBgnupg\fP (optional, \fBgzip\fP
-(optional)
+\fBbash\fP, \fBcoreutils\fP, \fBtar\fP, \fBmat\fP (optional),
+\fBgnupg\fP (optional), \fBgzip\fP (optional)
 
 .SH AUTHOR
 Developed by Ilya Terentyev <bacondropped@gmail.com> as a part of the
@@ -127,3 +148,6 @@ Developed by Ilya Terentyev <bacondropped@gmail.com> as a part of the
 
 .SH LICENSE
 \fBdevbup\fP is distributed under the terms of the MIT license.
+
+.SH SEE ALSO
+\fBdevrestore\fP(1), \fBbacontools\fP(7)

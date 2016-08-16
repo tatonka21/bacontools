@@ -1,4 +1,6 @@
 #!/bin/bash
+# shellcheck disable=SC2001
+#
 # Usage: [VAR=value] devbup files ...
 # Tarball devices or files together and split the archive.
 #
@@ -27,6 +29,9 @@
 # ENCRYPT_KEY="dr.no@acme.io" Encrypt the tarball with this gpg user-id.
 # HIDE_RECIPIENT=1            Use --hidden-recipient during encryption.
 # SPLIT_SIZE=512M             Override the default ('256M') split size.
+#                             If it equals to 0, no split will be performed.
+# DONT_SHRED                  Do not shred files; rm is assumed to be
+#                             sufficiently secure instead.
 #
 # Requirements
 # ------------
@@ -35,9 +40,9 @@
 # tar
 # mat (optional)
 # gnupg (optional)
+# gzip (optional)
 #
 # TODO: ddrescue support
-# TODO: option to simply unlink instead of shredding
 # TODO: directory backup support
 # TODO: pipe mode (IO seems to be a bottleneck, I mean, no shit)
 # TODO: DEVBUP_PRESET=[lax|paranoid]
@@ -60,6 +65,14 @@ if [ "$(id -u)" != "0" ]; then
 	_SUDO="sudo"
 fi
 
+db_remove() {
+	if [ -n "$DONT_SHRED" ]; then
+		rm "$1"
+	else
+		shred -u "$1"
+	fi
+}
+
 # Copy file to the destination directory, verify checksums, return 1 on
 # checksum mismatch
 db_deedee() {
@@ -76,7 +89,7 @@ db_deedee() {
 		$_SUDO chown "$(whoami)": "$2"
 	fi
 
-	CHECKSUM_OUTPUT="$("$CKSUM_COMMAND" "$1" "$2")"
+	CHECKSUM_OUTPUT="$($_SUDO "$CKSUM_COMMAND" "$1" "$2")"
 	SRC_CHECKSUM="$(echo "$CHECKSUM_OUTPUT" | head -n1 | cut -d\  -f1)"
 	RST_CHECKSUM="$(echo "$CHECKSUM_OUTPUT" | tail -n1 | cut -d\  -f1)"
 
@@ -98,7 +111,7 @@ db_compress() {
 
 	if [ "$COMPRESS" = "gzip" ]; then
 		gzip -c "$1" > "$1.gzip"
-		shred -u "$1"
+		db_remove "$1"
 		echo "$1.gzip"
 		return
 	fi
@@ -123,13 +136,19 @@ for file in "$@"; do
 	db_deedee "$file" "$TMP_FILE"
 
 	if [ "$?" = 1 ] && [ -z "$IGNORE_CKSUMS" ]; then
-		echo "Shredding all copied files and exiting." 1>&2
+		if [ -n "$DONT_SHRED" ]; then
+			REMOVING="Removing"
+		else
+			REMOVING="Shredding"
+		fi
+
+		echo "$REMOVING all copied files and exiting." 1>&2
 
 		for file_to_remove in "$@"; do
 			TMP_FILE="./$(basename "$file_to_remove")"
 
 			if [ -e "$TMP_FILE" ]; then
-				shred -u "$TMP_FILE"
+				db_remove "$TMP_FILE"
 			fi
 		done
 
@@ -153,10 +172,10 @@ for file in "$@"; do
 
 		tar -rvf "$TARBALL_NAME" "$SIGFILE_NAME"
 
-		shred -u "$SIGFILE_NAME"
+		db_remove "$SIGFILE_NAME"
 	fi
 
-	shred -u "$TMP_FILE"
+	db_remove "$TMP_FILE"
 done
 
 if [ -n "$ADD_PADDING" ] || [ -n "$PADDING_SIZE" ]; then
@@ -166,7 +185,7 @@ if [ -n "$ADD_PADDING" ] || [ -n "$PADDING_SIZE" ]; then
 	stat random.bin
 	tar -rvf "$TARBALL_NAME" random.bin
 
-	shred -u random.bin
+	db_remove random.bin
 fi
 
 tar -tvf "$TARBALL_NAME"
@@ -182,10 +201,21 @@ if [ -n "$ENCRYPT_KEY" ]; then
 	fi
 
 	"$GPG_COMMAND" --encrypt "$RECIP_OPTION"="$ENCRYPT_KEY" -o "$GPG_NAME" "$COMPRESSED_TARBALL"
-	shred -u "$COMPRESSED_TARBALL"
-	split -b"$SPLIT_SIZE" "$GPG_NAME" "$SPLIT_NAME"
-	shred -u "$GPG_NAME"
+	db_remove "$COMPRESSED_TARBALL"
+
+	if [ "$SPLIT_SIZE" = "0" ]; then
+		mv "$GPG_NAME" "$SPLIT_NAME"
+	else
+		split -b"$SPLIT_SIZE" "$GPG_NAME" "$SPLIT_NAME"
+	fi
+
+	db_remove "$GPG_NAME"
 else
-	split -b"$SPLIT_SIZE" "$COMPRESSED_TARBALL" "$SPLIT_NAME"
-	shred -u "$COMPRESSED_TARBALL"
+	if [ "$SPLIT_SIZE" = "0" ]; then
+		mv "$COMPRESSED_TARBALL" "$SPLIT_NAME"
+	else
+		split -b"$SPLIT_SIZE" "$COMPRESSED_TARBALL" "$SPLIT_NAME"
+	fi
+
+	db_remove "$COMPRESSED_TARBALL"
 fi

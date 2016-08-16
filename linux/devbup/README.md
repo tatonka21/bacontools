@@ -94,4 +94,5 @@ Use `--hidden-recipient` so that the key user-id is not transmitted
 ```
 $ SPLIT_SIZE=512M devbup ~/Stuff/GonnaBackupOverStableConnection
 ```
-Override default (`256M`) split size.
+Override default (`256M`) split size. If `SPLIT_SIZE` equals to "`0`", no split
+will be performed.

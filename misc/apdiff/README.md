@@ -17,3 +17,8 @@ Specify a real number in the [0, 1] interval for the `CUTOFF` environment
 variable to filter paths by similarity. 1 means paths must be absolutely equal
 (no diff will be printed), 0 means paths may be completely different (whole
 paths may be printed).
+
+Specify a Unix-style filename glob for the `GLOB` environment variable to limit
+file paths picked for diffing. For instance, you may want to specify
+`GLOB='*.log'` for the example above if files with different extensions exist
+in that directory.

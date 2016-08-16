@@ -3,6 +3,7 @@ bacontools/text - you can't read without eyes anyway
 | Tool      | Maturity | Description                                          | Language    |
 |-----------|----------|------------------------------------------------------|-------------|
 | balance   | Untested | Detect if strings contain balanced/unbalanced parens | C           |
+| center    | Hack     | Center text                                          | POSIX shell |
 | lines     | Hack     | Print distribution of input lines lengths            | POSIX shell |
 | morseconv | Hack     | Convert text to Morse                                | Python      |
 | n7m       | Untested | Generate a numeronym (i18n, l10n, etc.)              | C           |

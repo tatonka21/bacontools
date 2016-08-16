@@ -1,0 +1,12 @@
+#!/bin/sh
+# Usage: git-stat-adr [GIT DIFF --STAT ARGUMENT...]
+# Sort a 'git diff --stat' output by total/added lines ratio.
+
+LASTLINE="$(git diff --stat --color "$@" | tail -1)"
+
+git diff --stat --color "$@" | head -n-1 |\
+awk '{printf("%s %s\n", (gsub("+","+")+gsub("-","-"))/(gsub("+","+")+0.000001), $0)}' |\
+sort -hr |\
+cut -d' ' -f2-
+
+echo "$LASTLINE"

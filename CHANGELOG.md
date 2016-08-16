@@ -4,6 +4,26 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
+[2016.08.17]
+------------
+### Added
++ `apdiff`: `GLOB` environment variable
++ `bacontools.7` manpage
++ `devbup`: implement `DONT_SHRED`
++ `git-stat-atr`
++ `center`
+
+### Fixed
++ `devbup`: run checksum under sudo to avoid permission problems
++ `devrestore`: fix GPG decryption with anon recipients
+
+### Changed
++ `update-all`: use `figlet` instead of `toilet`
++ `devbup`: don't split when `SPLIT_SIZE` = `0`
++ `PKGBUILD`: install `dev/main` version
+
+***
+
 [2016.07.27]
 ------------
 ### Added
@@ -179,3 +199,4 @@ Notable changes to `bacontools` are documented in this file.
 [2016.07.05]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.05
 [2016.07.15]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.15
 [2016.07.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.27
+[2016.08.17]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.17
