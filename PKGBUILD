@@ -36,9 +36,5 @@ package_bacontools() {
 	rm -r misc/termdraw
 	sed -i '/termdraw/d' **/Makefile
 
-	# imgur-dl installs imgur-dl.1 to ${PREFIX}/man/man1 instead of
-	# ${PREFIX}/share/man/man1. It needs to be fixed or installation fails.
-	sed -i 's/{PREFIX}\/man/{PREFIX}\/share\/man/g' web/imgur-dl/Makefile
-
 	make DESTDIR="${pkgdir}" PREFIX="${pkgdir}"/usr install
 }
