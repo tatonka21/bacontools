@@ -6,4 +6,4 @@ bananaglee:
 	runghc Setup.hs configure && runghc Setup.hs build
 
 install: bananaglee
-	runghc Setup.hs install
+	install dist/build/bananaglee/bananaglee "${PREFIX}/bin"

@@ -10,6 +10,7 @@ Unreleased
 + `preptrack`: check dependencies
 
 ### Fixed
++ `bananaglee`: install from Makefile (fixes install on Arch)
 + `preptrack`: use inline Python code for latest eyeD3
 
 ***
