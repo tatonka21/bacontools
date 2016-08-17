@@ -77,15 +77,15 @@ process() {
 	eyeD3 --remove-all "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
 
 	if [ -n "$ARTIST" ] ; then
-		eyeD3 --set-encoding=utf8 -a "$ARTIST" "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
+		eyeD3 --encoding=utf8 --artist "$ARTIST" "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
 	fi
 
 	if [ -n "$ALBUM" ] ; then
-		eyeD3 --set-encoding=utf8 -A "$ALBUM" "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
+		eyeD3 --encoding=utf8 --album "$ALBUM" "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
 	fi
 
 	if [ -n "$TITLE" ] ; then
-		eyeD3 --set-encoding=utf8 -t "$TITLE" "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
+		eyeD3 --encoding=utf8 --title "$TITLE" "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
 	fi
 
 	if [ "$PRESERVE_PIC" = "y" ] || [ "$PRESERVE_PIC" = "Y" ]; then
