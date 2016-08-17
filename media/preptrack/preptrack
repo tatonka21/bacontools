@@ -19,7 +19,7 @@ process() {
 	DIR="${DIR:-$HOME/Music}"
 	FILE="$1"
 
-	echo "Processing file $1"
+	echo "Processing file $FILE"
 
 	if [ ! -f "$FILE" ]; then
 		echo "File $FILE does not exist" 1>&2
@@ -30,13 +30,13 @@ process() {
 	DETECTED_BITRATE="$(ffprobe -i "$FILE" 2>&1 | grep Stream | grep Audio | grep kb | head -n1 | grep -oP "(\d+)(?= kb\/s)")"
 
 	ARTIST="$(eyed3_get_tag "$FILE" artist)"
-	read -e -p "Artist: " -i "$ARTIST" ARTIST
+	read -r -e -p "Artist: " -i "$ARTIST" ARTIST
 
 	ALBUM="$(eyed3_get_tag "$FILE" album)"
-	read -e -p "Album: " -i "$ALBUM" ALBUM
+	read -r -e -p "Album: " -i "$ALBUM" ALBUM
 
 	TITLE="$(eyed3_get_tag "$FILE" title)"
-	read -e -p "Title: " -i "$TITLE" TITLE
+	read -r -e -p "Title: " -i "$TITLE" TITLE
 
 	if [ -n "$BITRATE" ] ; then
 		FINAL_BITRATE="$BITRATE"
@@ -48,7 +48,7 @@ process() {
 		fi
 	fi
 
-	read -e -p "Bitrate (kb/s): " -i "$FINAL_BITRATE" FINAL_BITRATE
+	read -r -e -p "Bitrate (kb/s): " -i "$FINAL_BITRATE" FINAL_BITRATE
 
 	if [ -n "$DETECTED_BITRATE" ] && [ "$FINAL_BITRATE" -gt "$DETECTED_BITRATE" ] ; then
 		echo "Warning: encoding with higher bitrate than the source: $FINAL_BITRATE kb/s vs $DETECTED_BITRATE kb/s" 1>&2
@@ -60,7 +60,7 @@ process() {
 	FIRST_IMG="$(find "$TMP_PIC_DIR" -mindepth 1 | head -1)"
 
 	if [ -n "$FIRST_IMG" ] ; then
-		read -e -p "Embedded pictures found; preserve? (y/n) " PRESERVE_PIC
+		read -r -e -p "Embedded pictures found; preserve? (y/n) " PRESERVE_PIC
 		PRESERVE_PIC="$(echo "$PRESERVE_PIC" | trim)"
 	fi
 
@@ -69,7 +69,7 @@ process() {
 
 	ffmpeg -loglevel quiet -i "$FILE" -b:a "$FINAL_BITRATE"k "$NEW_FILEPATH"
 
-	if [ "$(command -v mat &>/dev/zero ; echo $?)" = "0" -a \( -z "$DONT_MAT" \) ]; then
+	if [ "$(command -v mat &>/dev/zero ; echo $?)" = "0" ] && [ -z "$DONT_MAT" ]; then
 		mat "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
 		find "$TMP_PIC_DIR" -mindepth 1 -exec mat \{\} \; 1>/dev/zero 2>/dev/zero
 	fi
@@ -88,7 +88,7 @@ process() {
 		eyeD3 --set-encoding=utf8 -t "$TITLE" "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
 	fi
 
-	if [ "$PRESERVE_PIC" = "y" -o "$PRESERVE_PIC" = "Y" ]; then
+	if [ "$PRESERVE_PIC" = "y" ] || [ "$PRESERVE_PIC" = "Y" ]; then
 		find "$TMP_PIC_DIR" -mindepth 1 -exec bash -c 'eyeD3 --add-image="$1:$(basename "$1" | sed "s/\..*$//g")" "'"$NEW_FILEPATH"'"' funcname '{}' \; 1>/dev/zero 2>/dev/zero
 	fi
 
