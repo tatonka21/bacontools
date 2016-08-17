@@ -10,6 +10,11 @@ trim() {
 	sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]]*$//'
 }
 
+eyed3_get_tag() {
+	python2 -c "import eyed3; f = eyed3.load('$1'); print(f.tag.$2)" || \
+	python3 -c "import eyed3; f = eyed3.load('$1'); print(f.tag.$2)"
+}
+
 process() {
 	DIR="${DIR:-$HOME/Music}"
 	FILE="$1"
@@ -24,13 +29,13 @@ process() {
 	MAX_BITRATE="${MAX_BITRATE:-320}"
 	DETECTED_BITRATE="$(ffprobe -i "$FILE" 2>&1 | grep Stream | grep Audio | grep kb | head -n1 | grep -oP "(\d+)(?= kb\/s)")"
 
-	ARTIST="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Artist: ).*$" | trim)"
+	ARTIST="$(eyed3_get_tag "$FILE" artist)"
 	read -e -p "Artist: " -i "$ARTIST" ARTIST
 
-	ALBUM="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Album: ).*$" | trim)"
+	ALBUM="$(eyed3_get_tag "$FILE" album)"
 	read -e -p "Album: " -i "$ALBUM" ALBUM
 
-	TITLE="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Title: ).*$" | trim)"
+	TITLE="$(eyed3_get_tag "$FILE" title)"
 	read -e -p "Title: " -i "$TITLE" TITLE
 
 	if [ -n "$BITRATE" ] ; then
