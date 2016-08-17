@@ -6,6 +6,9 @@ Notable changes to `bacontools` are documented in this file.
 
 Unreleased
 ----------
+### Added
++ `preptrack`: check dependencies
+
 ### Fixed
 + `preptrack`: use inline Python code for latest eyeD3
 

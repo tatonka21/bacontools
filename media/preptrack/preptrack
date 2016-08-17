@@ -6,6 +6,11 @@
 # TODO: detect redirect, run non-interactively in this case
 # TODO: handle FLAC files via metaflac
 
+if [ "$(command -v eyeD3 1>/dev/null 2>/dev/null ; echo $?)" != "0" ]; then
+	echo "eyeD3 program and eyed3 Python module are required" 1>&2
+	exit 1
+fi
+
 trim() {
 	sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]]*$//'
 }
