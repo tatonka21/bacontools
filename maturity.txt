@@ -10,6 +10,7 @@ Hack       clone-github-user
 Hack       cptemp
 Hack       curl-tt
 Hack       devrestore
+Hack       docker-cleanup
 Hack       du1
 Hack       git-repo-list
 Hack       git-stat-atr

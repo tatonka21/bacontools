@@ -7,6 +7,7 @@ install:
 	$(MAKE) -C cptemp install
 	$(MAKE) -C devbup install
 	$(MAKE) -C devrestore install
+	$(MAKE) -C docker-cleanup install
 	$(MAKE) -C du1 install
 	$(MAKE) -C netinfo install
 	$(MAKE) -C single-urxvt install
