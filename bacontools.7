@@ -121,6 +121,18 @@ update-all@Hack@Update all Git repositories in level 1 subdirectories@POSIX shel
 .TE
 .ad
 
+.SH NOTES
+The following tools from tables above are not installed by \fBbacontools\fP.
+.TS
+tab (@);
+l l.
+Tool@Reason for exclusion
+_
+EncodingConverter@Developed on Windows with MSVS, not ported to Mono
+ImageValidator@Same as EncodingConverter
+termdraw@Problems with Python package installation
+.TE
+
 .SH AUTHOR
 \fBbacontools\fP are developed by Ilya Terentyev <bacondropped@gmail.com> and
 are available at <https://github.com/bacondropped/bacontools>.

@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `bacontools.7`: add NOTES section
 + `preptrack`: check dependencies
 
 ### Fixed
