@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `preptrack`: `V1` environment variable
 + `docker-cleanup`
 + `bacontools.7`: add NOTES section
 + `preptrack`: check dependencies

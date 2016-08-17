@@ -6,6 +6,11 @@
 # TODO: detect redirect, run non-interactively in this case
 # TODO: handle FLAC files via metaflac
 
+if [ -n "$V1" ]; then
+	echo "Using ID3v1" 1>&2
+	V1="-1"
+fi
+
 if [ "$(command -v eyeD3 1>/dev/null 2>/dev/null ; echo $?)" != "0" ]; then
 	echo "eyeD3 program and eyed3 Python module are required" 1>&2
 	exit 1
@@ -61,7 +66,7 @@ process() {
 
 	# Extract embedded pictures
 	TMP_PIC_DIR="$(mktemp --directory)"
-	eyeD3 --write-images="$TMP_PIC_DIR" "$FILE" 1>/dev/null 2>/dev/null
+	eyeD3 $V1 --write-images="$TMP_PIC_DIR" "$FILE" 1>/dev/null 2>/dev/null
 	FIRST_IMG="$(find "$TMP_PIC_DIR" -mindepth 1 | head -1)"
 
 	if [ -n "$FIRST_IMG" ] ; then
@@ -82,15 +87,15 @@ process() {
 	eyeD3 --remove-all "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
 
 	if [ -n "$ARTIST" ] ; then
-		eyeD3 --encoding=utf8 --artist "$ARTIST" "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
+		eyeD3 $V1 --encoding=utf8 --artist "$ARTIST" "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
 	fi
 
 	if [ -n "$ALBUM" ] ; then
-		eyeD3 --encoding=utf8 --album "$ALBUM" "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
+		eyeD3 $V1 --encoding=utf8 --album "$ALBUM" "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
 	fi
 
 	if [ -n "$TITLE" ] ; then
-		eyeD3 --encoding=utf8 --title "$TITLE" "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
+		eyeD3 $V1 --encoding=utf8 --title "$TITLE" "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
 	fi
 
 	if [ "$PRESERVE_PIC" = "y" ] || [ "$PRESERVE_PIC" = "Y" ]; then
