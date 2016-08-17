@@ -61,7 +61,7 @@ process() {
 
 	# Extract embedded pictures
 	TMP_PIC_DIR="$(mktemp --directory)"
-	eyeD3 --write-images="$TMP_PIC_DIR" "$FILE" 1>/dev/zero 2>/dev/zero
+	eyeD3 --write-images="$TMP_PIC_DIR" "$FILE" 1>/dev/null 2>/dev/null
 	FIRST_IMG="$(find "$TMP_PIC_DIR" -mindepth 1 | head -1)"
 
 	if [ -n "$FIRST_IMG" ] ; then
@@ -74,32 +74,32 @@ process() {
 
 	ffmpeg -loglevel quiet -i "$FILE" -b:a "$FINAL_BITRATE"k "$NEW_FILEPATH"
 
-	if [ "$(command -v mat &>/dev/zero ; echo $?)" = "0" ] && [ -z "$DONT_MAT" ]; then
-		mat "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
-		find "$TMP_PIC_DIR" -mindepth 1 -exec mat \{\} \; 1>/dev/zero 2>/dev/zero
+	if [ "$(command -v mat &>/dev/null ; echo $?)" = "0" ] && [ -z "$DONT_MAT" ]; then
+		mat "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
+		find "$TMP_PIC_DIR" -mindepth 1 -exec mat \{\} \; 1>/dev/null 2>/dev/null
 	fi
 
-	eyeD3 --remove-all "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
+	eyeD3 --remove-all "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
 
 	if [ -n "$ARTIST" ] ; then
-		eyeD3 --encoding=utf8 --artist "$ARTIST" "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
+		eyeD3 --encoding=utf8 --artist "$ARTIST" "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
 	fi
 
 	if [ -n "$ALBUM" ] ; then
-		eyeD3 --encoding=utf8 --album "$ALBUM" "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
+		eyeD3 --encoding=utf8 --album "$ALBUM" "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
 	fi
 
 	if [ -n "$TITLE" ] ; then
-		eyeD3 --encoding=utf8 --title "$TITLE" "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
+		eyeD3 --encoding=utf8 --title "$TITLE" "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
 	fi
 
 	if [ "$PRESERVE_PIC" = "y" ] || [ "$PRESERVE_PIC" = "Y" ]; then
-		find "$TMP_PIC_DIR" -mindepth 1 -exec bash -c 'eyeD3 --add-image="$1:$(basename "$1" | sed "s/\..*$//g")" "'"$NEW_FILEPATH"'"' funcname '{}' \; 1>/dev/zero 2>/dev/zero
+		find "$TMP_PIC_DIR" -mindepth 1 -exec bash -c 'eyeD3 --add-image="$1:$(basename "$1" | sed "s/\..*$//g")" "'"$NEW_FILEPATH"'"' funcname '{}' \; 1>/dev/null 2>/dev/null
 	fi
 
 	echo "$NEW_FILEPATH"
 
-	if [ "$(command -v notify-send 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" ]; then
+	if [ "$(command -v notify-send 1>/dev/null 2>/dev/null ; echo $?)" = "0" ]; then
 		notify-send "preptrack: $TITLE completed"
 	fi
 }
