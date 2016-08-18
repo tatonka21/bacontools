@@ -21,8 +21,13 @@ trim() {
 }
 
 eyed3_get_tag() {
-	python2 -c "import eyed3; f = eyed3.load('$1'); print(f.tag.$2)" || \
-	python3 -c "import eyed3; f = eyed3.load('$1'); print(f.tag.$2)"
+	python2 <<HEREDOC
+import eyed3
+f = eyed3.load('$1')
+if not (f):
+	exit()
+print(f.tag.$2)
+HEREDOC
 }
 
 process() {
