@@ -2,6 +2,10 @@
 # Usage: docker-cleanup
 # Remove stopped and data-only Docker containers.
 
+if [ "$(id -u)" != "0" ] && [ "$(id -nG "$(whoami)" | grep -wc "docker")" = "0" ]; then
+	echo "Warning: effective user \"$(whoami)\" is not root and is not in group \"docker\"" 1>&2
+fi
+
 docker ps -a --no-trunc | egrep '((weeks)|(months)) ago' | awk '{print $1}'
 docker ps -a --no-trunc | egrep '((weeks)|(months)) ago' | awk '{print $1}' | xargs --no-run-if-empty docker rm
 
