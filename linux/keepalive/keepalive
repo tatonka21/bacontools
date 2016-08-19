@@ -2,12 +2,12 @@
 # Usage: keepalive [PROGRAM] [ARGS...]
 # Restart command line if no instances of it are running.
 #
-# Environment:
-# INTERVAL            Sleeping interval between each ps check (default 10s).
+# ENVIRONMENT:
+# INTERVAL            Sleeping interval between each ps check (default: 10s).
 # INITIAL_SLEEP       Period of initial sleep before keepalive starts
 #                     (default: 1s).
 #
-# Requirements:
+# REQUIREMENTS:
 # sh
 # ps
 # nohup
