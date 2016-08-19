@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `miniscripts/`
 + `keepalive`
 + `snippets/vagrant.md`: Vagrantfile snippets
 + `preptrack`: `V1` environment variable
