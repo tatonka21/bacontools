@@ -30,7 +30,7 @@ INTERVAL="${INTERVAL-10s}"
 while true ; do
 	if [ "$(ps --no-headers -fC "$1" | wc -l)" = 0 ]; then
 		echo "$(date): restarting $*" 1>&2
-		nohup "$@" 1>/dev/null 2>/dev/null
+		nohup "$@" 1>/dev/null 2>/dev/null &
 	fi
 
 	sleep "$INTERVAL"
