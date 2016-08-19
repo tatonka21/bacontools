@@ -4,6 +4,8 @@
 #
 # Environment:
 # INTERVAL            Sleeping interval between each ps check (default 10s).
+# INITIAL_SLEEP       Period of initial sleep before keepalive starts
+#                     (default: 1s).
 #
 # Requirements:
 # sh
@@ -26,6 +28,9 @@ sigint_trap() {
 trap sigint_trap INT
 
 INTERVAL="${INTERVAL-10s}"
+INITIAL_SLEEP="${INITIAL_SLEEP-1s}"
+
+sleep "$INITIAL_SLEEP"
 
 while true ; do
 	if [ "$(ps --no-headers -fC "$1" | wc -l)" = 0 ]; then
