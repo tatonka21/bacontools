@@ -15,6 +15,7 @@ Hack       du1
 Hack       git-repo-list
 Hack       git-stat-atr
 Hack       httpdf
+Hack       keepalive
 Hack       lines
 Hack       maybe
 Hack       morseconv
