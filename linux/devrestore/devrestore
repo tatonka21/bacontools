@@ -72,7 +72,7 @@ process() {
 	fi
 
 	if [ "$MIME" = "application/x-tar" ] ; then
-		tar -xvf "$NAME" | tr '\n' '\0' | xargs -0 -i bash -c 'echo "{}" ; try_verify "{}"'
+		tar -xvf "$NAME" | tr '\n' '\0' | xargs -0 -i bash -c 'try_verify "{}"'
 	fi
 
 	exit 0
