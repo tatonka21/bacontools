@@ -5,8 +5,8 @@
 LASTLINE="$(git diff --stat --color "$@" | tail -1)"
 
 git diff --stat --color "$@" | head -n-1 |\
-awk '{printf("%s %s\n", (gsub("+","+")+gsub("-","-"))/(gsub("+","+")+0.000001), $0)}' |\
-sort -hr |\
+awk '{printf("%s %s\n", (gsub("+","+")+0.000001)/(gsub("+","+")+gsub("-","-")), $0)}' |\
+sort -h |\
 cut -d' ' -f2-
 
 echo "$LASTLINE"
