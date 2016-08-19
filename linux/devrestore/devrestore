@@ -11,9 +11,8 @@
 # Requirements
 # ------------
 # POSIX shell
-# echo
-# cat
-# rev
+# coreutils
+# sed
 # file
 # tar
 # gnupg
@@ -21,7 +20,7 @@
 # TODO: decompression
 
 # NAME if defined, first file sans extension otherwise
-NAME="${NAME:-$(echo "$1" | rev | cut -d. -f2- | rev)}"
+NAME="${NAME:-$(echo "$1" | sed 's/\.[^.]*$//')}"
 GPG_COMMAND="${GPG_COMMAND:-gpg}"
 RM="rm"
 
@@ -40,7 +39,7 @@ trim() {
 
 try_verify() {
 	SIG_APPEND="$1.sig"
-	SIG_REMOVE="$(echo "$1" | rev | cut -d. -f2- | rev)"
+	SIG_REMOVE="$(echo "$1" | sed 's/\.sig$//')"
 
 	if [ -f "$SIG_APPEND" ] ; then
 		gpg --verify "$SIG_APPEND" "$1"
