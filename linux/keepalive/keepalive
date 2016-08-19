@@ -11,7 +11,6 @@
 # nohup
 # sleep
 # wc
-# bc
 
 if [ "$#" = "0" ]; then
 	echo "No command line specified, exiting" 1>&2
