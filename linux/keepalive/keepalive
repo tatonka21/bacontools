@@ -47,6 +47,14 @@ while true ; do
 	if [ "$(ps --no-headers -fC "$1" | wc -l)" = 0 ]; then
 		echo "$(date): restarting $*" 1>&2
 		nohup "$@" 1>/dev/null 2>/dev/null &
+
+		{
+		sleep 1s
+		kill -0 "$!" 1>/dev/null 2>/dev/null
+		if [ "$?" != 0 ]; then
+			echo "Couldn't start \"$*\"" 1>&2
+		fi
+		} &
 	fi
 
 	sleep "$INTERVAL"
