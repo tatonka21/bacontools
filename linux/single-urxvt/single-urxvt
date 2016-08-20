@@ -12,8 +12,8 @@
 SINGLE_URXVT_WMCLASS="single-urxvt"
 
 for REQUISITE in urxvt wmctrl xprop xdotool ; do
-	if [ "$(command -v $REQUISITE 1>/dev/null 2>/dev/null ; echo $?)" ] ; then
-		echo "Error: required dependency wmctrl not found." >&2
+	if [ "$(command -v $REQUISITE 1>/dev/null 2>/dev/null ; echo $?)" != 0 ] ; then
+		echo "Error: required dependency $REQUISITE not found." >&2
 		exit 1
 	fi
 done
