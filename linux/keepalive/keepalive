@@ -26,6 +26,13 @@ fi
 
 sigint_trap() {
 	echo "SIGINT received, exiting" 1>&2
+
+	JOBS="$(jobs -p)"
+
+	if [ -n "$JOBS" ]; then
+		echo "$JOBS" | xargs kill -KILL 2>/dev/null
+	fi
+
 	exit 0
 }
 
