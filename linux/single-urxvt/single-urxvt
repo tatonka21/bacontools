@@ -11,12 +11,12 @@
 
 SINGLE_URXVT_WMCLASS=single-urxvt
 
-# make sure wmctrl exists
-wmctrlpath="$(which wmctrl 2>/dev/null)"
-if ! [ -x "$wmctrlpath" ] ; then
-	echo Error: required dependency wmctrl not found. >&2
-	exit 1
-fi
+for REQUISITE in urxvt wmctrl xprop xdotool ; do
+	if [ "$(command -v $REQUISITE 1>/dev/null 2>/dev/null ; echo $?)" ] ; then
+		echo "Error: required dependency wmctrl not found." >&2
+		exit 1
+	fi
+done
 
 active_window_id=\
 "$(xprop -root | sed -n -e '/^_NET_ACTIVE/s/^[[:print:]]\{40\}//p')"
