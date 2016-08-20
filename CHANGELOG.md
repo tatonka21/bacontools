@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `apdiff.1` manpage
 + `miniscripts/`
 + `keepalive`
 + `snippets/vagrant.md`: Vagrantfile snippets
