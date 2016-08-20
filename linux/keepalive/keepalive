@@ -20,6 +20,10 @@ if [ "$#" = "0" ]; then
 	exit 1
 fi
 
+if [ "$(command -v "$1" 1>/dev/null 2>/dev/null ; echo $?)" != 0 ]; then
+	echo "Warning: executable \"$1\" not in \$PATH" 1>&2
+fi
+
 sigint_trap() {
 	echo "SIGINT received, exiting" 1>&2
 	exit 0
