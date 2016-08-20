@@ -4,12 +4,12 @@
 #
 # This script is courtesy of forums.debian.net user jw013:
 # http://forums.debian.net/viewtopic.php?f=16&t=60374
-
+#
 # single_urxvt: emulates quake terminal functionality
 # designed for use with openbox and wmctrl
 # make sure wmctrl is installed
 
-SINGLE_URXVT_WMCLASS=single-urxvt
+SINGLE_URXVT_WMCLASS="single-urxvt"
 
 for REQUISITE in urxvt wmctrl xprop xdotool ; do
 	if [ "$(command -v $REQUISITE 1>/dev/null 2>/dev/null ; echo $?)" ] ; then
@@ -18,19 +18,19 @@ for REQUISITE in urxvt wmctrl xprop xdotool ; do
 	fi
 done
 
-active_window_id=\
+ACTIVE_WINDOW_ID=\
 "$(xprop -root | sed -n -e '/^_NET_ACTIVE/s/^[[:print:]]\{40\}//p')"
 
-# test: true if active window has WM_CLASS $SINGLE_URXVT_WMCLASS
-if xprop -id "$active_window_id" 2>/dev/null | \
+# Test: true if active window has WM_CLASS $SINGLE_URXVT_WMCLASS
+if xprop -id "$ACTIVE_WINDOW_ID" 2>/dev/null | \
 	grep -q '^WM_CLASS(STRING)[[:print:]]*'"$SINGLE_URXVT_WMCLASS"
 then
-	# hide active quake rxvt
-	wmctrl -i -r "$active_window_id" -b add,hidden
+	# Hide active quake rxvt
+	wmctrl -i -r "$ACTIVE_WINDOW_ID" -b add,hidden
 	xdotool windowminimize "$(xdotool getactivewindow)"
 elif ! wmctrl -R "$SINGLE_URXVT_WMCLASS" -x ; then
-# use the wmctrl to both focus and raise quake terminal as well as
-# test if it is already running; wmctrl returns nonzero/false if no matching
-# window is found, so we have to start it
+	# Use the wmctrl to both focus and raise quake terminal as well as
+	# test if it is already running; wmctrl returns nonzero/false if no
+	# matching window is found, so we have to start it
 	urxvt -name "$SINGLE_URXVT_WMCLASS" "$@" &
 fi
