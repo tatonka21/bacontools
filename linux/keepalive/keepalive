@@ -8,11 +8,10 @@
 #                     (default: 1s).
 #
 # REQUIREMENTS:
+# coreutils
 # sh
 # ps
-# nohup
-# sleep
-# wc
+# xargs
 
 if [ "$#" = "0" ]; then
 	echo "No command line specified, exiting" 1>&2
