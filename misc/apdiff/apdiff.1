@@ -21,10 +21,10 @@ Sibling paths are found via \fBos.listdir(parent_path)\fP; only paths matching
 next step.
 .IP \n+[step]
 Among selected siblings, paths similar to \fBFILE\fP are selected via
-\fBdifflib.get_close_matches\fP. The maximum of \fB$NEIGHBORS\fP (\fB1000\fP
-by default) is produced, and similarity (i.e. edit distance weighed by string
-length) of these close matches must equal \fB$CUTOFF\fP (\fB0.7 by default\fP)
-or more.
+\fBdifflib.get_close_matches\fP. The maximum of \fB$MAX_NEIGHBORS\fP
+(\fB1000\fP by default) is produced, and similarity (i.e. edit distance weighed
+by string length) of these close matches must equal \fB$CUTOFF\fP (\fB0.7 by
+default\fP) or more.
 .IP \n+[step]
 Among selected close paths, a diff conjunction is performed. This step finds
 the longest contiguous subsequence of \fBFILE\fP by which it differs with any
