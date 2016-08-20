@@ -1,4 +1,6 @@
 #!/bin/sh
+# Usage: single-urxvt [URXVT_ARGS...]
+# Launch a singleton urxvt instance, or minimize/maximize already running one
 #
 # This script is courtesy of forums.debian.net user jw013:
 # http://forums.debian.net/viewtopic.php?f=16&t=60374
