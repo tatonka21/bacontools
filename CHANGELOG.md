@@ -19,6 +19,7 @@ Unreleased
 + `preptrack`: check dependencies
 
 ### Fixed
++ `preptrack`: escape single quotes in filenames
 + `clone-github-user`: ensure unique URLs
 + `preptrack`: fix Python exception when converting videos
 + `bananaglee`: install from Makefile (fixes install on Arch)
