@@ -30,6 +30,7 @@ Hack       update-all
 Hack       userls
 Hack       vidinfo
 Hack       vimless
+Hack       watchclock
 Hack       wget-page
 Untested   EncodingConverter
 Untested   ImageValidator

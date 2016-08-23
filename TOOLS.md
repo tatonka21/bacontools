@@ -73,3 +73,4 @@ Miscellaneous utilities
 | tasktags          | Untested | Search for tags like TODO                               | POSIX shell |
 | termdraw          | Moving   | Print ASCII-art graphs                                  | Python      |
 | update-all        | Hack     | Update all Git repositories in level 1 subdirectories   | POSIX shell |
+| watchclock        | Hack     | Display an ASCII-art clock in your terminal             | POSIX shell |
