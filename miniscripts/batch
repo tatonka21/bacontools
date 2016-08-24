@@ -18,7 +18,12 @@ fi
 
 
 if [ -z "$PREFIX" ]; then
-	PREFIX="${PREFIX-$(basename "$(pwd)")e}"
+	BASENAME="$(basename "$(pwd)")"
+	if [ "$(echo "$BASENAME" | egrep -c "*[0-9]$")" = 1 ]; then
+		PREFIX="$BASENAME"e
+	else
+		PREFIX="$BASENAME."
+	fi
 elif [[ "$PREFIX" != *\. ]] && [[ "$PREFIX" != *e ]] && [[ "$PREFIX" != *0 ]]; then
 	PREFIX="$PREFIX."
 fi

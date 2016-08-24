@@ -18,6 +18,9 @@ Unreleased
 + `bacontools.7`: add NOTES section
 + `preptrack`: check dependencies
 
+### Changed
++ `miniscripts/batch`: don't put dots after "e" for episodes
+
 ### Fixed
 + `preptrack`: escape single quotes in filenames
 + `clone-github-user`: ensure unique URLs
