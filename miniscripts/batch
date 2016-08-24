@@ -16,7 +16,6 @@ if [ -z "$DIRECTORY" ]; then
 	exit 1
 fi
 
-
 if [ -z "$PREFIX" ]; then
 	BASENAME="$(basename "$(pwd)")"
 	if [ "$(echo "$BASENAME" | egrep -c "*[0-9]$")" = 1 ]; then
