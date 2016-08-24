@@ -61,6 +61,21 @@ if [ -z "$DD_COMMAND" ] && [ "$(command -v dcfldd 1>/dev/zero 2>/dev/zero ; echo
 	DD_COMMAND=dcfldd
 fi
 
+if [ "$(command -v "$DD_COMMAND" 1>/dev/null 2>/dev/null ; echo $?)" != 0 ]; then
+	echo "\$DD_COMMAND is \"$DD_COMMAND\", which does not exist in \$PATH" 1>&2
+	exit 1
+fi
+
+if [ "$(command -v "$CKSUM_COMMAND" 1>/dev/null 2>/dev/null ; echo $?)" != 0 ]; then
+	echo "\$CKSUM_COMMAND is \"$CKSUM_COMMAND\", which does not exist in \$PATH" 1>&2
+	exit 1
+fi
+
+if [ "$(command -v "$GPG_COMMAND" 1>/dev/null 2>/dev/null ; echo $?)" != 0 ]; then
+	echo "\$GPG_COMMAND is \"$GPG_COMMAND\", which does not exist in \$PATH" 1>&2
+	exit 1
+fi
+
 if [ "$(id -u)" != "0" ]; then
 	_SUDO="sudo"
 fi
