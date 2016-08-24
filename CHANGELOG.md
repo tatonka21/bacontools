@@ -39,14 +39,14 @@ Unreleased
 + `git-stat-atr`
 + `center`
 
-### Fixed
-+ `devbup`: run checksum under sudo to avoid permission problems
-+ `devrestore`: fix GPG decryption with anon recipients
-
 ### Changed
 + `update-all`: use `figlet` instead of `toilet`
 + `devbup`: don't split when `SPLIT_SIZE` = `0`
 + `PKGBUILD`: install `dev/main` version
+
+### Fixed
++ `devbup`: run checksum under sudo to avoid permission problems
++ `devrestore`: fix GPG decryption with anon recipients
 
 ***
 
