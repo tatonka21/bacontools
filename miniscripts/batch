@@ -43,6 +43,6 @@ process() {
 export -f process
 
 find "$DIRECTORY" -maxdepth "$MAXDEPTH" -path "$PATHGLOB" -print0 |\
-sort |\
+sort -z |\
 parallel -0 -v -q --eta -j"$JOBS" -- \
 process "$FRAMES" "$PIXELS" "$DELAY" "{}" "$PREFIX"
