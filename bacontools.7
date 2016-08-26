@@ -1,10 +1,10 @@
-.TH bacontools 7 "bacontools" "17 Aug 2016" "version 2016.08.17"
+.TH bacontools 7 "bacontools" "26 Aug 2016" "version 2016.08.26"
 
 .SH NAME
 \fBbacontools\fP - Collection of small, unrelated utilities
 
 .SH DESCRIPTION
-\fBbacontools\fB are utilities I've written over the years and gathered into a
+\fBbacontools\fP are utilities I've written over the years and gathered into a
 single package.
 
 .SH TOOL MATURITY
@@ -36,7 +36,9 @@ checkreboot@Hack@Print whether reboot is required@POSIX shell
 cptemp@Hack@Copy file/directory to /tmp@POSIX shell
 devbup@Moving@Backup, archive, and encrypt files and devices@Bash
 devrestore@Hack@Restore devbup archives@Bash
+docker-cleanup@Hack@Remove old Docker containers@POSIX shell
 du1@Hack@Print sizes of top level directories@POSIX shell
+keepalive@Hack@Restart a process if it's not running@POSIX shell
 netinfo@Untested@Print current WAN IP and nmcli connection name@POSIX shell
 single-urxvt@Hack@Launch a singleton urxvt instance@POSIX shell
 userls@Hack@Print all users on the system@POSIX shell
@@ -118,8 +120,21 @@ stopwatch@Hack@Count elapsed time@POSIX shell
 tasktags@Untested@Search for tags like TODO@POSIX shell
 termdraw@Moving@Print ASCII-art graphs@Python
 update-all@Hack@Update all Git repositories in level 1 subdirectories@POSIX shell
+watchclock@Hack@Display an ASCII-art clock in your terminal@POSIX shell
 .TE
 .ad
+
+.SH NOTES
+The following tools from tables above are not installed by \fBbacontools\fP.
+.TS
+tab (@);
+l l.
+Tool@Reason for exclusion
+_
+EncodingConverter@Developed on Windows with MSVS, not ported to Mono
+ImageValidator@Same as EncodingConverter
+termdraw@Problems with Python package installation
+.TE
 
 .SH AUTHOR
 \fBbacontools\fP are developed by Ilya Terentyev <bacondropped@gmail.com> and
@@ -130,5 +145,5 @@ are available at <https://github.com/bacondropped/bacontools>.
 a specific tool overrides that with its own license.
 
 .SH SEE ALSO
-\fBimgur-dl\fP(1), \fBpreptrack\fP(1), \fBtogif\fP(1), \fBreadable\fP(1),
-\fBdevbup\fP(1), \fBdevrestore\fP(1)
+\fBapdiff\fP(1), \fBdevbup\fP(1), \fBdevrestore\fP(1), \fBimgur-dl\fP(1),
+\fBpreptrack\fP(1), \fBreadable\fP(1), \fBtogif\fP(1)

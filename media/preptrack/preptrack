@@ -6,15 +6,36 @@
 # TODO: detect redirect, run non-interactively in this case
 # TODO: handle FLAC files via metaflac
 
+if [ -n "$V1" ]; then
+	echo "Using ID3v1" 1>&2
+	V1="-1"
+fi
+
+if [ "$(command -v eyeD3 1>/dev/null 2>/dev/null ; echo $?)" != "0" ]; then
+	echo "eyeD3 program and eyed3 Python module are required" 1>&2
+	exit 1
+fi
+
 trim() {
 	sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]]*$//'
+}
+
+eyed3_get_tag() {
+	FILENAME="${1//\'/\\\'}"
+	python2 <<HEREDOC
+import eyed3
+f = eyed3.load('$FILENAME')
+if not (f):
+	exit()
+print(f.tag.$2)
+HEREDOC
 }
 
 process() {
 	DIR="${DIR:-$HOME/Music}"
 	FILE="$1"
 
-	echo "Processing file $1"
+	echo "Processing file $FILE"
 
 	if [ ! -f "$FILE" ]; then
 		echo "File $FILE does not exist" 1>&2
@@ -24,14 +45,14 @@ process() {
 	MAX_BITRATE="${MAX_BITRATE:-320}"
 	DETECTED_BITRATE="$(ffprobe -i "$FILE" 2>&1 | grep Stream | grep Audio | grep kb | head -n1 | grep -oP "(\d+)(?= kb\/s)")"
 
-	ARTIST="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Artist: ).*$" | trim)"
-	read -e -p "Artist: " -i "$ARTIST" ARTIST
+	ARTIST="$(eyed3_get_tag "$FILE" artist)"
+	read -r -e -p "Artist: " -i "$ARTIST" ARTIST
 
-	ALBUM="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Album: ).*$" | trim)"
-	read -e -p "Album: " -i "$ALBUM" ALBUM
+	ALBUM="$(eyed3_get_tag "$FILE" album)"
+	read -r -e -p "Album: " -i "$ALBUM" ALBUM
 
-	TITLE="$(eyeD3 --rfc822 "$FILE" | grep -oP "(?<=Title: ).*$" | trim)"
-	read -e -p "Title: " -i "$TITLE" TITLE
+	TITLE="$(eyed3_get_tag "$FILE" title)"
+	read -r -e -p "Title: " -i "$TITLE" TITLE
 
 	if [ -n "$BITRATE" ] ; then
 		FINAL_BITRATE="$BITRATE"
@@ -43,7 +64,7 @@ process() {
 		fi
 	fi
 
-	read -e -p "Bitrate (kb/s): " -i "$FINAL_BITRATE" FINAL_BITRATE
+	read -r -e -p "Bitrate (kb/s): " -i "$FINAL_BITRATE" FINAL_BITRATE
 
 	if [ -n "$DETECTED_BITRATE" ] && [ "$FINAL_BITRATE" -gt "$DETECTED_BITRATE" ] ; then
 		echo "Warning: encoding with higher bitrate than the source: $FINAL_BITRATE kb/s vs $DETECTED_BITRATE kb/s" 1>&2
@@ -51,11 +72,11 @@ process() {
 
 	# Extract embedded pictures
 	TMP_PIC_DIR="$(mktemp --directory)"
-	eyeD3 --write-images="$TMP_PIC_DIR" "$FILE" 1>/dev/zero 2>/dev/zero
+	eyeD3 $V1 --write-images="$TMP_PIC_DIR" "$FILE" 1>/dev/null 2>/dev/null
 	FIRST_IMG="$(find "$TMP_PIC_DIR" -mindepth 1 | head -1)"
 
 	if [ -n "$FIRST_IMG" ] ; then
-		read -e -p "Embedded pictures found; preserve? (y/n) " PRESERVE_PIC
+		read -r -e -p "Embedded pictures found; preserve? (y/n) " PRESERVE_PIC
 		PRESERVE_PIC="$(echo "$PRESERVE_PIC" | trim)"
 	fi
 
@@ -64,32 +85,32 @@ process() {
 
 	ffmpeg -loglevel quiet -i "$FILE" -b:a "$FINAL_BITRATE"k "$NEW_FILEPATH"
 
-	if [ "$(command -v mat &>/dev/zero ; echo $?)" = "0" -a \( -z "$DONT_MAT" \) ]; then
-		mat "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
-		find "$TMP_PIC_DIR" -mindepth 1 -exec mat \{\} \; 1>/dev/zero 2>/dev/zero
+	if [ "$(command -v mat &>/dev/null ; echo $?)" = "0" ] && [ -z "$DONT_MAT" ]; then
+		mat "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
+		find "$TMP_PIC_DIR" -mindepth 1 -exec mat \{\} \; 1>/dev/null 2>/dev/null
 	fi
 
-	eyeD3 --remove-all "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
+	eyeD3 --remove-all "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
 
 	if [ -n "$ARTIST" ] ; then
-		eyeD3 --set-encoding=utf8 -a "$ARTIST" "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
+		eyeD3 $V1 --encoding=utf8 --artist "$ARTIST" "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
 	fi
 
 	if [ -n "$ALBUM" ] ; then
-		eyeD3 --set-encoding=utf8 -A "$ALBUM" "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
+		eyeD3 $V1 --encoding=utf8 --album "$ALBUM" "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
 	fi
 
 	if [ -n "$TITLE" ] ; then
-		eyeD3 --set-encoding=utf8 -t "$TITLE" "$NEW_FILEPATH" 1>/dev/zero 2>/dev/zero
+		eyeD3 $V1 --encoding=utf8 --title "$TITLE" "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
 	fi
 
-	if [ "$PRESERVE_PIC" = "y" -o "$PRESERVE_PIC" = "Y" ]; then
-		find "$TMP_PIC_DIR" -mindepth 1 -exec bash -c 'eyeD3 --add-image="$1:$(basename "$1" | sed "s/\..*$//g")" "'"$NEW_FILEPATH"'"' funcname '{}' \; 1>/dev/zero 2>/dev/zero
+	if [ "$PRESERVE_PIC" = "y" ] || [ "$PRESERVE_PIC" = "Y" ]; then
+		find "$TMP_PIC_DIR" -mindepth 1 -exec bash -c 'eyeD3 --add-image="$1:$(basename "$1" | sed "s/\..*$//g")" "'"$NEW_FILEPATH"'"' funcname '{}' \; 1>/dev/null 2>/dev/null
 	fi
 
 	echo "$NEW_FILEPATH"
 
-	if [ "$(command -v notify-send 1>/dev/zero 2>/dev/zero ; echo $?)" = "0" ]; then
+	if [ "$(command -v notify-send 1>/dev/null 2>/dev/null ; echo $?)" = "0" ]; then
 		notify-send "preptrack: $TITLE completed"
 	fi
 }

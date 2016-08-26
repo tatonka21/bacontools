@@ -9,8 +9,8 @@ if [ "$(grep -c "Raspbian" /etc/issue)" = "1" ]; then
 	"patches/0001-don-t-install-bananaglee-when-there-s-no-runghc.patch" \
 	"patches/0002-don-t-run-Bundler-when-it-s-problematic.patch" \
 	; do
-		git am "$patch"
-		git show HEAD --stat
+		echo "applying $(basename "$patch")" 1>&2
+		patch -p1 < "$patch"
 	done
 
 	exit 0

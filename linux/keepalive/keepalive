@@ -1,0 +1,64 @@
+#!/bin/sh
+# Usage: keepalive [PROGRAM] [ARGS...]
+# Restart command line if no instances of it are running.
+#
+# ENVIRONMENT:
+# INTERVAL            Sleeping interval between each ps check (default: 10s).
+# INITIAL_SLEEP       Period of initial sleep before keepalive starts
+#                     (default: 1s).
+#
+# REQUIREMENTS:
+# coreutils
+# sh
+# ps
+# xargs
+
+LOG_PREFIX="$(basename "$0"):"
+
+if [ "$#" = "0" ]; then
+	echo "No command line specified, exiting" 1>&2
+	echo "Usage: $(basename "$0") [PROGRAM] [ARGS...]" 1>&2
+	exit 1
+fi
+
+sigint_trap() {
+	echo "$LOG_PREFIX SIGINT received, exiting" 1>&2
+
+	JOBS="$(jobs -p)"
+
+	if [ -n "$JOBS" ]; then
+		echo "$JOBS" | xargs kill -KILL 2>/dev/null
+	fi
+
+	exit 0
+}
+
+trap sigint_trap INT
+
+INTERVAL="${INTERVAL-10s}"
+INITIAL_SLEEP="${INITIAL_SLEEP-1s}"
+
+echo "$LOG_PREFIX polling interval $INTERVAL, initial sleep $INITIAL_SLEEP, process \"$1\", command line \"$*\"" 1>&2
+
+if [ "$(command -v "$1" 1>/dev/null 2>/dev/null ; echo $?)" != 0 ]; then
+	echo "$LOG_PREFIX warning: executable \"$1\" not in \$PATH" 1>&2
+fi
+
+sleep "$INITIAL_SLEEP"
+
+while true ; do
+	if [ "$(ps --no-headers -fC "$1" | wc -l)" = 0 ]; then
+		echo "$LOG_PREFIX $(date): restarting \"$*\"" 1>&2
+		nohup -- "$@" 1>/dev/null 2>/dev/null &
+
+		{
+			sleep 1s
+			kill -0 "$!" 1>/dev/null 2>/dev/null
+			if [ "$?" != 0 ]; then
+				echo "$LOG_PREFIX error: couldn't start \"$*\"" 1>&2
+			fi
+		} &
+	fi
+
+	sleep "$INTERVAL"
+done

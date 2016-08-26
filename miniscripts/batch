@@ -1,0 +1,48 @@
+#!/bin/bash
+# batch DIRECTORY PATHGLOB PREFIX [MAXDEPTH]
+
+JOBS="${JOBS-"$(grep -c processor /proc/cpuinfo 2>/dev/null)"}"
+#DIRECTORY="$(echo "$DIRECTORY" | bash -c "printf %q")"
+DIRECTORY="$DIRECTORY"
+PATHGLOB="${PATHGLOB-*.mkv}"
+MAXDEPTH="${MAXDEPTH-1}"
+
+FRAMES="${FRAMES-40}"
+PIXELS="${PIXELS-40000}"
+DELAY="${DELAY-25}"
+
+if [ -z "$DIRECTORY" ]; then
+	echo "\$DIRECTORY is unset, but is required" 1>&2
+	exit 1
+fi
+
+if [ -z "$PREFIX" ]; then
+	BASENAME="$(basename "$(pwd)")"
+	if [ "$(echo "$BASENAME" | egrep -c "*[0-9]$")" = 1 ]; then
+		PREFIX="$BASENAME"e
+	else
+		PREFIX="$BASENAME."
+	fi
+elif [[ "$PREFIX" != *\. ]] && [[ "$PREFIX" != *e ]] && [[ "$PREFIX" != *0 ]]; then
+	PREFIX="$PREFIX."
+fi
+
+echo "Jobs: $JOBS" 1>&2
+echo "Directory: $DIRECTORY" 1>&2
+echo "Pathglob: $PATHGLOB" 1>&2
+echo "Prefix: $PREFIX" 1>&2
+echo "Maxdepth: $MAXDEPTH" 1>&2
+echo "Frames: $FRAMES" 1>&2
+echo "Pixels: $PIXELS" 1>&2
+echo "Delay: $DELAY" 1>&2
+
+process() {
+	env FRAMES="$1" PIXELS="$2" DELAY="$3" togif "$4" "$5""$(apdiff "$4")"
+}
+
+export -f process
+
+find "$DIRECTORY" -maxdepth "$MAXDEPTH" -path "$PATHGLOB" -print0 |\
+sort -z |\
+parallel -0 -v -q --eta -j"$JOBS" -- \
+process "$FRAMES" "$PIXELS" "$DELAY" "{}" "$PREFIX"

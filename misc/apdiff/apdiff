@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-
+# Usage: apdiff FILE...
+# Print contiguous filename difference among similarly named files.
+#
 # TODO: Context options, like -ABC in grep, but with symbols instead of lines
 # TODO: Tokenize file paths, so paths like "01 - Some long episode title.ext"\
 # and "12 - Some other long episode title.ext" don't confuse apdiff and/or\

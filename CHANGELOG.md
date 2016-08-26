@@ -4,6 +4,33 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
+[2016.08.26]
+------------
+### Added
++ `devbup`: check if *_COMMAND commands exist
++ `watchclock`
++ `patches/check`
++ `apdiff.1` manpage
++ `miniscripts/`
++ `keepalive`
++ `snippets/vagrant.md`: Vagrantfile snippets
++ `preptrack`: `V1` environment variable
++ `docker-cleanup`
++ `bacontools.7`: add NOTES section
++ `preptrack`: check dependencies
+
+### Changed
++ `miniscripts/batch`: don't put dots after "e" for episodes
+
+### Fixed
++ `preptrack`: escape single quotes in filenames
++ `clone-github-user`: ensure unique URLs
++ `preptrack`: fix Python exception when converting videos
++ `bananaglee`: install from Makefile (fixes install on Arch)
++ `preptrack`: use inline Python code for latest eyeD3
+
+***
+
 [2016.08.17]
 ------------
 ### Added
@@ -13,14 +40,14 @@ Notable changes to `bacontools` are documented in this file.
 + `git-stat-atr`
 + `center`
 
-### Fixed
-+ `devbup`: run checksum under sudo to avoid permission problems
-+ `devrestore`: fix GPG decryption with anon recipients
-
 ### Changed
 + `update-all`: use `figlet` instead of `toilet`
 + `devbup`: don't split when `SPLIT_SIZE` = `0`
 + `PKGBUILD`: install `dev/main` version
+
+### Fixed
++ `devbup`: run checksum under sudo to avoid permission problems
++ `devrestore`: fix GPG decryption with anon recipients
 
 ***
 
@@ -200,3 +227,4 @@ Notable changes to `bacontools` are documented in this file.
 [2016.07.15]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.15
 [2016.07.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.27
 [2016.08.17]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.17
+[2016.08.26]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.17

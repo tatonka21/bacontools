@@ -1,0 +1,65 @@
+.TH apdiff 1 "apdiff" "26 Aug 2016" "version 2016.08.26"
+
+.SH NAME
+apdiff\~\-\~Print contiguous filename difference among similarly named files
+
+.SH SYNOPSIS
+apdiff \fBFILE...\fP
+
+.SH DESCRIPTION
+\fBapdiff\fP (\fIa\fPll \fIp\fPaths' \fIdiff\fP) computes the largest
+contiguous subsequence of each its input filenames by which this filename
+differs from other similar files in the same directory. Simplified, the
+following happens to each \fBFILE\fP that \fBapdiff\fP receives as an argument:
+
+.nr step 1 1
+.IP \n[step] 4
+\fBapdiff\fP finds the parent directory of \fBFILE\fP\~\-\~\fBparent_path\fP.
+.IP \n+[step]
+Sibling paths are found via \fBos.listdir(parent_path)\fP; only paths matching
+\fB$GLOB\fP Unix-style path glob (\fB*\fP by default) are considered for the
+next step.
+.IP \n+[step]
+Among selected siblings, paths similar to \fBFILE\fP are selected via
+\fBdifflib.get_close_matches\fP. The maximum of \fB$MAX_NEIGHBORS\fP
+(\fB1000\fP by default) is produced, and similarity (i.e. edit distance weighed
+by string length) of these close matches must equal \fB$CUTOFF\fP (\fB0.7\fP by
+default) or more.
+.IP \n+[step]
+Among selected close paths, a diff conjunction is performed. This step finds
+the longest contiguous subsequence of \fBFILE\fP by which it differs with any
+of those close paths. For instance, if \fBFILE\fP equals \fBlog-7-15-2.txt\fP
+and close paths are \fBlog-23.txt\fP and \fBlog-445-2-4.txt\fP, the result will
+be \fB7-15-2\fP.
+.IP \n+[step]
+The subsequence is then printed to stdout as the result. All these steps are
+repeated independently for each input \fBFILE\fP.
+
+.SH ENVIRONMENT
+.TP
+\fBMAX_NEIGHBORS\fP
+Maximum amount of similarly named neighbor files that will be considered when
+computing the diff subsequence. Default: \fB1000\fP
+
+.TP
+\fBCUTOFF\fP
+Minimum required similarity between neighbor paths and argument path. Paths
+with less similarity than this will not be considered in the final diff
+subsequence computation. Default: \fB0.7\fP
+
+.TP
+\fBGLOB\fP
+Linux-style glob that all neighbor files are filtered by. Default: \fB*\fP
+
+.SH REQUIREMENTS
+\fBPython\fP 2 or 3
+
+.SH AUTHOR
+Developed by Ilya Terentyev <bacondropped@gmail.com> as a part of the
+\fBbacontools\fP package <https://gitlab.com/bacondropped/bacontools>.
+
+.SH LICENSE
+\fBapdiff\fP is distributed under the terms of the MIT license.
+
+.SH SEE ALSO
+\fBbacontools\fP(7)

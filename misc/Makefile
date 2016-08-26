@@ -26,3 +26,4 @@ install: all
 	$(MAKE) -C tasktags install
 	$(MAKE) -C termdraw install
 	$(MAKE) -C update-all install
+	$(MAKE) -C watchclock install

@@ -1,0 +1,2 @@
+#!/bin/sh
+watch -ptcn1 date +\\ %D\\ %T\\  \| toilet -f mono9 -F border --gay -w \$\(tput cols\)

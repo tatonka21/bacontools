@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+for PATCH in patches/*.patch ; do
+	git apply --check "$PATCH"
+done

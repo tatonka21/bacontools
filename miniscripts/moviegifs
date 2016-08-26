@@ -1,0 +1,20 @@
+#!/bin/sh
+
+MINIMUM="${FRAMECOUNTS-"470 475 480"}"
+DEFAULT="${FRAMECOUNTS-"467 470 473 475 477 480 485 490"}"
+LOTS="${FRAMECOUNTS-"450 460 463 465 467 469 470 471 472 473 474 475 476 477 479 480 482 485 487 490"}"
+JOBS="${JOBS-2}"
+
+if [ -n "$PRESET" ]; then
+	if [ "$PRESET" = "minimum" ]; then
+		FRAMECOUNTS="$MINIMUM"
+	elif [ "$PRESET" = "default" ]; then
+		FRAMECOUNTS="$DEFAULT"
+	elif [ "$PRESET" = "lots" ]; then
+		FRAMECOUNTS="$LOTS"
+	fi
+else
+	FRAMECOUNTS="$DEFAULT"
+fi
+
+echo | parallel --delay 3 --eta -v -q -j"$JOBS" time env FRAMES='{}' togif "$1" "$2" ::: $FRAMECOUNTS

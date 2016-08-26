@@ -1,0 +1,3 @@
+#!/bin/sh
+FRAMES=40 PIXELS=40000 DELAY=25 togif "$1" "$2"
+# rm -v "$1"

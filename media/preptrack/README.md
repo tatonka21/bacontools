@@ -17,6 +17,9 @@ If MAT (Metadata anonymization toolkit) is present, `preptrack` will run `mat
 newfile` after conversion and before applying new ID3 tags, unless `$DONT_MAT`
 is set to anything.
 
+If `$V1` environment variable is set to anything, `preptrack` will tell `eyeD3`
+to write IDv1 metatags.
+
 Use cases
 ---------
 + Normalize your music library for publishing: `preptrack` renames files like

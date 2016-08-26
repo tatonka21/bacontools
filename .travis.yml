@@ -20,5 +20,6 @@ before_install:
   - python3 -V
   - pip3 -V
 script:
+  - patches/check
   - patches/apply
   - make
