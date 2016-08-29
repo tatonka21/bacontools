@@ -1,0 +1,25 @@
+#!/bin/sh
+# Usage: cate [FILE...]
+# Edit files purely via stdin and cat.
+
+_edit() {
+	if [ ! -w "$1" ] && [ ! -w "$(dirname "$1")" ]; then
+		echo "Warning: \"$1\" is not writable" 1>&2
+	fi
+
+	cat - > "$1"
+}
+
+if [ "$#" = 0 ]; then
+	echo "Enter filename: " 1>&2
+	read -r FILE
+	_edit "$FILE"
+fi
+
+for FILE in "$@" ; do
+	if [ "$#" -gt 1 ]; then
+		echo "Editing \"$FILE\"" 1>&2
+	fi
+
+	_edit "$FILE"
+done

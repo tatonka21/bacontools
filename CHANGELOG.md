@@ -4,6 +4,13 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
+Unreleased
+----------
+### Added
++ `cate`
+
+***
+
 [2016.08.26]
 ------------
 ### Added

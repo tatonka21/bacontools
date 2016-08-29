@@ -3,6 +3,7 @@
 all:
 
 install:
+	$(MAKE) -C cate install
 	$(MAKE) -C checkreboot install
 	$(MAKE) -C cptemp install
 	$(MAKE) -C devbup install
