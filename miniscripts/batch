@@ -1,8 +1,8 @@
 #!/bin/bash
-# batch DIRECTORY PATHGLOB PREFIX [MAXDEPTH]
+# Usage: env DIRECTORY=dir batch [GNU_PARALLEL_ARGS...]
+# Run multiple togif conversions.
 
 JOBS="${JOBS-"$(grep -c processor /proc/cpuinfo 2>/dev/null)"}"
-#DIRECTORY="$(echo "$DIRECTORY" | bash -c "printf %q")"
 DIRECTORY="$DIRECTORY"
 PATHGLOB="${PATHGLOB-*.mkv}"
 MAXDEPTH="${MAXDEPTH-1}"
