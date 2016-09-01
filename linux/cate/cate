@@ -25,7 +25,7 @@ _edit() {
 		echo "Editing \"$FILE\"" 1>&2
 	fi
 
-	cat - > "$1"
+	cat -> "$1"
 }
 
 if [ "$#" = 0 ]; then
