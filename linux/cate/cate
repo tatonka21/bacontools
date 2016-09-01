@@ -21,6 +21,10 @@ _edit() {
 		fi
 	fi
 
+	if [ -n "$ANNOUNCE_EDIT" ]; then
+		echo "Editing \"$FILE\"" 1>&2
+	fi
+
 	cat - > "$1"
 }
 
@@ -32,7 +36,7 @@ fi
 
 for FILE in "$@" ; do
 	if [ "$#" -gt 1 ]; then
-		echo "Editing \"$FILE\"" 1>&2
+		ANNOUNCE_EDIT=1
 	fi
 
 	_edit "$FILE"
