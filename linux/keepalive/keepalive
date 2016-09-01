@@ -38,7 +38,8 @@ trap sigint_trap INT
 INTERVAL="${INTERVAL-10s}"
 INITIAL_SLEEP="${INITIAL_SLEEP-1s}"
 
-echo "$LOG_PREFIX polling interval $INTERVAL, initial sleep $INITIAL_SLEEP, process \"$1\", command line \"$*\"" 1>&2
+echo "$LOG_PREFIX polling interval $INTERVAL, initial sleep $INITIAL_SLEEP, " \
+"process \"$1\", command line \"$*\"" 1>&2
 
 if [ "$(command -v "$1" 1>/dev/null 2>/dev/null ; echo $?)" != 0 ]; then
 	echo "$LOG_PREFIX warning: executable \"$1\" not in \$PATH" 1>&2
