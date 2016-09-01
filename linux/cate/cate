@@ -7,6 +7,16 @@ _edit() {
 		echo "Warning: \"$1\" is not writable" 1>&2
 	fi
 
+	if [ "$(stat -c%s "$1")" -gt 0 ]; then
+		printf "%s" "Warning: file '$1' is not empty ($(wc -l < "$1") "\
+		"lines); overwrite? (y/n) " 1>&2
+		read -r ACTION
+
+		if [ "$ACTION" != 'y' ] && [ "$ACTION" != 'Y' ]; then
+			return
+		fi
+	fi
+
 	cat - > "$1"
 }
 
