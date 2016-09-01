@@ -31,6 +31,14 @@ print(f.tag.$2)
 HEREDOC
 }
 
+id3_check_tag_length() {
+	if [ -n "$V1" ]; then
+		if [ "$(printf "%s" "$1" | wc -c)" -gt 30 ]; then
+			echo "Warning: ID3v1 tags are truncated to 30 bytes!" 1>&2
+		fi
+	fi
+}
+
 process() {
 	DIR="${DIR:-$HOME/Music}"
 	FILE="$1"
@@ -47,12 +55,15 @@ process() {
 
 	ARTIST="$(eyed3_get_tag "$FILE" artist)"
 	read -r -e -p "Artist: " -i "$ARTIST" ARTIST
+	id3_check_tag_length "$ARTIST"
 
 	ALBUM="$(eyed3_get_tag "$FILE" album)"
 	read -r -e -p "Album: " -i "$ALBUM" ALBUM
+	id3_check_tag_length "$ALBUM"
 
 	TITLE="$(eyed3_get_tag "$FILE" title)"
 	read -r -e -p "Title: " -i "$TITLE" TITLE
+	id3_check_tag_length "$TITLE"
 
 	if [ -n "$BITRATE" ] ; then
 		FINAL_BITRATE="$BITRATE"

@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `preptrack`: warn if ID3v1 tags are too long
 + `cate`
 
 ***
