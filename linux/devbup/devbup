@@ -17,6 +17,8 @@
 # ADD_PADDING=1               Add padding file (read from /dev/urandom) to
 #                             prevent size estimations.
 # PADDING_SIZE=1241M          Override padding file size.
+# PADDING_SOURCE=/dev/zero    Override default (/dev/urandom) file which is
+#                             read into the padding.
 # RUN_MAT=1                   Run Metadata anonymization toolkit on the
 #                             resulting tarball.
 # COMPRESS=gzip               Compress the tarball. Available values:
@@ -78,6 +80,10 @@ fi
 
 if [ "$(id -u)" != "0" ]; then
 	_SUDO="sudo"
+fi
+
+if [ -z "$PADDING_SOURCE" ]; then
+	PADDING_SOURCE="/dev/urandom"
 fi
 
 db_remove() {
@@ -196,7 +202,7 @@ done
 if [ -n "$ADD_PADDING" ] || [ -n "$PADDING_SIZE" ]; then
 	PADDING_SIZE="${PADDING_SIZE:-"$(( RANDOM % 4096 ))M"}"
 
-	head -c"$PADDING_SIZE" /dev/urandom > random.bin
+	head -c"$PADDING_SIZE" "$PADDING_SOURCE" > random.bin
 	stat random.bin
 	tar -rvf "$TARBALL_NAME" random.bin
 
