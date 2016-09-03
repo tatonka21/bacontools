@@ -37,6 +37,10 @@ if [ ! -t 0 ] ; then
 	vimcat_less
 else
 	for FILE in "$@" ; do
-		vimcat_less "$FILE"
+		if [ -r "$FILE" ]; then
+			vimcat_less "$FILE"
+		else
+			echo "Can't read '$FILE'" 1>&2
+		fi
 	done
 fi

@@ -11,6 +11,9 @@ Unreleased
 + `preptrack`: warn if ID3v1 tags are too long
 + `cate`
 
+### Changed
++ `vimless`: check if input files are readable
+
 ### Fixed
 + `togif`: fix incorrect quoting in requisite error report
 
