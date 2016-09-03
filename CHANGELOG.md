@@ -11,6 +11,9 @@ Unreleased
 + `preptrack`: warn if ID3v1 tags are too long
 + `cate`
 
+### Fixed
++ `togif`: fix incorrect quoting in requisite error report
+
 ***
 
 [2016.08.26]

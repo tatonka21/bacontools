@@ -44,7 +44,7 @@ datediff() {
 
 for REQUISITE in ffmpeg ffprobe convert gifsicle ; do
 	if [ "$(command -v $REQUISITE 1>/dev/zero 2>/dev/zero ; echo $?)" = 1 ] ; then
-		echo "\`$REQUISITE\' is required, but not installed" 1>&2
+		echo "'$REQUISITE' is required, but not installed" 1>&2
 		exit 1
 	fi
 done
