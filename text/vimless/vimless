@@ -14,7 +14,7 @@ vimcat_less() {
 LESS_N=""
 
 # Exit if no arguments were passed and stdin is attached to a tty
-if [ "$#" = "0" -a -t 0 ] ; then
+if [ "$#" = 0 ] && [ -t 0 ] ; then
 	echo "File argument[s] or stdin input required" 1>&2
 	echo "Usage: [command | ] $(basename "$0") [-N] [FILE...]" 1>&2
 	exit 1
