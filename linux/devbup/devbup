@@ -1,6 +1,4 @@
 #!/bin/bash
-# shellcheck disable=SC2001
-#
 # Usage: [VAR=value] devbup files ...
 # Tarball devices or files together and split the archive.
 #
@@ -53,7 +51,9 @@
 
 DCFLDD_STATINT="${DCFLDD_STATINT:-64}"
 NAME="${NAME:-$(date '+%s%z').devbup.}"
+# shellcheck disable=SC2001
 TARBALL_NAME="$(echo "$NAME" | sed 's/\.$//g').tar"
+# shellcheck disable=SC2001
 GPG_NAME="$(echo "$NAME" | sed 's/\.$//g').tar.gpg"
 SPLIT_NAME="$NAME"
 SPLIT_SIZE="${SPLIT_SIZE:-256M}"
