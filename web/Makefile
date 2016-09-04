@@ -9,6 +9,7 @@ install: all
 	$(MAKE) -C myzuka-dl install
 	$(MAKE) -C respcode install
 	$(MAKE) -C wget-page install
+	$(MAKE) -C wget-parallel install
 
 httpdf:
 	$(MAKE) -C httpdf

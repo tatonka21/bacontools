@@ -1,0 +1,13 @@
+#!/bin/sh
+# Usage: wget-parallel URL...
+# Fetch multiple urls with wget via GNU parallel.
+#
+# ENVIRONMENT:
+# PARALLEL_OPTIONS    A list of supplementary options for parallel. It will be
+#                     expanded once, so spaces within options must be escaped
+#                     with a literal slash or single quotes.
+# WGET_OPTIONS        A list of supplementary options for wget. Same concerns
+#                     as with PARALLEL_OPTIONS apply.
+
+# shellcheck disable=SC2086
+parallel $PARALLEL_OPTIONS -- wget -nv -nc $WGET_OPTIONS ::: "$@"
