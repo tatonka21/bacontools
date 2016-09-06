@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `clone-github-user`: pass arguments to `git clone`
 + `wget-parallel`
 + `devbup`: implement `$PADDING_SOURCE`
 + `preptrack`: warn if ID3v1 tags are too long
