@@ -17,7 +17,7 @@ require 'ostruct'
 require 'uri'
 require 'fileutils'
 
-TIMEOUT = 60
+TIMEOUT = Integer(ENV.fetch('TIMEOUT', '60'))
 STDNULL = File.open(File::NULL, 'w')
 
 module Imgur

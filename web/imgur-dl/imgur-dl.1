@@ -23,6 +23,12 @@ directory, while the third command creates a subdirectory named "\fBID\fP[ -
 \fBNAME\fP]", where \fBID\fP is the unique album identifier and \fBNAME\fP is
 an optional album title which does not always appear on the page.
 
+.SH ENVIRONMENT VARIABLES
+.TP
+\fBTIMEOUT\fP
+Overrides default HTTP resource timeout of \fB60\fP seconds. Must be a valid
+integral number of seconds.
+
 .SH DEPENDENCIES
 \fBphantomjs\fP, \fBruby\fP, \fBcapybara\fP, \fBhighline\fP,
 \fBopen_uri_redirections\fP

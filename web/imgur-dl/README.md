@@ -19,3 +19,8 @@ from all specified albums will be saved there, so it's probably not a good idea
 to use `-d` with multiple albums. Note that when `-d` is specified, `imgur-dl`
 won't create a subdirectory for images: in the example above, they'll go
 straight to `SomeImgurWallpaperDump`.
+
+```
+$ env TIMEOUT=120 imgur-dl
+```
+Override default resource timeout of `60` seconds.
