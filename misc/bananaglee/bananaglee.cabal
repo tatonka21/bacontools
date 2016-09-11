@@ -4,7 +4,7 @@
 name:                bananaglee
 synopsis:            NSA/GCHQ codename generator
 version:             0.1.0
-homepage:            https://gitlab.com/bacondropped/bacontools/tree/master/misc/bananaglee
+homepage:            https://github.com/bacondropped/bacontools/tree/master/misc/bananaglee
 license-file:        LICENSE
 author:              Ilya Terentyev
 maintainer:          bacondropped@gmail.com
