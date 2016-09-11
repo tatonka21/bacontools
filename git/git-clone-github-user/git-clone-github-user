@@ -1,5 +1,5 @@
 #!/bin/sh
-# Usage: clone-github-user USER [GIT_CLONE_OPTS...]
+# Usage: git-clone-github-user USER [GIT_CLONE_OPTS...]
 # Clone all repositories of a Github user to the working directory.
 
 PER_PAGE="{PER_PAGE-200}"

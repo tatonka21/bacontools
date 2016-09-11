@@ -4,6 +4,7 @@ export PREFIX ?= /usr/local
 
 all:
 	patches/apply
+	$(MAKE) -C git
 	$(MAKE) -C linux
 	$(MAKE) -C media
 	$(MAKE) -C misc
@@ -11,6 +12,7 @@ all:
 	$(MAKE) -C web
 
 install:
+	$(MAKE) -C git install
 	$(MAKE) -C linux install
 	$(MAKE) -C media install
 	$(MAKE) -C misc install
