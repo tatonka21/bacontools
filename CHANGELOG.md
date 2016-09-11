@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `bindump`
 + `imgur-dl`: read `$TIMEOUT` from environment
 + `clone-github-user`: read `$PER_PAGE` from environment
 + `clone-github-user`: pass arguments to `git clone`

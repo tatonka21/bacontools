@@ -3,6 +3,7 @@
 all:
 
 install:
+	$(MAKE) -C bindump install
 	$(MAKE) -C cate install
 	$(MAKE) -C checkreboot install
 	$(MAKE) -C cptemp install

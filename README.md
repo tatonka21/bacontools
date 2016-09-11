@@ -11,12 +11,12 @@ Tool count
 | Directory | Description                                         | Languages                           | Count |
 |-----------|-----------------------------------------------------|-------------------------------------|-------|
 | git       | Git helpers                                         | POSIX shell, Python                 | 4     |
-| linux     | Tools specific to GNU/Linux distributions           | POSIX shell, Bash                   | 11    |
+| linux     | Tools specific to GNU/Linux distributions           | POSIX shell, Bash                   | 12    |
 | media     | Tools for editing media (audio, video, image) files | C#, POSIX shell, Bash               | 4     |
 | text      | Tools for working with text                         | Python, C, POSIX shell              | 10    |
 | web       | Internet-related tools                              | Go, Ruby, POSIX shell               | 7     |
 | misc      | Everything else                                     | Python, C#, C, Haskell, POSIX shell | 15    |
-|           |                                                     | *Total*                             | 51    |
+|           |                                                     | *Total*                             | 52    |
 
 Tool maturity
 -------------

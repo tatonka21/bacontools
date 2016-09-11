@@ -14,6 +14,7 @@ Linux utilities
 ---------------
 | Tool           | Maturity | Description                                    | Language    |
 |----------------|----------|------------------------------------------------|-------------|
+| bindump        | Hack     | Encode data to a binary dump                   | POSIX shell |
 | cate           | Hack     | Rewrite files interactively with cat and stdin | POSIX shell |
 | checkreboot    | Hack     | Print whether reboot is required               | POSIX shell |
 | cptemp         | Hack     | Copy file/directory to /tmp                    | POSIX shell |
