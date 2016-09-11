@@ -4,7 +4,7 @@ all:
 	true
 
 install: all
-	$(MAKE) -C git-clone-github-user
-	$(MAKE) -C git-ls
-	$(MAKE) -C git-repo-list
-	$(MAKE) -C git-stat-atr
+	$(MAKE) -C git-clone-github-user install
+	$(MAKE) -C git-ls install
+	$(MAKE) -C git-repo-list install
+	$(MAKE) -C git-stat-atr install
