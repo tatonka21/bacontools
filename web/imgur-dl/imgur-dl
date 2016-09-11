@@ -22,6 +22,25 @@ STDNULL = File.open(File::NULL, 'w')
 
 module Imgur
   class Downloader
+    def extract_images(session, expected_imgs)
+      images = []
+
+      if expected_imgs != 0 then
+        loop do
+          session.execute_script('window.scrollBy(0,100000)')
+          sleep 2
+          images += session.all(:xpath, "//div[@class='posts']/div//img").map{|i| i[:src]}
+          break unless images.size < expected_imgs
+        end
+      else
+        images += session.all(:xpath, "//link[@rel='image_src']").map{|i| i[:href]}
+        images += session.all(:xpath, "//div[@class='post-image']/img").map{|i| i[:src]}
+        images += session.all(:xpath, "//meta[@property='og:video']").map{|i| i[:content]}
+      end
+
+      return images.compact
+    end
+
     def download(url, opts)
       session = Capybara::Session.new(:poltergeist)
       session.visit(url)
@@ -41,33 +60,14 @@ module Imgur
       expected_imgs = (Integer session.find(:xpath, "//h2[contains(text(),'image')]").text[/(\d+) image(s)?$/, 1]) rescue 0
       STDERR.puts("#{url}: expected size = #{if expected_imgs != 0 then expected_imgs else 1 end}")
 
-      if expected_imgs != 0 then
-        loop do
-          session.execute_script('window.scrollBy(0,100000)')
-          sleep 2
-          images = session.all(:xpath, "//div[@class='posts']/div//img").map{|i| i[:src]}
-          break unless images.size < expected_imgs
-        end
-        if images.size == 0 then session.visit(saved_url) end
-      else
-        images = (Array(session.find(:xpath, "//link[@rel='image_src']")[:href])) \
-          rescue (Array(session.find(:xpath, "//div[@class='post-image']/img")[:src])) \
-          rescue (Array(session.find(:xpath, "//meta[@property='og:video']")[:content])) \
-          rescue session.visit(saved_url)
-      end
+      images = (extract_images(session, expected_imgs) rescue begin
+        session.visit(saved_url)
+        return extract_images(session, expected_imgs)
+      end)
 
-      # XXX: doesn't find video-only ("GIF on Imgur") posts properly
-      if expected_imgs != 0 then
-        loop do
-          session.execute_script('window.scrollBy(0,100000)')
-          sleep 2
-          images = session.all(:xpath, "//div[@class='posts']/div//img").map{|i| i[:src]}
-          break unless images.size < expected_imgs
-        end
-      else
-        images = (Array(session.find(:xpath, "//link[@rel='image_src']")[:href])) \
-          rescue (Array(session.find(:xpath, "//div[@class='post-image']/img")[:src])) \
-          rescue (Array(session.find(:xpath, "//meta[@property='og:video']")[:content]))
+      if images.size == 0 then
+        session.visit(saved_url)
+        images = extract_images(session, expected_imgs)
       end
 
       post_id = session.current_url[/(?<=\/)([A-Za-z0-9]+)$/, 1]
