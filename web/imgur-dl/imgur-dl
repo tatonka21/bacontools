@@ -58,7 +58,6 @@ module Imgur
       end
 
       expected_imgs = (Integer session.find(:xpath, "//h2[contains(text(),'image')]").text[/(\d+) image(s)?$/, 1]) rescue 0
-      STDERR.puts("#{url}: expected size = #{if expected_imgs != 0 then expected_imgs else 1 end}")
 
       images = (extract_images(session, expected_imgs) rescue begin
         session.visit(saved_url)
@@ -84,7 +83,8 @@ module Imgur
       path = subdir if path == "."
       path = path.tr("/\000", "")
 
-      STDERR.puts("#{url}: #{images.size} extracted")
+      STDERR.puts("#{url}: extracted #{images.size} image#{'s' if images.size % 10 != 1 or images.size % 100 == 11}")
+      STDERR.puts("#{url}: (warning: expected #{expected_imgs})") if images.size != expected_imgs and expected_imgs != 0
 
       FileUtils::mkdir_p(path)
 

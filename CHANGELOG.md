@@ -16,6 +16,7 @@ Unreleased
 + `cate`
 
 ### Changed
++ `imgur-dl`: smarter messages
 + `vimless`: check if input files are readable
 
 ### Fixed
