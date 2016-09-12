@@ -8,6 +8,7 @@
 # TODO: position-independent flags, refer to the "right now" comment
 
 vimcat_less() {
+	# shellcheck disable=SC2086
 	vimcat -o - "$@" | sed 's/$/\x1B[0m/' | less -r $LESS_N
 }
 
