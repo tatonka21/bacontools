@@ -5,9 +5,13 @@
 # OPTIONS
 #   -d                Decode data from the dump instead.
 #
+# ENVIRONMENT VARIABLES
+#   COLUMNS           Override default (8) number of bytes per line.
+#
 # TODO: process file list with '-' as the special stdin case
 
 PROGRAM_NAME="$(basename "$0")"
+COLUMNS="${COLUMNS-8}"
 
 if [ -t 0 ] && [ "$#" = 0 ]; then
 	echo "Usage: command | $PROGRAM_NAME [-d]" 1>&2
@@ -20,7 +24,7 @@ fi
 DECODE=''
 
 encode_data() {
-	perl -lpe '$_=join " ", unpack"(B8)*"' | xargs -n8
+	perl -lpe '$_=join " ", unpack"(B8)*"' | xargs -n"$COLUMNS"
 }
 
 decode_data() {
