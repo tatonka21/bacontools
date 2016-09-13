@@ -8,12 +8,12 @@ imgur-dl\~[--dir=\fBPATH\fP]\~[\fBURL\fP...]
 
 .SH DESCRIPTION
 \fBimgur-dl\fP downloads one or several Imgur albums to the current directory.
-If no URL is specified on the command line, Imgur interactively prompts the
-user instead.
+If no URL is specified on the command line, \fBimgur-dl\fP interactively
+prompts the user instead.
 
 .SH OPTIONS
 .TP
---dir=\fBPATH\fP, -d\fBPATH\fP
+-d\fBPATH\fP, --dir=\fBPATH\fP
 Override default save path (which is a subdirectory of the working directory
 with the name equal to the album's title) and save to \fBPATH\fP. Note that
 \fBimgur-dl\fP won't create a subdirectory in this case, which means that
@@ -34,8 +34,7 @@ Overrides default HTTP resource timeout of \fB60\fP seconds. Must be a valid
 integral number of seconds.
 
 .SH DEPENDENCIES
-\fBphantomjs\fP, \fBruby\fP, \fBcapybara\fP, \fBhighline\fP,
-\fBopen_uri_redirections\fP
+\fBphantomjs\fP, \fBruby\fP, \fBcapybara\fP, \fBhighline\fP
 
 .SH AUTHOR
 Developed by Ilya Terentyev <bacondropped@gmail.com> as a part of the
