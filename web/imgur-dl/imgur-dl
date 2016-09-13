@@ -69,6 +69,15 @@ module Imgur
         images = extract_images(session, expected_imgs)
       end
 
+      images_wording = "image#{'s' if images.size % 10 != 1 or images.size % 100 == 11}"
+
+      STDERR.puts("#{url}: extracted #{images.size} #{images_wording}")
+      STDERR.puts("#{url}: (warning: expected #{expected_imgs})") if images.size != expected_imgs and expected_imgs != 0
+
+      if images.size == 0 then
+        return 0
+      end
+
       post_id = session.current_url[/(?<=\/)([A-Za-z0-9]+)$/, 1]
       if post_id == 'grid' then post_id = session.current_url[/(?<=a\/)([A-Za-z0-9]+)/, 1] end
 
@@ -82,9 +91,6 @@ module Imgur
       path = opts.path
       path = subdir if path == "."
       path = path.tr("/\000", "")
-
-      STDERR.puts("#{url}: extracted #{images.size} image#{'s' if images.size % 10 != 1 or images.size % 100 == 11}")
-      STDERR.puts("#{url}: (warning: expected #{expected_imgs})") if images.size != expected_imgs and expected_imgs != 0
 
       FileUtils::mkdir_p(path)
 
