@@ -69,7 +69,12 @@ module Imgur
         images = extract_images(session, expected_imgs)
       end
 
-      images_wording = "image#{'s' if images.size % 10 != 1 or images.size % 100 == 11}"
+      if opts.unique then
+        images.uniq!
+      end
+
+      unique_images_wording = "#{'unique ' if opts.unique}"
+      images_wording = "#{unique_images_wording}image#{'s' if images.size % 10 != 1 or images.size % 100 == 11}"
 
       STDERR.puts("#{url}: extracted #{images.size} #{images_wording}")
       STDERR.puts("#{url}: (warning: expected #{expected_imgs})") if images.size != expected_imgs and expected_imgs != 0
@@ -121,6 +126,7 @@ cli_options  = OpenStruct.new
 
 OptionParser.new do |option|
   option.on('-d PATH', '--dir PATH') {|o| cli_options.path = o}
+  option.on('-u', '--unique') {|o| cli_options.unique = true}
 end.parse!
 
 cli_options.path = '.' unless cli_options.path

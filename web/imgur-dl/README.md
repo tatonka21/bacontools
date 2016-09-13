@@ -21,6 +21,13 @@ won't create a subdirectory for images: in the example above, they'll go
 straight to `SomeImgurWallpaperDump`.
 
 ```
+$ imgur-dl --unique
+```
+Specifying `-u`/`--unique` will make `imgur-dl` remove duplicate images (by
+URL) from each album. If there are several albums to be downloaded, duplicate
+images across albums are _not_ removed.
+
+```
 $ env TIMEOUT=120 imgur-dl
 ```
 Override default resource timeout of `60` seconds.
