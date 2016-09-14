@@ -59,7 +59,7 @@ program_help() {
 	echo "  $PROGRAM_NAME -v" 1>&2
 	echo "                    Wiggle the cursor vertically once, then exit." 1>&2
 	echo "  $PROGRAM_NAME 1m 5" 1>&2
-	echo "                    Wiggle the cursor 5 times each minute." 1>&2
+	echo "                    Wiggle the cursor 5 times, once per minute." 1>&2
 	echo 1>&2
 	echo "For more information, refer to the header comment in this script." 1>&2
 }

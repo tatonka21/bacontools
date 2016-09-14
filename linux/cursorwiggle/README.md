@@ -25,7 +25,7 @@ Wiggle the cursor repeatedly with 10 second delay.
 Wiggle the cursor vertically once, then exit.
 
 `cursorwiggle 1m 5`<br>
-Wiggle the cursor 5 times each minute.
+Wiggle the cursor 5 times, once per minute.
 
 Arguments
 ---------
