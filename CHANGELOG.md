@@ -19,6 +19,7 @@ Unreleased
 + `cate`
 
 ### Changed
++ `Makefile`: don't run `patches/apply` in all
 + extract Git-specific utilities to `git/`
 + `imgur-dl`: smarter messages
 + `vimless`: check if input files are readable

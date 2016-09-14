@@ -3,7 +3,6 @@ export PREFIX ?= /usr/local
 .PHONY: all install
 
 all:
-	patches/apply
 	$(MAKE) -C git
 	$(MAKE) -C linux
 	$(MAKE) -C media
