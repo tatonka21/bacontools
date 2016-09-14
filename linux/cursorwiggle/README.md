@@ -4,7 +4,8 @@ cursorwiggle - "I'm still alive, can't you see?"
 predetermined number of times or repeatedly with delay. It is best illustrated
 by the following xkcd strip:
 
-![When designing an interface, imagine that your program is all that stands between the user and hot, sweaty, tangled-bedsheets-fingertips-digging-into-the-back sex.](https://imgs.xkcd.com/comics/command_line_fu.png)
+![](https://imgs.xkcd.com/comics/command_line_fu.png)<br>
+_"When designing an interface, imagine that your program is all that stands between the user and hot, sweaty, tangled-bedsheets-fingertips-digging-into-the-back sex."_
 
 Usage
 -----
