@@ -23,6 +23,7 @@ Unreleased
 + `vimless`: check if input files are readable
 
 ### Fixed
++ `imgur-dl`: don't strip slashes in paths
 + `imgur-dl`: don't create a subfolder when no images are extracted
 + `imgur-dl`: refactor image extraction (now finally works with GIF posts)
 + `imgur-dl`: fix exceptions on single image posts
