@@ -30,7 +30,7 @@
 #
 # TODO: an option / environment variable for integer-only sleep(1) delays
 
-PROGRAM_NAME="$0"
+PROGRAM_NAME="$(basename "$0")"
 DELAY="${DELAY-1m}"
 COUNT="${COUNT-1}"
 VERTICAL="${VERTICAL-}"
