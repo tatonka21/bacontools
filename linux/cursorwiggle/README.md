@@ -15,13 +15,13 @@ Wiggle the mouse cursor with xdotool.
 
 Examples
 --------
-`cursorwiggle 10s`
+`cursorwiggle 10s`<br>
 Wiggle the cursor repeatedly with 10 second delay.
 
-`cursorwiggle -v`
+`cursorwiggle -v`<br>
 Wiggle the cursor vertically once, then exit.
 
-`cursorwiggle 1m 5`
+`cursorwiggle 1m 5`<br>
 Wiggle the cursor 5 times each minute.
 
 Arguments
