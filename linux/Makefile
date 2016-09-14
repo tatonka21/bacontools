@@ -7,6 +7,7 @@ install:
 	$(MAKE) -C cate install
 	$(MAKE) -C checkreboot install
 	$(MAKE) -C cptemp install
+	$(MAKE) -C cursorwiggle install
 	$(MAKE) -C devbup install
 	$(MAKE) -C devrestore install
 	$(MAKE) -C docker-cleanup install

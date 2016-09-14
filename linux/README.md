@@ -6,6 +6,7 @@ bacontools/linux - gaze into the eyes of the penguin
 | cate           | Hack     | Rewrite files interactively with cat and stdin | POSIX shell |
 | checkreboot    | Hack     | Print whether reboot is required               | POSIX shell |
 | cptemp         | Hack     | Copy file/directory to /tmp                    | POSIX shell |
+| cursorwiggle   | Hack     | Wiggle mouse cursor with xdotool               | POSIX shell |
 | devbup         | Moving   | Backup, archive, and encrypt files and devices | Bash        |
 | devrestore     | Hack     | Restore devbup archives                        | Bash        |
 | docker-cleanup | Hack     | Remove old Docker containers                   | POSIX shell |

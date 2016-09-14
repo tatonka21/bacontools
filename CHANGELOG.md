@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `cursorwiggle`
 + `imgur-dl`: -u/--unique option
 + `bindump`
 + `imgur-dl`: read `$TIMEOUT` from environment

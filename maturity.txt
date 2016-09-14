@@ -11,6 +11,7 @@ Hack       checkreboot
 Hack       clone-github-user
 Hack       cptemp
 Hack       curl-tt
+Hack       cursorwiggle
 Hack       devrestore
 Hack       docker-cleanup
 Hack       du1
