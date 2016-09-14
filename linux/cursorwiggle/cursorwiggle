@@ -53,7 +53,7 @@ program_help() {
 	echo "OPTIONS" 1>&2
 	echo "  -v                Wiggle the cursor vertically instead of horizontally." 1>&2
 	echo 1>&2
-	echo "EXAMPLE" 1>&2
+	echo "EXAMPLES" 1>&2
 	echo "  $PROGRAM_NAME 10s" 1>&2
 	echo "                    Wiggle the cursor repeatedly with 10 second delay." 1>&2
 	echo "  $PROGRAM_NAME -v" 1>&2
