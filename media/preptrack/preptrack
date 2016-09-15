@@ -87,7 +87,7 @@ process() {
 	FIRST_IMG="$(find "$TMP_PIC_DIR" -mindepth 1 | head -1)"
 
 	if [ -n "$FIRST_IMG" ] ; then
-		read -r -e -p "Embedded pictures found; preserve? (y/n) " PRESERVE_PIC
+		read -r -e -p "Embedded pictures found; preserve? [y/N] " PRESERVE_PIC
 		PRESERVE_PIC="$(echo "$PRESERVE_PIC" | trim)"
 	fi
 
