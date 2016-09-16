@@ -5,7 +5,7 @@
 # TODO: Text search
 # TODO: Optional comment scraping for URLs
 # TODO: Optional post metadata export to JSON
-# FIXME: Some images yield a redirect loop; investigate
+# TODO: leverage filemagic for content-correct file extensions
 
 require 'rubygems'
 require 'capybara'
