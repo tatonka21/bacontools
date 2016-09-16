@@ -50,7 +50,6 @@ module Imgur
       session.visit(session.current_url.gsub(/gallery/, 'a'))
 
       if session.status_code == 404 then
-        STDERR.puts("#{url}: hit 404, falling back")
         session.visit(saved_url)
       else
         saved_url = session.current_url
