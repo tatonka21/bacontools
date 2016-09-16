@@ -13,7 +13,7 @@ Copy `sda` and `dataset.tar` to working directory, verify checksums, tarball
 them, and be on our way.
 
 Environment variables
-=====================
+---------------------
 ```
 $ NAME=music. devbup ~/Music/*
 ```
