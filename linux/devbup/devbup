@@ -58,6 +58,9 @@ GPG_NAME="$(echo "$NAME" | sed 's/\.$//g').tar.gpg"
 SPLIT_NAME="$NAME"
 SPLIT_SIZE="${SPLIT_SIZE:-256M}"
 GPG_COMMAND="${GPG_COMMAND:-gpg}"
+DD_COMMAND="${DD_COMMAND:-dd}"
+CKSUM_COMMAND="${CKSUM_COMMAND:-sha512sum}"
+
 
 if [ -z "$DD_COMMAND" ] && [ "$(command -v dcfldd 1>/dev/zero 2>/dev/zero ; echo $?)" = 0 ]; then
 	DD_COMMAND=dcfldd
@@ -97,9 +100,6 @@ db_remove() {
 # Copy file to the destination directory, verify checksums, return 1 on
 # checksum mismatch
 db_deedee() {
-	DD_COMMAND="${DD_COMMAND:-dd}"
-	CKSUM_COMMAND="${CKSUM_COMMAND:-sha512sum}"
-
 	if [ "$DD_COMMAND" = "dcfldd" ]; then
 		$_SUDO "$DD_COMMAND" if="$1" of="$2" statusinterval="$DCFLDD_STATINT"
 	else
