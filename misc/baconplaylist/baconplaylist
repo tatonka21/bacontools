@@ -24,6 +24,6 @@ else
 	if [ -n "$TOP_ARTIST_COUNT" ]; then
 		echo
 		echo "Top $TOP_ARTIST_COUNT artists:"
-		cut -d' '  -f2- ~/Documents/baconplaylist/list.txt | grep -Po "^.*(?= –)" | sort | uniq -ci | sort -hr | head -"$TOP_ARTIST_COUNT"
+		cut -d' '  -f2- "$BACONPLAYLIST_FILE" | grep -Po "^.*(?= –)" | sort | uniq -ci | sort -hr | head -"$TOP_ARTIST_COUNT"
 	fi
 fi

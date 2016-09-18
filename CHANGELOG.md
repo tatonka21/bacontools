@@ -25,6 +25,7 @@ Unreleased
 + `vimless`: check if input files are readable
 
 ### Fixed
++ `baconplaylist`: remove hardcoded path
 + `devbup`: fix '$CKSUM_COMMAND is ""' error
 + `imgur-dl`: don't strip slashes in paths
 + `imgur-dl`: don't create a subfolder when no images are extracted
