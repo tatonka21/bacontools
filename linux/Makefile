@@ -16,3 +16,4 @@ install:
 	$(MAKE) -C netinfo install
 	$(MAKE) -C single-urxvt install
 	$(MAKE) -C userls install
+	$(MAKE) -C zerofile install

@@ -15,3 +15,4 @@ bacontools/linux - gaze into the eyes of the penguin
 | netinfo        | Untested | Print current WAN IP and nmcli connection name | POSIX shell |
 | single-urxvt   | Hack     | Launch a singleton urxvt instance              | POSIX shell |
 | userls         | Hack     | Print all users on the system                  | POSIX shell |
+| zerofile       | Hack     | Overwrite files with zeros                     | POSIX shell |

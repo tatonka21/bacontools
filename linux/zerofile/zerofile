@@ -1,0 +1,24 @@
+#!/bin/sh
+# Usage: zerofile FILE...
+# Fill files with zeros, preserving their size.
+
+PROGRAM_NAME="$(basename "$0")"
+SOURCE="${SOURCE-/dev/zero}"
+
+if [ "$#" = 0 ]; then
+	echo "Usage: $PROGRAM_NAME FILE..."                  1>&2
+	echo "Fill files with zeros, preserving their size." 1>&2
+fi
+
+if [ ! -r "$SOURCE" ]; then
+	echo "$PROGRAM_NAME: can't read from $SOURCE"        1>&2
+fi
+
+for FILE in "$@" ; do
+	if [ -w "$FILE" ]; then
+		# shellcheck disable=SC2094
+		head -c"$(stat -c%s "$FILE")" "$SOURCE" > "$FILE"
+	else
+		echo "$PROGRAM_NAME: can't write to $FILE"       1>&2
+	fi
+done

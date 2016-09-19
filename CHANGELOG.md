@@ -8,6 +8,7 @@ Unreleased
 ----------
 ### Added
 + `cursorwiggle`
++ `zerofile`
 + `imgur-dl`: -u/--unique option
 + `bindump`
 + `imgur-dl`: read `$TIMEOUT` from environment

@@ -36,6 +36,7 @@ Hack       vimless
 Hack       watchclock
 Hack       wget-page
 Hack       wget-parallel
+Hack       zerofile
 Untested   EncodingConverter
 Untested   ImageValidator
 Untested   balance
