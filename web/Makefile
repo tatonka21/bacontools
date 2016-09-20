@@ -2,6 +2,9 @@
 
 all: httpdf
 
+httpdf:
+	$(MAKE) -C httpdf
+
 install: all
 	$(MAKE) -C content-length install
 	$(MAKE) -C curl-tt        install
@@ -11,6 +14,3 @@ install: all
 	$(MAKE) -C respcode       install
 	$(MAKE) -C wget-page      install
 	$(MAKE) -C wget-parallel  install
-
-httpdf:
-	$(MAKE) -C httpdf
