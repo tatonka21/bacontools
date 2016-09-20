@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `content-length`
 + `cursorwiggle`
 + `zerofile`
 + `imgur-dl`: -u/--unique option

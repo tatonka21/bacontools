@@ -1,0 +1,22 @@
+#!/bin/sh
+# Usage: content-length [URL...]
+# Print summary size (in bytes) of content at URLs.
+#
+# curl solution to get content size originally posted by Kenavoz on
+# stackoverflow: http://stackoverflow.com/a/36233272
+#
+# awk solution to sum integers originally posted by Paul Dixon on
+# stackoverflow: http://stackoverflow.com/a/450821
+
+PROGRAM_NAME="$(basename "$0")"
+
+for URL in "$@" ; do
+	SIZE=$(curl -sI "$URL" | awk '/Content-Length/{gsub("\\r", ""); print $2}')
+
+	if [ -z "$SIZE" ]; then
+		echo "$PROGRAM_NAME: downloading $URL" 1>&2
+		SIZE=$(curl -s "$URL" | wc -c)
+	fi
+
+	echo "$SIZE"
+done | awk '{s+=$1} END {print s}'

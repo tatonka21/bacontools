@@ -3,6 +3,7 @@
 all: httpdf
 
 install: all
+	$(MAKE) -C content-length install
 	$(MAKE) -C curl-tt install
 	$(MAKE) -C httpdf install
 	$(MAKE) -C imgur-dl install
