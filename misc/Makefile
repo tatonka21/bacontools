@@ -9,17 +9,17 @@ all:
 	$(MAKE) -C maybe
 
 install: all
-	$(MAKE) -C apdiff install
-	$(MAKE) -C baconplaylist install
-	$(MAKE) -C bananaglee install
-	$(MAKE) -C bitcount install
-	$(MAKE) -C bitdiff install
-	$(MAKE) -C byteat install
-	$(MAKE) -C corrupt install
-	$(MAKE) -C maybe install
+	$(MAKE) -C apdiff          install
+	$(MAKE) -C baconplaylist   install
+	$(MAKE) -C bananaglee      install
+	$(MAKE) -C bitcount        install
+	$(MAKE) -C bitdiff         install
+	$(MAKE) -C byteat          install
+	$(MAKE) -C corrupt         install
+	$(MAKE) -C maybe           install
 	$(MAKE) -C pip-upgrade-all install
-	$(MAKE) -C stopwatch install
-	$(MAKE) -C tasktags install
-	$(MAKE) -C termdraw install
-	$(MAKE) -C update-all install
-	$(MAKE) -C watchclock install
+	$(MAKE) -C stopwatch       install
+	$(MAKE) -C tasktags        install
+	$(MAKE) -C termdraw        install
+	$(MAKE) -C update-all      install
+	$(MAKE) -C watchclock      install

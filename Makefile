@@ -11,12 +11,12 @@ all:
 	$(MAKE) -C web
 
 install:
-	$(MAKE) -C git install
+	$(MAKE) -C git   install
 	$(MAKE) -C linux install
 	$(MAKE) -C media install
-	$(MAKE) -C misc install
-	$(MAKE) -C text install
-	$(MAKE) -C web install
+	$(MAKE) -C misc  install
+	$(MAKE) -C text  install
+	$(MAKE) -C web   install
 	install bacontools.7 "${PREFIX}/share/man/man7"
 	mandb
 
