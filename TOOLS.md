@@ -57,6 +57,7 @@ Web utilities
 -------------
 | Tool           | Maturity | Description                            | Language    |
 |----------------|----------|----------------------------------------|-------------|
+| checktor       | Hack     | Check if TCP connection is torified    | POSIX shell |
 | content-length | Hack     | Print sum of file sizes at given URLs  | POSIX shell |
 | curl-tt        | Hack     | Test server response time              | POSIX shell |
 | httpdf         | Hack     | Listen to a port and return free space | Go          |

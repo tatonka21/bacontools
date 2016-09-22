@@ -6,6 +6,7 @@ httpdf:
 	$(MAKE) -C httpdf
 
 install: all
+	$(MAKE) -C checktor       install
 	$(MAKE) -C content-length install
 	$(MAKE) -C curl-tt        install
 	$(MAKE) -C httpdf         install

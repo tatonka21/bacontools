@@ -8,6 +8,7 @@ Hack       byteat
 Hack       cate
 Hack       center
 Hack       checkreboot
+Hack       checktor
 Hack       clone-github-user
 Hack       content-length
 Hack       cptemp
