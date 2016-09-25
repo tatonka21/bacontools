@@ -28,6 +28,7 @@ Unreleased
 + `vimless`: check if input files are readable
 
 ### Fixed
++ `preptrack`: default to empty tags if exceptions are thrown
 + `imgur-dl`: strip path slashes properly
 + `baconplaylist`: remove hardcoded path
 + `devbup`: fix '$CKSUM_COMMAND is ""' error

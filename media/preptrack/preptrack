@@ -27,7 +27,11 @@ import eyed3
 f = eyed3.load('$FILENAME')
 if not (f):
 	exit()
-print(f.tag.$2)
+try:
+	f.tag.setTextEncoding(eyed3.UTF_8_ENCODING)
+	print(f.tag.$2)
+except:
+	print("")
 SCRIPT
 }
 
