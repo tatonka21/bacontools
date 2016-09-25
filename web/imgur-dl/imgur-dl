@@ -87,7 +87,7 @@ module Imgur
                   .gsub(/- Imgur$/, '')
                   .strip
 
-      subdir = "#{post_id} #{("- " + post_title) unless post_title =~ /Imgur: The most awesome images on the Internet/ or post_title.empty?}".strip
+      subdir = "#{post_id} #{("- " + post_title) unless post_title =~ /Imgur: The most awesome images on the Internet/ or post_title.empty?}".strip.tr("/", "")
       path = opts.path
       path = subdir if path == "."
       path = path.tr("\000", "")
