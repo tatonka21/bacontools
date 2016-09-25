@@ -22,13 +22,13 @@ trim() {
 
 eyed3_get_tag() {
 	FILENAME="${1//\'/\\\'}"
-	python2 <<HEREDOC
+	python2 <<SCRIPT
 import eyed3
 f = eyed3.load('$FILENAME')
 if not (f):
 	exit()
 print(f.tag.$2)
-HEREDOC
+SCRIPT
 }
 
 id3_check_tag_length() {
