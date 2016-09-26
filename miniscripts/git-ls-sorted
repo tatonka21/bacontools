@@ -1,0 +1,2 @@
+#!/bin/sh
+env LC_COLLATE=C ls -AXhF1 --color=none --group-directories-first "$@" | sed 's/\/$//' | xargs -n1 -I'{}' -- sh -c "git ls $* | grep '^{}'"
