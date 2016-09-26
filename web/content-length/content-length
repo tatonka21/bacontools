@@ -11,11 +11,11 @@
 PROGRAM_NAME="$(basename "$0")"
 
 for URL in "$@" ; do
-	SIZE=$(curl -sI "$URL" | awk '/Content-Length/{gsub("\\r", ""); print $2}')
+	SIZE=$(curl -sLI "$URL" | awk '/Content-Length/{gsub("\\r", ""); print $2}' | tail -1)
 
 	if [ -z "$SIZE" ]; then
 		echo "$PROGRAM_NAME: downloading $URL" 1>&2
-		SIZE=$(curl -s "$URL" | wc -c)
+		SIZE=$(curl -sL "$URL" | wc -c)
 	fi
 
 	echo "$SIZE"
