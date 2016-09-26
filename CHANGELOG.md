@@ -22,6 +22,7 @@ Unreleased
 + `cate`
 
 ### Changed
++ `git-ls`: separate columns by tab instead of single space
 + `Makefile`: don't run `patches/apply` in all
 + extract Git-specific utilities to `git/`
 + `imgur-dl`: smarter messages
