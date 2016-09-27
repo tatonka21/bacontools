@@ -4,6 +4,13 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
+Unreleased
+----------
+### Changed
++ `wget-parallel`: sort URLs and discard duplicates
+
+***
+
 [2016.09.27]
 ------------
 ### Added
