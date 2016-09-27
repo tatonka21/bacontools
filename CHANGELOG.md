@@ -264,5 +264,5 @@ Notable changes to `bacontools` are documented in this file.
 [2016.07.15]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.15
 [2016.07.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.27
 [2016.08.17]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.17
-[2016.08.26]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.17
+[2016.08.26]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.26
 [2016.09.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.09.27
