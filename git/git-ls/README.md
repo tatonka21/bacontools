@@ -39,3 +39,8 @@ Makefile 10 days ago  a99cde4 Linux 4.7-rc6                      Linus Torvalds
 README   3 months ago cfaf790 README: remove trailing whitespace Jonathan Corbet
 ```
 Print arbitrary file listing.
+
+```
+$ git ls --noalign ~/Sources/linux
+```
+Do not align each field with spaces.

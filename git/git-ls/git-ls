@@ -47,6 +47,7 @@ def columnize(row_list, alignments, separator_string='\t'):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('path', default=['.'], nargs='*')
+    parser.add_argument('--noalign', default=False, action='store_true')
     args = parser.parse_args()
 
     rows  = []
@@ -86,5 +87,7 @@ if __name__ == '__main__':
                 sys.stderr.write("`cd {} ; git log -1 --pretty=format:%cr%x09%h%x09%s%x09%cn -- {}` exited with a non-zero status\n".format(parent, f))
                 exit(1)
 
-    for r in columnize(rows, {}):
+    rws = rows if args.noalign else columnize(rows, {})
+
+    for r in rws:
         print(r)

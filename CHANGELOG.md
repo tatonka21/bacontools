@@ -6,6 +6,9 @@ Notable changes to `bacontools` are documented in this file.
 
 Unreleased
 ----------
+### Added
++ `git-ls`: `--noalign` option
+
 ### Changed
 + `wget-parallel`: sort URLs and discard duplicates
 
