@@ -4,8 +4,8 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-Unreleased
-----------
+[2016.09.27]
+------------
 ### Added
 + `miniscripts/git-ls-sorted`
 + `checktor`
@@ -265,3 +265,4 @@ Unreleased
 [2016.07.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.27
 [2016.08.17]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.17
 [2016.08.26]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.17
+[2016.09.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.09.27
