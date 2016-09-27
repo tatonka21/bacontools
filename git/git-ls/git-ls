@@ -81,7 +81,7 @@ if __name__ == '__main__':
                     '--',
                     f],
                     cwd=parent).
-                strip())
+                splitlines()[-1].strip())
             except subprocess.CalledProcessError:
                 sys.stderr.write("`cd {} ; git log -1 --pretty=format:%cr%x09%h%x09%s%x09%cn -- {}` exited with a non-zero status\n".format(parent, f))
                 exit(1)

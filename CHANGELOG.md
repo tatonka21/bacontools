@@ -9,6 +9,9 @@ Unreleased
 ### Changed
 + `wget-parallel`: sort URLs and discard duplicates
 
+### Fixed
++ `git-ls`: discard GPG verification in `git log` output
+
 ***
 
 [2016.09.27]
