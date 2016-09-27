@@ -1,9 +1,0 @@
-#!/bin/sh
-# Usage: clone-github-user USER
-# Clone all repositories of a Github user to the working directory.
-
-PER_PAGE=200
-
-curl -s "https://api.github.com/users/$1/repos?per_page=$PER_PAGE" \
-"https://api.github.com/orgs/$1/repos?per_page=$PER_PAGE" | \
-jq -r '.[].html_url?' | sort | uniq | parallel git clone

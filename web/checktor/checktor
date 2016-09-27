@@ -1,0 +1,16 @@
+#!/bin/sh
+# Usage: checktor
+# Use check.torproject.org to verify Tor connection
+
+PROGRAM_NAME="$(basename "$0")"
+
+BANNER="$(curl -s https://check.torproject.org | egrep -i 'congratulations|sorry' | head -1)"
+
+# Top-notch security here
+if echo "$BANNER" | grep -iq congratulations ; then
+	echo "$PROGRAM_NAME: this connection uses Tor" 1>&2
+	exit 0
+else
+	echo "$PROGRAM_NAME: this connection does NOT use Tor" 1>&2
+	exit 1
+fi

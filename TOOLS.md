@@ -1,12 +1,24 @@
 bacontools list
 ===============
 
+Git utilities
+-------------
+| Tool                  | Maturity | Description                                            | Language    |
+|-----------------------|----------|--------------------------------------------------------|-------------|
+| git-clone-github-user | Hack     | Clone all repositories of a single Github user         | POSIX shell |
+| git-ls                | Untested | Github-like human-readable Git repo directory listing  | Python      |
+| git-repo-list         | Hack     | Clone or pull all repos from a remote list             | POSIX shell |
+| git-stat-atr          | Hack     | Sort output of `git diff --stat` by added/total ratio  | POSIX shell |
+
 Linux utilities
 ---------------
 | Tool           | Maturity | Description                                    | Language    |
 |----------------|----------|------------------------------------------------|-------------|
+| bindump        | Hack     | Encode data to a binary dump                   | POSIX shell |
+| cate           | Hack     | Rewrite files interactively with cat and stdin | POSIX shell |
 | checkreboot    | Hack     | Print whether reboot is required               | POSIX shell |
 | cptemp         | Hack     | Copy file/directory to /tmp                    | POSIX shell |
+| cursorwiggle   | Hack     | Wiggle mouse cursor with xdotool               | POSIX shell |
 | devbup         | Moving   | Backup, archive, and encrypt files and devices | Bash        |
 | devrestore     | Hack     | Restore devbup archives                        | Bash        |
 | docker-cleanup | Hack     | Remove old Docker containers                   | POSIX shell |
@@ -15,6 +27,7 @@ Linux utilities
 | netinfo        | Untested | Print current WAN IP and nmcli connection name | POSIX shell |
 | single-urxvt   | Hack     | Launch a singleton urxvt instance              | POSIX shell |
 | userls         | Hack     | Print all users on the system                  | POSIX shell |
+| zerofile       | Hack     | Overwrite files with zeros                     | POSIX shell |
 
 Media utilities
 ---------------
@@ -42,14 +55,17 @@ Text utilities
 
 Web utilities
 -------------
-| Tool      | Maturity | Description                            | Language    |
-|-----------|----------|----------------------------------------|-------------|
-| curl-tt   | Hack     | Test server response time              | POSIX shell |
-| httpdf    | Hack     | Listen to a port and return free space | Go          |
-| myzuka-dl | Moving   | Download audio tracks from myzuka.fm   | Ruby        |
-| imgur-dl  | Moving   | Download Imgur albums                  | Ruby        |
-| respcode  | Hack     | Return HTTP response code              | POSIX shell |
-| wget-page | Hack     | Download a web page                    | POSIX shell |
+| Tool           | Maturity | Description                            | Language    |
+|----------------|----------|----------------------------------------|-------------|
+| checktor       | Hack     | Check if TCP connection is torified    | POSIX shell |
+| content-length | Hack     | Print sum of file sizes at given URLs  | POSIX shell |
+| curl-tt        | Hack     | Test server response time              | POSIX shell |
+| httpdf         | Hack     | Listen to a port and return free space | Go          |
+| myzuka-dl      | Moving   | Download audio tracks from myzuka.fm   | Ruby        |
+| imgur-dl       | Moving   | Download Imgur albums                  | Ruby        |
+| respcode       | Hack     | Return HTTP response code              | POSIX shell |
+| wget-page      | Hack     | Download a web page                    | POSIX shell |
+| wget-parallel  | Hack     | Download multiple files simultaneously | POSIX shell |
 
 Miscellaneous utilities
 -----------------------
@@ -62,11 +78,7 @@ Miscellaneous utilities
 | bitcount          | Hack     | Tally individual bits in stdin bytes                    | C           |
 | bitdiff           | Hack     | Detect different bytes in mostly similar files          | C           |
 | byteat            | Hack     | Print value of byte at index                            | C           |
-| clone-github-user | Hack     | Clone all repositories of a single Github user          | POSIX shell |
 | corrupt           | Untested | Flip/remove random bits/bytes                           | C           |
-| git-ls            | Untested | Github-like human-readable Git repo directory listing   | Python      |
-| git-repo-list     | Hack     | Clone or pull all repos from a remote list              | POSIX shell |
-| git-stat-atr      | Hack     | Sort output of `git diff --stat` by added/total ratio   | POSIX shell |
 | maybe             | Hack     | Prints yes and no randomly interleaved                  | C           |
 | pip-upgrade-all   | Hack     | Upgrade all local PIP packages                          | Python      |
 | stopwatch         | Hack     | Count elapsed time                                      | POSIX shell |

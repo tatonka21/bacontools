@@ -1,4 +1,4 @@
-.TH devbup 1 "devbup" "26 Aug 2016" "version 2016.08.26"
+.TH devbup 1 "devbup" "27 Sep 2016" "version 2016.09.27"
 
 .SH NAME
 devbup - file and device backup script
@@ -77,6 +77,10 @@ Override default padding file size.
 Must be a size specifier accepted by \fBhead\fP.
 
 .TP
+\fBPADDING_SOURCE\fP
+Override default (\fB/dev/urandom\fP) padding source file.
+
+.TP
 \fBRUN_MAT\fP
 If \fBmat\fP (Metadata Anonymization Toolkit) is installed in \fBPATH\fP, run
 it on the resulting tarball.
@@ -144,7 +148,7 @@ Can be any non-empty string.
 
 .SH AUTHOR
 Developed by Ilya Terentyev <bacondropped@gmail.com> as a part of the
-\fBbacontools\fP package <https://gitlab.com/bacondropped/bacontools>.
+\fBbacontools\fP package <https://github.com/bacondropped/bacontools>.
 
 .SH LICENSE
 \fBdevbup\fP is distributed under the terms of the MIT license.

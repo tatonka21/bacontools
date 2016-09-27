@@ -1,0 +1,162 @@
+#!/bin/sh
+# Usage: cursorwiggle [-v] [DELAY [COUNT]]
+# Wiggle the mouse cursor with xdotool.
+#
+# ARGUMENTS
+#   DELAY             Time interval between mouse wiggles. Must be a valid time
+#                     interval accepted by sleep(1). The default is 1m (1
+#                     minute). Does not matter if COUNT equals to 1.
+#   COUNT             Total number of mouse wiggles. If unset or '0',
+#                     cursorwiggle will not stop wiggling the cursor unless
+#                     interrupted. The default is 0 if DELAY is set as an
+#                     argument, 1 otherwise.
+#
+# OPTIONS
+#   -v                Wiggle the cursor vertically instead of horizontally.
+#   -d DELAY          Equivalent to DELAY. If DELAY is set after this option,
+#                     the value of DELAY will be used.
+#   -c COUNT          Ditto for COUNT.
+#   -h                Print a small help text.
+#
+# ENVIRONMENT
+#   DELAY             Refer to the ARGUMENTS section. The environment variable
+#                     has the least preference.
+#   COUNT             Ditto for COUNT.
+#   VERTICAL          Ditto for the '-v' option.
+#   MICROSLEEP        Length of the sleep between each one-pixel movement of
+#                     one wiggle. The default is 0.001 (seconds).
+#   WIGGLE_SIZE       Length of one wiggle in pixels in one direction. The
+#                     default is 10 (pixels).
+#
+# TODO: an option / environment variable for integer-only sleep(1) delays
+
+PROGRAM_NAME="$(basename "$0")"
+DELAY="${DELAY-1m}"
+COUNT="${COUNT-1}"
+VERTICAL="${VERTICAL-}"
+MICROSLEEP="${MICROSLEEP-0.001}"
+WIGGLE_SIZE="${WIGGLE_SIZE-10}"
+SIDESLEEP="0"
+
+program_usage() {
+	echo "Usage: $PROGRAM_NAME [-v] [DELAY [COUNT]]"
+	echo "Wiggle the mouse cursor with xdotool." 1>&2
+}
+
+program_help() {
+	program_usage
+	echo 1>&2
+	echo "ARGUMENTS" 1>&2
+	echo "  DELAY             Time interval between mouse wiggles." 1>&2
+	echo "  COUNT             Total number of mouse wiggles." 1>&2
+	echo 1>&2
+	echo "OPTIONS" 1>&2
+	echo "  -v                Wiggle the cursor vertically instead of horizontally." 1>&2
+	echo 1>&2
+	echo "EXAMPLES" 1>&2
+	echo "  $PROGRAM_NAME 10s" 1>&2
+	echo "                    Wiggle the cursor repeatedly with 10 second delay." 1>&2
+	echo "  $PROGRAM_NAME -v" 1>&2
+	echo "                    Wiggle the cursor vertically once, then exit." 1>&2
+	echo "  $PROGRAM_NAME 1m 5" 1>&2
+	echo "                    Wiggle the cursor 5 times, once per minute." 1>&2
+	echo 1>&2
+	echo "For more information, refer to the header comment in this script." 1>&2
+}
+
+sigint_trap() {
+	echo "SIGINT received, exiting" 1>&2
+	exit 0
+}
+
+trap sigint_trap INT
+
+wiggle() {
+	for INCREMENT in "+1" "-1" ; do
+		# shellcheck disable=SC2034
+		for I in $(seq 1 "$WIGGLE_SIZE") ; do
+			if [ -n "$VERTICAL" ]; then
+				XDT_MMR_ARGS="0 $INCREMENT"
+			else
+				XDT_MMR_ARGS="$INCREMENT 0"
+			fi
+
+			# shellcheck disable=SC2086
+			xdotool mousemove_relative -- $XDT_MMR_ARGS
+			sleep "$MICROSLEEP"
+		done
+
+		sleep "$SIDESLEEP"
+	done
+}
+
+for ARG in "$@" ; do
+	if [ "$ARG" = "--help" ]; then
+		program_help
+		exit 0
+	fi
+done
+
+while getopts :vd:c:h OPT ; do
+	case "$OPT" in
+		v)
+			VERTICAL=1
+			;;
+		d)
+			DELAY="$OPTARG"
+			;;
+		c)
+			COUNT="$OPTARG"
+			;;
+		h)
+			program_help
+			exit 0
+			;;
+		*)
+			program_usage
+			exit 1
+			;;
+	esac
+done
+
+shift "$(( OPTIND - 1 ))"
+
+if [ "$#" -gt 0 ]; then
+	DELAY="$1"
+
+	if [ "$#" = 1 ]; then
+		COUNT=0
+	fi
+
+	shift 1
+fi
+
+if [ "$#" -gt 0 ]; then
+	COUNT="$1"
+	shift 1
+fi
+
+if [ "$#" -gt 0 ]; then
+	program_usage
+	exit 1
+fi
+
+case "$COUNT" in
+	0)
+		while true ; do
+			wiggle
+			sleep "$DELAY"
+		done
+		;;
+	*)
+		while true ; do
+			wiggle
+			COUNT="$(( COUNT - 1 ))"
+			if [ "$COUNT" -gt 0 ]; then
+				sleep "$DELAY"
+			else
+				break
+			fi
+		done
+		;;
+esac

@@ -1,0 +1,51 @@
+#!/bin/sh
+# Usage: command | bindump [-d]
+# Encode data to a binary dump.
+#
+# OPTIONS
+#   -d                Decode data from the dump instead.
+#
+# ENVIRONMENT VARIABLES
+#   COLUMNS           Override default (8) number of bytes per line.
+#
+# TODO: process file list with '-' as the special stdin case
+
+PROGRAM_NAME="$(basename "$0")"
+COLUMNS="${COLUMNS-8}"
+
+if [ -t 0 ] && [ "$#" = 0 ]; then
+	echo "Usage: command | $PROGRAM_NAME [-d]" 1>&2
+	echo "Encode data to a binary dump."
+	echo
+	echo "$PROGRAM_NAME: error: stdin input required"
+	exit 1
+fi
+
+DECODE=''
+
+encode_data() {
+	perl -lpe '$_=join " ", unpack"(B8)*"' | xargs -n"$COLUMNS"
+}
+
+decode_data() {
+	tr -d '[:space:]' | perl -lpe '$_=pack"B*",$_'
+}
+
+while getopts d OPTION ; do
+	case "$OPTION" in
+		d) DECODE=1 ;;
+	esac
+done
+
+shift "$(( OPTIND - 1 ))"
+
+if [ -n "$DECODE" ]; then
+	decode_data
+else
+	encode_data
+fi
+
+# encode: perl -lpe '$_=unpack"B*"'
+# decode: perl -lpe '$_=pack"B*",$_'
+# encode with spaces: perl -lpe '$_=join " ", unpack"(B8)*"'
+# decode with spaces: perl -lape '$_=pack"(B8)*",@F'

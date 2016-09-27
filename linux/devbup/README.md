@@ -13,7 +13,7 @@ Copy `sda` and `dataset.tar` to working directory, verify checksums, tarball
 them, and be on our way.
 
 Environment variables
-=====================
+---------------------
 ```
 $ NAME=music. devbup ~/Music/*
 ```
@@ -54,6 +54,11 @@ $ PADDING_SIZE=8141M ADD_PADDING=1 devbup ~/Documents/SizeSensitiveDocuments/*
 ```
 Override default padding file size (which is `$(( RANDOM % 4096 ))M`,
 i.e. from 0 to 4 GB).
+
+```
+$ PADDING_SOURCE=/dev/zero devbup ~/justsomefile.bin
+```
+Override default (`/dev/urandom`) padding file source.
 
 ```
 $ RUN_MAT=1 devbup ~/Torrents/SomePiratedMovie.mkv

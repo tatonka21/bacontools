@@ -1,6 +1,4 @@
 #!/bin/bash
-# shellcheck disable=SC2001
-#
 # Usage: [VAR=value] devbup files ...
 # Tarball devices or files together and split the archive.
 #
@@ -17,6 +15,8 @@
 # ADD_PADDING=1               Add padding file (read from /dev/urandom) to
 #                             prevent size estimations.
 # PADDING_SIZE=1241M          Override padding file size.
+# PADDING_SOURCE=/dev/zero    Override default (/dev/urandom) file which is
+#                             read into the padding.
 # RUN_MAT=1                   Run Metadata anonymization toolkit on the
 #                             resulting tarball.
 # COMPRESS=gzip               Compress the tarball. Available values:
@@ -51,11 +51,16 @@
 
 DCFLDD_STATINT="${DCFLDD_STATINT:-64}"
 NAME="${NAME:-$(date '+%s%z').devbup.}"
+# shellcheck disable=SC2001
 TARBALL_NAME="$(echo "$NAME" | sed 's/\.$//g').tar"
+# shellcheck disable=SC2001
 GPG_NAME="$(echo "$NAME" | sed 's/\.$//g').tar.gpg"
 SPLIT_NAME="$NAME"
 SPLIT_SIZE="${SPLIT_SIZE:-256M}"
 GPG_COMMAND="${GPG_COMMAND:-gpg}"
+DD_COMMAND="${DD_COMMAND:-dd}"
+CKSUM_COMMAND="${CKSUM_COMMAND:-sha512sum}"
+
 
 if [ -z "$DD_COMMAND" ] && [ "$(command -v dcfldd 1>/dev/zero 2>/dev/zero ; echo $?)" = 0 ]; then
 	DD_COMMAND=dcfldd
@@ -80,6 +85,10 @@ if [ "$(id -u)" != "0" ]; then
 	_SUDO="sudo"
 fi
 
+if [ -z "$PADDING_SOURCE" ]; then
+	PADDING_SOURCE="/dev/urandom"
+fi
+
 db_remove() {
 	if [ -n "$DONT_SHRED" ]; then
 		rm "$1"
@@ -91,9 +100,6 @@ db_remove() {
 # Copy file to the destination directory, verify checksums, return 1 on
 # checksum mismatch
 db_deedee() {
-	DD_COMMAND="${DD_COMMAND:-dd}"
-	CKSUM_COMMAND="${CKSUM_COMMAND:-sha512sum}"
-
 	if [ "$DD_COMMAND" = "dcfldd" ]; then
 		$_SUDO "$DD_COMMAND" if="$1" of="$2" statusinterval="$DCFLDD_STATINT"
 	else
@@ -196,7 +202,7 @@ done
 if [ -n "$ADD_PADDING" ] || [ -n "$PADDING_SIZE" ]; then
 	PADDING_SIZE="${PADDING_SIZE:-"$(( RANDOM % 4096 ))M"}"
 
-	head -c"$PADDING_SIZE" /dev/urandom > random.bin
+	head -c"$PADDING_SIZE" "$PADDING_SOURCE" > random.bin
 	stat random.bin
 	tar -rvf "$TARBALL_NAME" random.bin
 

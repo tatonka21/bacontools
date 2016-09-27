@@ -1,0 +1,43 @@
+#!/bin/sh
+# Usage: cate [FILE...]
+# Edit files purely via stdin and cat.
+
+_edit() {
+	if [ ! -w "$1" ] && [ ! -w "$(dirname "$1")" ]; then
+		echo "Warning: \"$1\" is not writable" 1>&2
+	fi
+
+	if [ ! -e "$1" ]; then
+		touch "$1"
+	fi
+
+	if [ "$(stat -c%s "$1")" -gt 0 ]; then
+		printf "%s" "Warning: file '$1' is not empty ($(wc -l < "$1") "\
+		"lines); overwrite? (y/n) " 1>&2
+		read -r ACTION
+
+		if [ "$ACTION" != 'y' ] && [ "$ACTION" != 'Y' ]; then
+			return
+		fi
+	fi
+
+	if [ -n "$ANNOUNCE_EDIT" ]; then
+		echo "Editing \"$FILE\"" 1>&2
+	fi
+
+	cat -> "$1"
+}
+
+if [ "$#" = 0 ]; then
+	echo "Enter filename: " 1>&2
+	read -r FILE
+	_edit "$FILE"
+fi
+
+for FILE in "$@" ; do
+	if [ "$#" -gt 1 ]; then
+		ANNOUNCE_EDIT=1
+	fi
+
+	_edit "$FILE"
+done

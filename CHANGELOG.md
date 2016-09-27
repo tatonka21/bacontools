@@ -4,6 +4,43 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
+[2016.09.27]
+------------
+### Added
++ `miniscripts/git-ls-sorted`
++ `checktor`
++ `content-length`
++ `zerofile`
++ `cursorwiggle`
++ `imgur-dl`: -u/--unique option
++ `bindump`
++ `imgur-dl`: read `$TIMEOUT` from environment
++ `clone-github-user`: read `$PER_PAGE` from environment
++ `clone-github-user`: pass arguments to `git clone`
++ `wget-parallel`
++ `devbup`: implement `$PADDING_SOURCE`
++ `preptrack`: warn if ID3v1 tags are too long
++ `cate`
+
+### Changed
++ `git-ls`: separate columns by tab instead of single space
++ `Makefile`: don't run `patches/apply` in all
++ extract Git-specific utilities to `git/`
++ `imgur-dl`: smarter messages
++ `vimless`: check if input files are readable
+
+### Fixed
++ `preptrack`: default to empty tags if exceptions are thrown
++ `imgur-dl`: strip path slashes properly
++ `baconplaylist`: remove hardcoded path
++ `devbup`: fix '$CKSUM_COMMAND is ""' error
++ `imgur-dl`: don't create a subfolder when no images are extracted
++ `imgur-dl`: refactor image extraction (now finally works with GIF posts)
++ `imgur-dl`: fix exceptions on single image posts
++ `togif`: fix incorrect quoting in requisite error report
+
+***
+
 [2016.08.26]
 ------------
 ### Added
@@ -228,3 +265,4 @@ Notable changes to `bacontools` are documented in this file.
 [2016.07.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.27
 [2016.08.17]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.17
 [2016.08.26]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.17
+[2016.09.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.09.27

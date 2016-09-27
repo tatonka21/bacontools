@@ -5,62 +5,111 @@
 # TODO: Text search
 # TODO: Optional comment scraping for URLs
 # TODO: Optional post metadata export to JSON
-# FIXME: Some images yield a redirect loop; investigate
+# TODO: leverage filemagic for content-correct file extensions
 
 require 'rubygems'
 require 'capybara'
 require 'capybara/poltergeist'
 require 'highline/import'
 require 'net/http'
-require 'open-uri'
-require 'open_uri_redirections'
 require 'optparse'
 require 'ostruct'
 require 'uri'
 require 'fileutils'
 
-TIMEOUT = 60
+TIMEOUT = Integer(ENV.fetch('TIMEOUT', '60'))
 STDNULL = File.open(File::NULL, 'w')
 
 module Imgur
   class Downloader
+    def extract_images(session, expected_imgs)
+      images = []
+
+      if expected_imgs != 0 then
+        loop do
+          session.execute_script('window.scrollBy(0,100000)')
+          sleep 2
+          images += session.all(:xpath, "//div[@class='posts']/div//img").map{|i| i[:src]}
+          break unless images.size < expected_imgs
+        end
+      else
+        images += session.all(:xpath, "//link[@rel='image_src']").map{|i| i[:href]}
+        images += session.all(:xpath, "//div[@class='post-image']/img").map{|i| i[:src]}
+        images += session.all(:xpath, "//meta[@property='og:video']").map{|i| i[:content]}
+      end
+
+      return images.compact
+    end
+
     def download(url, opts)
       session = Capybara::Session.new(:poltergeist)
       session.visit(url)
       images = []
 
-      session.visit(session.current_url.gsub(/gallery/, "a").gsub(/(?<!\/layout\/grid)$/, '/layout/grid'))
+      saved_url = session.current_url
+      session.visit(session.current_url.gsub(/gallery/, 'a'))
 
-      expected_imgs = Integer session.find(:xpath, "//h2[contains(text(),'image')]").text[/(\d+) image(s)?$/, 1]
-      STDERR.puts("Expecting #{expected_imgs} images")
-
-      loop do
-        STDERR.puts("Scrolling down")
-        session.execute_script('window.scrollBy(0,100000)')
-        sleep 2
-        images = session.all(:xpath, "//div[@class='posts']/div[.//img]")
-        STDERR.puts("Found #{images.size} images out of expected #{expected_imgs}")
-        break unless images.size < expected_imgs
+      if session.status_code == 404 then
+        session.visit(saved_url)
+      else
+        saved_url = session.current_url
+        session.visit(session.current_url.gsub(/(?<!\/layout\/grid)$/, '/layout/grid'))
       end
 
-      post_id = session.current_url[/(?<=\/a\/)([A-Za-z0-9]*)/, 1]
-      post_title = session.find(:xpath, "//title").text.gsub("- Album on Imgur", "").strip
+      expected_imgs = (Integer session.find(:xpath, "//h2[contains(text(),'image')]").text[/(\d+) image(s)?$/, 1]) rescue 0
 
-      subdir = "#{post_id} #{("- " + post_title) unless post_title =~ /Imgur: The most awesome images on the Internet/ or post_title.empty?}".strip
+      images = (extract_images(session, expected_imgs) rescue begin
+        session.visit(saved_url)
+        return extract_images(session, expected_imgs)
+      end)
+
+      if images.size == 0 then
+        session.visit(saved_url)
+        images = extract_images(session, expected_imgs)
+      end
+
+      images.uniq! if opts.unique
+
+      unique_images_wording = "#{'unique ' if opts.unique}"
+      images_wording = "#{unique_images_wording}image#{'s' if images.size % 10 != 1 or images.size % 100 == 11}"
+
+      STDERR.puts("#{url}: extracted #{images.size} #{images_wording}")
+      STDERR.puts("#{url}: (warning: expected #{expected_imgs})") if images.size != expected_imgs and expected_imgs != 0
+
+      return 0 if images.size == 0
+
+      post_id = session.current_url[/(?<=\/)([A-Za-z0-9]+)$/, 1]
+      post_id = session.current_url[/(?<=a\/)([A-Za-z0-9]+)/, 1] if post_id == 'grid'
+
+      post_title = session.find(:xpath, "//title").text
+                  .gsub(/- Album on Imgur$/, '')
+                  .gsub(/- GIF on Imgur$/, '')
+                  .gsub(/- Imgur$/, '')
+                  .strip
+
+      subdir = "#{post_id} #{("- " + post_title) unless post_title =~ /Imgur: The most awesome images on the Internet/ or post_title.empty?}".strip.tr("/", "")
       path = opts.path
       path = subdir if path == "."
-      path = path.tr("/\000", "")
+      path = path.tr("\000", "")
 
       FileUtils::mkdir_p(path)
 
       images.each_with_index do |img, index|
-        image_url  = img.find(:xpath, ".//img")[:src].gsub("b.", ".")
-        request    = open(image_url)
+        image_url  = img.gsub("b.", ".")
+
         basename   = File.basename(URI.parse(image_url).path)
         basename   = "#{index+1} - #{basename}".tr("/\000", "")
         final_path = File.join(path, basename)
         puts("#{final_path}")
-        IO.copy_stream(request, final_path)
+
+        resp = Net::HTTP.start('i.imgur.com') {|http|
+          req = Net::HTTP::Get.new(URI(image_url))
+          http.request(req)
+        }
+
+        open(final_path, "wb") {|file|
+          file.write(resp.body)
+        }
       end
     end
   end
@@ -72,6 +121,7 @@ cli_options  = OpenStruct.new
 
 OptionParser.new do |option|
   option.on('-d PATH', '--dir PATH') {|o| cli_options.path = o}
+  option.on('-u', '--unique') {|o| cli_options.unique = true}
 end.parse!
 
 cli_options.path = '.' unless cli_options.path
