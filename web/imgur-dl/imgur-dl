@@ -20,6 +20,11 @@ require 'fileutils'
 TIMEOUT = Integer(ENV.fetch('TIMEOUT', '60'))
 STDNULL = File.open(File::NULL, 'w')
 
+trap "SIGINT" do
+  puts "SIGINT received, exiting"
+  exit 130
+end
+
 module Imgur
   class Downloader
     def extract_images(session, expected_imgs)

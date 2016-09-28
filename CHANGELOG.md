@@ -14,6 +14,7 @@ Unreleased
 + `wget-parallel`: sort URLs and discard duplicates
 
 ### Fixed
++ `imgur-dl`: trap SIGINT
 + `git-ls`: discard GPG verification in `git log` output
 
 ***
