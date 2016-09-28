@@ -3,4 +3,4 @@ set -o pipefail
 
 env LC_COLLATE=C ls -AXhF1 --color=none --group-directories-first "$@" | \
 sed 's/\/$//' | \
-xargs -n1 -I'{}' -- sh -c "git ls --noalign $* | grep -P '^{}(?=\t)' | head -1"
+xargs -n1 -I'{}' -- sh -c "git ls $* | grep -P '^{}\s*(?=\t)' | head -1"

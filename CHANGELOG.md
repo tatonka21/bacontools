@@ -10,7 +10,6 @@ Unreleased
 + `git-ls`: `--noalign` option
 
 ### Changed
-+ `miniscripts/git-ls-sorted`: use `git-ls --noalign`
 + `wget-parallel`: sort URLs and discard duplicates
 
 ### Fixed
