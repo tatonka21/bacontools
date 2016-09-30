@@ -44,8 +44,3 @@ if [ -n "$DECODE" ]; then
 else
 	encode_data
 fi
-
-# encode: perl -lpe '$_=unpack"B*"'
-# decode: perl -lpe '$_=pack"B*",$_'
-# encode with spaces: perl -lpe '$_=join " ", unpack"(B8)*"'
-# decode with spaces: perl -lape '$_=pack"(B8)*",@F'
