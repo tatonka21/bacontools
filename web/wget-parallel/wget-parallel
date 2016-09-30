@@ -10,7 +10,7 @@
 #                     as with PARALLEL_OPTIONS apply.
 
 # shellcheck disable=SC2086
-echo "$@" | \
+printf "%s\n" "$@" | \
 sort | \
 uniq | \
 parallel $PARALLEL_OPTIONS -- wget -nv -nc $WGET_OPTIONS
