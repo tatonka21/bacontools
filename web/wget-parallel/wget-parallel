@@ -16,7 +16,7 @@ cat_stdin() {
 }
 
 # shellcheck disable=SC2086
-( printf "%s\n" "$@" ; cat_stdin ) | \
+( if [ "$#" -gt 0 ]; then printf "%s\n" "$@" ; fi ; cat_stdin ) | \
 sort | \
 uniq | \
 parallel $PARALLEL_ARGS -- wget -nv -nc $WGET_ARGS

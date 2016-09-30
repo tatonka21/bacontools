@@ -17,6 +17,7 @@ Unreleased
 + `wget-parallel`: sort URLs and discard duplicates
 
 ### Fixed
++ `wget-parallel`: fix $#=0 case
 + `wget-parallel`: fix newline separation
 + `imgur-dl`: trap SIGINT
 + `git-ls`: discard GPG verification in `git log` output
