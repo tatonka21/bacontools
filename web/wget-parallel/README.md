@@ -14,3 +14,8 @@ valid:
 ```
 $ env WGET_OPTIONS=--progress=bar PARALLEL_OPTIONS="-j2 -u" wget-parallel URL1 URL2
 ```
+
+`wget-parallel` also reads URLs from stdin if it's not attached to a terminal.
+```
+$ cat url-list.txt | wget-parallel
+```

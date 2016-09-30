@@ -9,8 +9,14 @@
 # WGET_OPTIONS        A list of supplementary options for wget. Same concerns
 #                     as with PARALLEL_OPTIONS apply.
 
+cat_stdin() {
+	if [ ! -t 0 ]; then
+		cat
+	fi
+}
+
 # shellcheck disable=SC2086
-printf "%s\n" "$@" | \
+( printf "%s\n" "$@" ; cat_stdin ) | \
 sort | \
 uniq | \
 parallel $PARALLEL_OPTIONS -- wget -nv -nc $WGET_OPTIONS
