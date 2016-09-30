@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Usage: preptrack FILE [FILE ...]
 # Extract first audio stream from media files with ffmpeg, recode to MP3, tag
 #
