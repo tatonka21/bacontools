@@ -3,11 +3,11 @@
 # Fetch multiple urls with wget via GNU parallel.
 #
 # ENVIRONMENT:
-# PARALLEL_OPTIONS    A list of supplementary options for parallel. It will be
+# PARALLEL_ARGS       A list of supplementary options for parallel. It will be
 #                     expanded once, so spaces within options must be escaped
 #                     with a literal slash or single quotes.
-# WGET_OPTIONS        A list of supplementary options for wget. Same concerns
-#                     as with PARALLEL_OPTIONS apply.
+# WGET_ARGS           A list of supplementary options for wget. Same concerns
+#                     as with PARALLEL_ARGS apply.
 
 cat_stdin() {
 	if [ ! -t 0 ]; then
@@ -19,4 +19,4 @@ cat_stdin() {
 ( printf "%s\n" "$@" ; cat_stdin ) | \
 sort | \
 uniq | \
-parallel $PARALLEL_OPTIONS -- wget -nv -nc $WGET_OPTIONS
+parallel $PARALLEL_ARGS -- wget -nv -nc $WGET_ARGS

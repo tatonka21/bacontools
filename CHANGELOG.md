@@ -12,6 +12,7 @@ Unreleased
 + `git-ls`: `--noalign` option
 
 ### Changed
++ `wget-parallel`: rename *_OPTIONS to *_ARGS
 + `wget-parallel`: also read URLs from stdin
 + `wget-parallel`: sort URLs and discard duplicates
 
