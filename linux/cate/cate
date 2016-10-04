@@ -26,6 +26,10 @@ _edit() {
 	if [ "$(stat -c%s "$1")" -gt 0 ]; then
 		LINECOUNT="$(wc -l < "$1")"
 
+		if [ "$LINECOUNT" = 0 ]; then
+			LINECOUNT=1
+		fi
+
 		printf "Warning: file '%s' is not empty (%d %s), overwrite? [y/N] "\
 		"$1" "$LINECOUNT" "$(plural "$LINECOUNT" 'line' 'lines')" 1>&2
 
