@@ -16,7 +16,7 @@ plural() {
 
 _edit() {
 	if [ ! -w "$1" ] && [ ! -w "$(dirname "$1")" ]; then
-		echo "Warning: \"$1\" is not writable" 1>&2
+		echo "Warning: '$1' is not writable" 1>&2
 	fi
 
 	if [ ! -e "$1" ]; then
@@ -37,14 +37,14 @@ _edit() {
 	fi
 
 	if [ -n "$ANNOUNCE_EDIT" ]; then
-		echo "Editing \"$FILE\"" 1>&2
+		echo "Editing '$FILE'" 1>&2
 	fi
 
 	cat -> "$1"
 }
 
 if [ "$#" = 0 ]; then
-	echo "Enter filename: " 1>&2
+	printf "%s" "Enter filename: " 1>&2
 	read -r FILE
 	_edit "$FILE"
 fi
