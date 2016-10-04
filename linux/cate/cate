@@ -2,6 +2,18 @@
 # Usage: cate [FILE...]
 # Edit files purely via stdin and cat.
 
+plural() {
+	N="$1"
+	SINGULAR="$2"
+	PLURAL="$3"
+
+	if [ "$(( N % 10 ))" != "1" ] || [ "$(( N % 100 ))" = "11" ]; then
+		echo "$PLURAL"
+	else
+		echo "$SINGULAR"
+	fi
+}
+
 _edit() {
 	if [ ! -w "$1" ] && [ ! -w "$(dirname "$1")" ]; then
 		echo "Warning: \"$1\" is not writable" 1>&2
@@ -12,8 +24,11 @@ _edit() {
 	fi
 
 	if [ "$(stat -c%s "$1")" -gt 0 ]; then
-		printf "%s" "Warning: file '$1' is not empty ($(wc -l < "$1") "\
-		"lines); overwrite? (y/n) " 1>&2
+		LINECOUNT="$(wc -l < "$1")"
+
+		printf "Warning: file '%s' is not empty (%d %s), overwrite? [y/N] "\
+		"$1" "$LINECOUNT" "$(plural "$LINECOUNT" 'line' 'lines')" 1>&2
+
 		read -r ACTION
 
 		if [ "$ACTION" != 'y' ] && [ "$ACTION" != 'Y' ]; then
