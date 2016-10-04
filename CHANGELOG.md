@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `git-force-pristine`
 + `xclip-tofile`
 + `tasktags`: use less as pager
 + `git-ls`: `--noalign` option

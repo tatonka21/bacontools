@@ -17,6 +17,7 @@ Hack       cursorwiggle
 Hack       devrestore
 Hack       docker-cleanup
 Hack       du1
+Hack       git-force-pristine
 Hack       git-repo-list
 Hack       git-stat-atr
 Hack       httpdf
