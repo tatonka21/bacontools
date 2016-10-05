@@ -5,11 +5,11 @@
 PROGRAM_NAME="$(basename "$0")"
 
 if [ -n "$1" ]; then
-	cd "$1" || echo "$PROGRAM_NAME: could not cd to '$1'" 1>&2 && exit
+	cd "$1" || ( echo "$PROGRAM_NAME: could not cd to '$1'" 1>&2 && exit )
 fi
 
 GIT_ROOT="$(git rev-parse --show-toplevel)"
-cd "$GIT_ROOT" || echo "$PROGRAM_NAME: could not cd to '$GIT_ROOT'" 1>&2 && exit
+cd "$GIT_ROOT" || ( echo "$PROGRAM_NAME: could not cd to '$GIT_ROOT'" 1>&2 && exit )
 
 git clean -dfx
 git gc --auto
