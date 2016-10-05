@@ -2,6 +2,8 @@
 # Usage: git-force-pristine
 # Remove all Git untracked files and checkout the repository.
 
+set -e
+
 PROGRAM_NAME="$(basename "$0")"
 
 if [ -n "$1" ]; then
