@@ -13,6 +13,6 @@ fi
 GIT_ROOT="$(git rev-parse --show-toplevel)"
 cd "$GIT_ROOT" || ( echo "$PROGRAM_NAME: could not cd to '$GIT_ROOT'" 1>&2 && exit )
 
-git clean -dfx
+git clean -dffx
 git gc --auto
 git checkout -- .
