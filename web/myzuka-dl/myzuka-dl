@@ -75,9 +75,16 @@ module Myzuka
         end
       end
 
-      idx_list = if opts.index_list then opts.index_list
-      else ask("Download track # ") end
-      idx_list = idx_list.split(/[,\s]+/).map{|i| Integer(i) rescue 0}
+      idx_list = \
+      if opts.index_list then
+        opts.index_list
+      else
+        begin
+          ask("Download track # ")
+        rescue EOFError
+          ""
+        end
+      end.split(/[,\s]+/).map{|i| Integer(i) rescue 0}
 
       idx_list.each do |i|
         unless i >= 1 and i <= displayed_results
@@ -131,7 +138,11 @@ Capybara.current_driver        = :poltergeist
 Capybara.app_host              =  MYZUKA_HOME
 
 if ARGV.empty? then
-  Myzuka::Downloader.new.download((ask "Search for "), cli_options)
+  begin
+    Myzuka::Downloader.new.download((ask "Search for "), cli_options)
+  rescue EOFError
+    exit
+  end
 end
 
 ARGV.each do |arg|

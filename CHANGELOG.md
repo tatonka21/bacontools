@@ -20,6 +20,7 @@ Unreleased
 + `wget-parallel`: sort URLs and discard duplicates
 
 ### Fixed
++ `myzuka-dl`: catch EOFError (Ctrl-D in prompts)
 + `wget-parallel`: fix $#=0 case
 + `wget-parallel`: fix newline separation
 + `imgur-dl`: trap SIGINT
