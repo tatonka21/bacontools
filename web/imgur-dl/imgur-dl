@@ -19,6 +19,7 @@ require 'fileutils'
 
 TIMEOUT = Integer(ENV.fetch('TIMEOUT', '60'))
 STDNULL = File.open(File::NULL, 'w')
+USER_AGENT = ENV.fetch('USER_AGENT', 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.6.1 Safari/534.34 imgur-dl')
 
 trap "SIGINT" do
   puts "SIGINT received, exiting"
@@ -48,6 +49,7 @@ module Imgur
 
     def download(url, opts)
       session = Capybara::Session.new(:poltergeist)
+      session.driver.headers = {'User-Agent' => USER_AGENT}
       session.visit(url)
       images = []
 

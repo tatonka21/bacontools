@@ -13,6 +13,7 @@ Unreleased
 + `git-ls`: `--noalign` option
 
 ### Changed
++ `imgur-dl`: use custom User-Agent
 + `cate`: pluralize line count properly
 + `wget-parallel`: rename *_OPTIONS to *_ARGS
 + `wget-parallel`: also read URLs from stdin
