@@ -13,14 +13,14 @@ print_lap() {
 	LAP_TIME="$(date -u --date @$(( $(date +%s) - LAP_DATE )) +%H:%M:%S)"
 	tput cuu 1
 	tput el
-	printf "%03d  %s  %s\n" "$LAP_COUNT" "$LAP_TIME" "$TOTAL_TIME"
+	printf "%03d  %-9s %-9s\n" "$LAP_COUNT" "$LAP_TIME" "$TOTAL_TIME"
 }
 
 int_trap() {
 	echo
 	echo "Laps  Total time"
 	echo "----------------"
-	printf "%03d   %s\n" "$LAP_COUNT" "$TOTAL_TIME"
+	printf "%03d   %-9s\n" "$LAP_COUNT" "$TOTAL_TIME"
 	exit 0
 }
 
