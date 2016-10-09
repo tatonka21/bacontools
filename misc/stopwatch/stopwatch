@@ -1,17 +1,32 @@
-#!/bin/sh
+#!/bin/bash
 # Usage: stopwatch
 # Print an ascending time counter.
 #
-# TODO: laps
 # TODO: optional date announcement at startup
 
-date1="$(date +%s)"
+INIT_DATE="$(date +%s)"
+LAP_DATE="$INIT_DATE"
+LAP_COUNT="1"
 
+print_lap() {
+	TOTAL_TIME="$(date -u --date @$(( $(date +%s) - INIT_DATE )) +%H:%M:%S)"
+	LAP_TIME="$(date -u --date @$(( $(date +%s) - LAP_DATE )) +%H:%M:%S)"
+	tput cuu 1
+	tput el
+	printf "%03d  %s  %s\n" "$LAP_COUNT" "$LAP_TIME" "$TOTAL_TIME"
+}
+
+echo "Lap  Lap time  Total time"
+echo "-------------------------"
 echo
 
 while true ; do
-	tput cuu 1
-	tput el
-	printf "%s\n" "$(date -u --date @$(( $(date +%s) - date1)) +%H:%M:%S)" ;
-	sleep 1
+	print_lap
+	read -r -s -n1 -t1 KEY || KEY="EMPTY"
+
+	if [[ "$KEY" = "" ]]; then
+		echo
+		LAP_COUNT="$(( LAP_COUNT + 1 ))"
+		LAP_DATE="$(date +%s)"
+	fi
 done
