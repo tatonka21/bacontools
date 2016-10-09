@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `stopwatch`: print total laps on SIGINT
 + `stopwatch`: laps
 + `git-force-pristine`
 + `xclip-tofile`

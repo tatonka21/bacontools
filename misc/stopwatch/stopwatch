@@ -16,6 +16,16 @@ print_lap() {
 	printf "%03d  %s  %s\n" "$LAP_COUNT" "$LAP_TIME" "$TOTAL_TIME"
 }
 
+int_trap() {
+	echo
+	echo "Laps  Total time"
+	echo "----------------"
+	printf "%03d   %s\n" "$LAP_COUNT" "$TOTAL_TIME"
+	exit 0
+}
+
+trap int_trap INT
+
 echo "Lap  Lap time  Total time"
 echo "-------------------------"
 echo
