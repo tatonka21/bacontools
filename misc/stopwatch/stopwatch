@@ -1,8 +1,6 @@
 #!/bin/bash
 # Usage: stopwatch
 # Print an ascending time counter.
-#
-# TODO: optional date announcement at startup
 
 INIT_DATE="$(date +%s)"
 LAP_DATE="$INIT_DATE"
