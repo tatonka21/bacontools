@@ -123,6 +123,11 @@ if [ -n "$NOSTATS" ] || [ -n "$QUIET" ]; then
 	NOSTATS=no
 fi
 
+if [ -n "$NO_OVERWRITE" ] && [ -e "$RESULT_FILENAME" ]; then
+	echo "File '$RESULT_FILENAME' already exists and \$NO_OVERWRITE is set, refusing to overwrite"
+	exit 1
+fi
+
 quiet_echo "File: $1"
 quiet_echo "Output name: $RESULT_FILENAME"
 quiet_echo "Frame count: $FRAMES"
