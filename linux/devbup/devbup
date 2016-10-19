@@ -58,12 +58,15 @@ GPG_NAME="$(echo "$NAME" | sed 's/\.$//g').tar.gpg"
 SPLIT_NAME="$NAME"
 SPLIT_SIZE="${SPLIT_SIZE:-256M}"
 GPG_COMMAND="${GPG_COMMAND:-gpg}"
-DD_COMMAND="${DD_COMMAND:-dd}"
 CKSUM_COMMAND="${CKSUM_COMMAND:-sha512sum}"
 
 
-if [ -z "$DD_COMMAND" ] && [ "$(command -v dcfldd 1>/dev/zero 2>/dev/zero ; echo $?)" = 0 ]; then
-	DD_COMMAND=dcfldd
+if [ -z "$DD_COMMAND" ]; then
+	if [ "$(command -v dcfldd 1>/dev/zero 2>/dev/zero ; echo $?)" = 0 ]; then
+		DD_COMMAND=dcfldd
+	else
+		DD_COMMAND=dd
+	fi
 fi
 
 if [ "$(command -v "$DD_COMMAND" 1>/dev/null 2>/dev/null ; echo $?)" != 0 ]; then

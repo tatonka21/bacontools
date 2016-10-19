@@ -23,6 +23,7 @@ Unreleased
 + `wget-parallel`: sort URLs and discard duplicates
 
 ### Fixed
++ `devbup`: correctly set dcfldd as the default dd
 + `myzuka-dl`: catch EOFError (Ctrl-D in prompts)
 + `wget-parallel`: fix $#=0 case
 + `wget-parallel`: fix newline separation
