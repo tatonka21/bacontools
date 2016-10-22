@@ -16,6 +16,7 @@ Unreleased
 + `git-ls`: `--noalign` option
 
 ### Changed
++ `miniscripts/batch`: $DIRECTORY -> $1
 + `imgur-dl`: use custom User-Agent
 + `cate`: pluralize line count properly
 + `wget-parallel`: rename *_OPTIONS to *_ARGS

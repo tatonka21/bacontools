@@ -1,11 +1,18 @@
 #!/bin/bash
-# Usage: env DIRECTORY=dir batch [GNU_PARALLEL_ARGS...]
+# Usage: batch DIRECTORY [GNU_PARALLEL_ARGS...]
 # Run multiple togif conversions.
 
 JOBS="${JOBS-"$(grep -c processor /proc/cpuinfo 2>/dev/null)"}"
-DIRECTORY="$DIRECTORY"
+DIRECTORY="$1"
 PATHGLOB="${PATHGLOB-*.mkv}"
 MAXDEPTH="${MAXDEPTH-1}"
+
+if [ -z "$OVERWRITE" ]; then
+	# shellcheck disable=SC2034
+	export NO_OVERWRITE=1
+fi
+
+shift 1
 
 FRAMES="${FRAMES-40}"
 PIXELS="${PIXELS-40000}"
@@ -18,23 +25,25 @@ fi
 
 if [ -z "$PREFIX" ]; then
 	BASENAME="$(basename "$(pwd)")"
+
 	if [ "$(echo "$BASENAME" | egrep -c "*[0-9]$")" = 1 ]; then
 		PREFIX="$BASENAME"e
 	else
-		PREFIX="$BASENAME."
+		PREFIX="$BASENAME".
 	fi
 elif [[ "$PREFIX" != *\. ]] && [[ "$PREFIX" != *e ]] && [[ "$PREFIX" != *0 ]]; then
 	PREFIX="$PREFIX."
 fi
 
-echo "Jobs: $JOBS" 1>&2
+echo "Jobs:      $JOBS" 1>&2
 echo "Directory: $DIRECTORY" 1>&2
-echo "Pathglob: $PATHGLOB" 1>&2
-echo "Prefix: $PREFIX" 1>&2
-echo "Maxdepth: $MAXDEPTH" 1>&2
-echo "Frames: $FRAMES" 1>&2
-echo "Pixels: $PIXELS" 1>&2
-echo "Delay: $DELAY" 1>&2
+echo "Pathglob:  $PATHGLOB" 1>&2
+echo "Prefix:    $PREFIX" 1>&2
+echo "Maxdepth:  $MAXDEPTH" 1>&2
+echo "Frames:    $FRAMES" 1>&2
+echo "Pixels:    $PIXELS" 1>&2
+echo "Delay:     $DELAY" 1>&2
+echo "Matching:  $(find "$DIRECTORY" -maxdepth "$MAXDEPTH" -path "$PATHGLOB" | wc -l)" 1>&2
 
 process() {
 	env FRAMES="$1" PIXELS="$2" DELAY="$3" togif "$4" "$5""$(apdiff "$4")"
