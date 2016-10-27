@@ -4,8 +4,8 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
-Unreleased
-----------
+[2016.10.27]
+------------
 ### Added
 + `togif`: implement $NO_OVERWRITE
 + `stopwatch`: print total laps on SIGINT
@@ -296,3 +296,4 @@ Unreleased
 [2016.08.17]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.17
 [2016.08.26]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.26
 [2016.09.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.09.27
+[2016.10.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.10.27
