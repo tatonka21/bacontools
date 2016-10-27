@@ -4,6 +4,36 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
+[2016.10.27]
+------------
+### Added
++ `togif`: implement $NO_OVERWRITE
++ `stopwatch`: print total laps on SIGINT
++ `stopwatch`: laps
++ `git-force-pristine`
++ `xclip-tofile`
++ `tasktags`: use less as pager
++ `git-ls`: `--noalign` option
+
+### Changed
++ `togif`: prettier notifications
++ `miniscripts/batch`: $DIRECTORY -> $1
++ `imgur-dl`: use custom User-Agent
++ `cate`: pluralize line count properly
++ `wget-parallel`: rename *_OPTIONS to *_ARGS
++ `wget-parallel`: also read URLs from stdin
++ `wget-parallel`: sort URLs and discard duplicates
+
+### Fixed
++ `devbup`: correctly set dcfldd as the default dd
++ `myzuka-dl`: catch EOFError (Ctrl-D in prompts)
++ `wget-parallel`: fix $#=0 case
++ `wget-parallel`: fix newline separation
++ `imgur-dl`: trap SIGINT
++ `git-ls`: discard GPG verification in `git log` output
+
+***
+
 [2016.09.27]
 ------------
 ### Added
@@ -264,5 +294,6 @@ Notable changes to `bacontools` are documented in this file.
 [2016.07.15]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.15
 [2016.07.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.07.27
 [2016.08.17]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.17
-[2016.08.26]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.17
+[2016.08.26]: https://github.com/bacondropped/bacontools/releases/tag/2016.08.26
 [2016.09.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.09.27
+[2016.10.27]: https://github.com/bacondropped/bacontools/releases/tag/2016.10.27

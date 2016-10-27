@@ -22,7 +22,7 @@ quiet_echo() {
 
 try_notify() {
 	if [ "$(command -v notify-send 1>/dev/zero 2>/dev/zero ; echo $?)" = 0 ] ; then
-		notify-send "$1"
+		notify-send "$@"
 	fi
 }
 
@@ -123,6 +123,11 @@ if [ -n "$NOSTATS" ] || [ -n "$QUIET" ]; then
 	NOSTATS=no
 fi
 
+if [ -n "$NO_OVERWRITE" ] && [ -e "$RESULT_FILENAME" ]; then
+	echo "File '$RESULT_FILENAME' already exists and \$NO_OVERWRITE is set, refusing to overwrite"
+	exit 1
+fi
+
 quiet_echo "File: $1"
 quiet_echo "Output name: $RESULT_FILENAME"
 quiet_echo "Frame count: $FRAMES"
@@ -135,7 +140,7 @@ quiet_echo "Scale: $SCALE"
 quiet_echo "Delay: $DELAY/100 seconds"
 quiet_echo "Threads: $THREADS"
 
-try_notify "$RESULT_FILENAME started at $STARTTIME"
+try_notify "$RESULT_FILENAME" "started at $STARTTIME"
 quiet_echo "$RESULT_FILENAME started at $STARTTIME"
 
 mkdir -p "$RESULT_FILENAME.frames"
@@ -149,8 +154,7 @@ gifsicle --info "$RESULT_FILENAME" | head -n2
 
 ENDTIME="$(date --rfc-3339=seconds)"
 TIMEELAPSED="$(datediff "$STARTTIME" "$ENDTIME")"
-COMPLETEMSG="$RESULT_FILENAME completed in $(( (TIMEELAPSED/60) ))m"
-try_notify "$COMPLETEMSG"
+try_notify "$RESULT_FILENAME" "completed in $(( (TIMEELAPSED/60) ))m"
 quiet_echo "$RESULT_FILENAME ended at $ENDTIME, taking $(( (TIMEELAPSED/60) ))m"
 
 rm -r "$RESULT_FILENAME.frames"

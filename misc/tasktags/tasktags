@@ -6,8 +6,8 @@ TODO|NOTE|XXX|QUESTION|ANSWER|ISSUE|CHANGED\
 ADDED|REMOVED|DEPRECATED|TRANSLATORS|L10N|I18N"
 
 grep \
---color=auto \
+--color=always \
 --exclude="$0" \
 --exclude-dir='build' \
 --exclude-dir='.git' \
--B1 -A4 -nrEI " \b($TAGS)\b" "$@" 2>/dev/null
+-B1 -A4 -nrEI " \b($TAGS)\b" "$@" 2>/dev/null | less -FXr

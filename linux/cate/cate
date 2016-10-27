@@ -2,9 +2,21 @@
 # Usage: cate [FILE...]
 # Edit files purely via stdin and cat.
 
+plural() {
+	N="$1"
+	SINGULAR="$2"
+	PLURAL="$3"
+
+	if [ "$(( N % 10 ))" != "1" ] || [ "$(( N % 100 ))" = "11" ]; then
+		echo "$PLURAL"
+	else
+		echo "$SINGULAR"
+	fi
+}
+
 _edit() {
 	if [ ! -w "$1" ] && [ ! -w "$(dirname "$1")" ]; then
-		echo "Warning: \"$1\" is not writable" 1>&2
+		echo "Warning: '$1' is not writable" 1>&2
 	fi
 
 	if [ ! -e "$1" ]; then
@@ -12,8 +24,15 @@ _edit() {
 	fi
 
 	if [ "$(stat -c%s "$1")" -gt 0 ]; then
-		printf "%s" "Warning: file '$1' is not empty ($(wc -l < "$1") "\
-		"lines); overwrite? (y/n) " 1>&2
+		LINECOUNT="$(wc -l < "$1")"
+
+		if [ "$LINECOUNT" = 0 ]; then
+			LINECOUNT=1
+		fi
+
+		printf "Warning: file '%s' is not empty (%d %s), overwrite? [y/N] "\
+		"$1" "$LINECOUNT" "$(plural "$LINECOUNT" 'line' 'lines')" 1>&2
+
 		read -r ACTION
 
 		if [ "$ACTION" != 'y' ] && [ "$ACTION" != 'Y' ]; then
@@ -22,14 +41,14 @@ _edit() {
 	fi
 
 	if [ -n "$ANNOUNCE_EDIT" ]; then
-		echo "Editing \"$FILE\"" 1>&2
+		echo "Editing '$FILE'" 1>&2
 	fi
 
 	cat -> "$1"
 }
 
 if [ "$#" = 0 ]; then
-	echo "Enter filename: " 1>&2
+	printf "%s" "Enter filename: " 1>&2
 	read -r FILE
 	_edit "$FILE"
 fi

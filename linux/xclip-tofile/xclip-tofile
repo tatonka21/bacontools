@@ -1,0 +1,42 @@
+#!/bin/sh
+
+FILE="$1"
+DELAY="${DELAY-1s}"
+PROGRAM_NAME="$(basename "$0")"
+
+inttrap() {
+	echo "SIGINT received, exiting"
+	exit 130
+}
+
+tailable() {
+	if [ ! -p "$1" ] && [ ! -c "$1" ]; then
+		return 1
+	else
+		return 0
+	fi
+}
+
+trap inttrap INT
+
+while true ; do
+	XCLIP="$(xclip -o)"
+
+	if ( tailable "$FILE" ) ; then
+		LASTLINE="$(tail -1 "$FILE")"
+	fi
+
+	if [ "$LASTLINE" != "$XCLIP" ]; then
+		echo "$XCLIP" | tee -a "$FILE"
+
+		if [ "$(command -v notify-send 1>/dev/null 2>/dev/null ; echo $?)" = 0 ]; then
+			notify-send "$PROGRAM_NAME: appending to $(basename "$FILE")" "$XCLIP"
+		fi
+
+		if ! ( tailable "$FILE" ) ; then
+			LASTLINE="$XCLIP"
+		fi
+	fi
+
+	sleep "$DELAY"
+done

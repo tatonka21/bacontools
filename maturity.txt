@@ -17,6 +17,7 @@ Hack       cursorwiggle
 Hack       devrestore
 Hack       docker-cleanup
 Hack       du1
+Hack       git-force-pristine
 Hack       git-repo-list
 Hack       git-stat-atr
 Hack       httpdf
@@ -38,6 +39,7 @@ Hack       vimless
 Hack       watchclock
 Hack       wget-page
 Hack       wget-parallel
+Hack       xclip-tofile
 Hack       zerofile
 Untested   EncodingConverter
 Untested   ImageValidator

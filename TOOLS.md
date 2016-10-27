@@ -6,6 +6,7 @@ Git utilities
 | Tool                  | Maturity | Description                                            | Language    |
 |-----------------------|----------|--------------------------------------------------------|-------------|
 | git-clone-github-user | Hack     | Clone all repositories of a single Github user         | POSIX shell |
+| git-force-pristine    | Hack     | Make the working tree identical to HEAD                | POSIX shell |
 | git-ls                | Untested | Github-like human-readable Git repo directory listing  | Python      |
 | git-repo-list         | Hack     | Clone or pull all repos from a remote list             | POSIX shell |
 | git-stat-atr          | Hack     | Sort output of `git diff --stat` by added/total ratio  | POSIX shell |
@@ -27,6 +28,7 @@ Linux utilities
 | netinfo        | Untested | Print current WAN IP and nmcli connection name | POSIX shell |
 | single-urxvt   | Hack     | Launch a singleton urxvt instance              | POSIX shell |
 | userls         | Hack     | Print all users on the system                  | POSIX shell |
+| xclip-tofile   | Hack     | Poll xclip and append it to a file             | POSIX shell |
 | zerofile       | Hack     | Overwrite files with zeros                     | POSIX shell |
 
 Media utilities
@@ -81,7 +83,7 @@ Miscellaneous utilities
 | corrupt           | Untested | Flip/remove random bits/bytes                           | C           |
 | maybe             | Hack     | Prints yes and no randomly interleaved                  | C           |
 | pip-upgrade-all   | Hack     | Upgrade all local PIP packages                          | Python      |
-| stopwatch         | Hack     | Count elapsed time                                      | POSIX shell |
+| stopwatch         | Hack     | Count elapsed time                                      | Bash        |
 | tasktags          | Untested | Search for tags like TODO                               | POSIX shell |
 | termdraw          | Moving   | Print ASCII-art graphs                                  | Python      |
 | update-all        | Hack     | Update all Git repositories in level 1 subdirectories   | POSIX shell |

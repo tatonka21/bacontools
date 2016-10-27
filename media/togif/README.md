@@ -21,3 +21,9 @@ $ QUIET=1 FRAMES=1000 THREADS=4 togif ~/Downloads/Movie.mkv Movie
 ```
 `$QUIET` supresses any output by the script, `$NOSTATS` makes `ffmpeg` use the
 `-nostats` flag.
+
+```
+$ NO_OVERWRITE=1 togif
+```
+`$NO_OVERWRITE` will make `togif` throw an error and exit whenever the
+resulting filename already exists. By default `togif` will overwrite it.
