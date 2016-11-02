@@ -25,7 +25,7 @@ eyed3_get_tag() {
 # -*- coding: utf-8 -*-
 import eyed3
 f = eyed3.load(u'$FILENAME')
-if not (f):
+if not f:
 	exit()
 try:
 	print(unicode(f.tag.getTextFrame(eyed3.id3.frames.$2)).encode('utf-8'))
