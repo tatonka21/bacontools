@@ -28,7 +28,7 @@ f = eyed3.load(u'$FILENAME')
 if not (f):
 	exit()
 try:
-	print(f.tag.$2)
+	print(unicode(f.tag.getTextFrame(eyed3.id3.frames.$2)).encode('utf-8'))
 except:
 	print("")
 SCRIPT
@@ -56,15 +56,15 @@ process() {
 	MAX_BITRATE="${MAX_BITRATE:-320}"
 	DETECTED_BITRATE="$(ffprobe -i "$FILE" 2>&1 | grep Stream | grep Audio | grep kb | head -n1 | grep -oP "(\d+)(?= kb\/s)")"
 
-	ARTIST="$(eyed3_get_tag "$FILE" artist)"
+	ARTIST="$(eyed3_get_tag "$FILE" ARTIST_FID)"
 	read -r -e -p "Artist: " -i "$ARTIST" ARTIST
 	id3_check_tag_length "$ARTIST"
 
-	ALBUM="$(eyed3_get_tag "$FILE" album)"
+	ALBUM="$(eyed3_get_tag "$FILE" ALBUM_FID)"
 	read -r -e -p "Album: " -i "$ALBUM" ALBUM
 	id3_check_tag_length "$ALBUM"
 
-	TITLE="$(eyed3_get_tag "$FILE" title)"
+	TITLE="$(eyed3_get_tag "$FILE" TITLE_FID)"
 	read -r -e -p "Title: " -i "$TITLE" TITLE
 	id3_check_tag_length "$TITLE"
 
