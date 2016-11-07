@@ -4,6 +4,13 @@ Notable changes to `bacontools` are documented in this file.
 
 ***
 
+Unreleased
+----------
+### Added
++ `preptrack`: handle UTF-8 paths and source tags
+
+***
+
 [2016.10.27]
 ------------
 ### Added
