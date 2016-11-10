@@ -97,7 +97,16 @@ process() {
 	NEW_FILEPATH="$DIR/$(echo "$ARTIST - $TITLE" | sed 's/\///g').mp3"
 	mkdir -p "$DIR"
 
-	ffmpeg -loglevel quiet -i "$FILE" -b:a "$FINAL_BITRATE"k "$NEW_FILEPATH"
+	if [ -e "$NEW_FILEPATH" ]; then
+		read -r -e -p "File '$NEW_FILEPATH' exists; overwrite? [y/N] " DO_OVERWRITE
+		DO_OVERWRITE="$(echo "$DO_OVERWRITE" | trim | cut -c1)"
+
+		if [ "$DO_OVERWRITE" = "y" ] || [ "$DO_OVERWRITE" = "Y" ]; then
+			ffmpeg -y -loglevel quiet -i "$FILE" -b:a "$FINAL_BITRATE"k "$NEW_FILEPATH"
+		else
+			exit 1
+		fi
+	fi
 
 	if [ "$(command -v mat &>/dev/null ; echo $?)" = "0" ] && [ -z "$DONT_MAT" ]; then
 		mat "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
