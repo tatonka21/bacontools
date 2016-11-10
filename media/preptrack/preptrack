@@ -5,6 +5,27 @@
 # TODO: detect redirect, run non-interactively in this case
 # TODO: handle FLAC files via metaflac
 
+normalize_mp3() {
+	FILE="$1"
+	BITRATE="$2"
+
+	TMP_DIR="/tmp"
+	TMP_FILE="$(mktemp $TMP_DIR/XXXX.wav)"
+
+	if [ -z "$TMP_FILE" ]; then
+		echo "Could not create a temporary file '$TMP_FILE' for normalizing" 1>&2
+		exit 1
+	fi
+
+	if [ "$(command -v normalize 1>/dev/null 2>/dev/null ; echo $?)" = "0" ]; then
+		ffmpeg -y -loglevel quiet -i "$FILE" "$TMP_FILE"
+		normalize -q "$TMP_FILE"
+		ffmpeg -y -loglevel quiet -i "$TMP_FILE" -b:a "$BITRATE" "$FILE"
+	fi
+
+	rm "$TMP_FILE"
+}
+
 if [ -n "$V1" ]; then
 	echo "Using ID3v1" 1>&2
 	V1="-1"
@@ -107,6 +128,8 @@ process() {
 			exit 1
 		fi
 	fi
+
+	normalize_mp3 "$NEW_FILEPATH" "$FINAL_BITRATE"
 
 	if [ "$(command -v mat &>/dev/null ; echo $?)" = "0" ] && [ -z "$DONT_MAT" ]; then
 		mat "$NEW_FILEPATH" 1>/dev/null 2>/dev/null
