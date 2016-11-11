@@ -122,12 +122,12 @@ process() {
 		read -r -e -p "File '$NEW_FILEPATH' exists; overwrite? [y/N] " DO_OVERWRITE
 		DO_OVERWRITE="$(echo "$DO_OVERWRITE" | trim | cut -c1)"
 
-		if [ "$DO_OVERWRITE" = "y" ] || [ "$DO_OVERWRITE" = "Y" ]; then
-			ffmpeg -y -loglevel quiet -i "$FILE" -b:a "$FINAL_BITRATE"k "$NEW_FILEPATH"
-		else
+		if [ "$DO_OVERWRITE" != "y" ] && [ "$DO_OVERWRITE" != "Y" ]; then
 			exit 1
 		fi
 	fi
+
+	ffmpeg -y -loglevel quiet -i "$FILE" -b:a "$FINAL_BITRATE"k "$NEW_FILEPATH"
 
 	normalize_mp3 "$NEW_FILEPATH" "$FINAL_BITRATE"
 
