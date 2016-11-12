@@ -128,6 +128,14 @@ if [ -z "$OUTPUT" ]; then
 	exit 1
 fi
 
+if   [ ! -e "$INPUT" ]; then
+	echo "$(basename "$0"): input file does not exist" 1>&2
+	exit 1
+elif [ ! -r "$INPUT" ]; then
+	echo "$(basename "$0"): input file is not readable" 1>&2
+	exit 1
+fi
+
 # shellcheck disable=SC2064
 trap "tput cnorm ; rm -fv '$PROGRESS_FILE' '$PALETTE_FILE' ; exit" INT
 
