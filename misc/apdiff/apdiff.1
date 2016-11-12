@@ -6,6 +6,49 @@ apdiff\~\-\~Print contiguous filename difference among similarly named files
 .SH SYNOPSIS
 apdiff \fBFILE...\fP
 
+.SH EXAMPLES
+For each \fBFILE\fP, \fBapdiff\fP outputs the contiguous subsequence in that
+file's name by which it differs from other similarly named files. The intended
+use of \fPapdiff\fP is to help in batch conversion of a lot of automatically
+named files, so that you don't have to use \fBgrep\fP and co to extract indices
+or whatever from filenames.
+
+Here's how you could automatically extract sound from a lot of anime episodes:
+.PP
+.nf
+.RS
+$ ls *.mkv
+Cory_in_the_House_[08].mkv
+Cory_in_the_House_[09].mkv
+Cory_in_the_House_[10].mkv
+Cory_in_the_House_[11].mkv
+$ cat script
+#!/bin/sh
+for FILE in *.mkv ; do
+    ffmpeg -i "$FILE" sound_"$(GLOB='*.mkv' apdiff "$FILE")".wav
+done
+$ ./script
+$ ls *.wav
+sound_08.wav
+sound_09.wav
+sound_10.wav
+sound_11.wav
+.RE
+.fi
+.PP
+
+Or here's how one would use \fBapdiff\fP to implement something similar to
+Makefile's .c.o rule (don't actually do that):
+.PP
+.nf
+.RS
+for SOURCE in *.c ; do
+    cc "$SOURCE" -c -o "$(GLOB='*.c' apdiff "$SOURCE").o"
+done
+.RE
+.fi
+.PP
+
 .SH DESCRIPTION
 \fBapdiff\fP (\fIa\fPll \fIp\fPaths' \fIdiff\fP) computes the largest
 contiguous subsequence of each its input filenames by which this filename

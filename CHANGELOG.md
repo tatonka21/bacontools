@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `apdiff`: EXAMPLES man page section
 + `ffmpeg-togif`
 + `preptrack`: normalize audio gain
 + `preptrack`: handle UTF-8 paths and source tags
