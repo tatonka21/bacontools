@@ -1,4 +1,6 @@
-<img align="center" src="bacon_icon.png" alt="Yum">
+<p align="center">
+<img src="bacon_icon.png" alt="Yum">
+</p>
 
 bacontools - gradual descent into madness
 =========================================
