@@ -118,6 +118,16 @@ get_video_duration() {
 	bc
 }
 
+if [ -z "$INPUT" ]; then
+	echo "$(basename "$0"): input file not provided, exiting" 1>&2
+	exit 1
+fi
+
+if [ -z "$OUTPUT" ]; then
+	echo "$(basename "$0"): output path not provided, exiting" 1>&2
+	exit 1
+fi
+
 # shellcheck disable=SC2064
 trap "tput cnorm ; rm -fv '$PROGRESS_FILE' '$PALETTE_FILE' ; exit" INT
 
