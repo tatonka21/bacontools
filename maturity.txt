@@ -45,6 +45,7 @@ Untested   EncodingConverter
 Untested   ImageValidator
 Untested   balance
 Untested   corrupt
+Untested   ffmpeg-togif
 Untested   git-ls
 Untested   n7m
 Untested   netinfo

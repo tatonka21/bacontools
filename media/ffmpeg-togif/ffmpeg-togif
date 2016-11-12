@@ -1,0 +1,148 @@
+#!/bin/bash
+# Usage: ffmpeg-togif input.mp4 output.gif
+# Convert video to gif using ffmpeg with a separate palette generation pass.
+#
+# REQUIREMENTS
+#   POSIX shell
+#   bc
+
+INPUT="$1"
+OUTPUT="$2"
+shift 2
+
+TMP_DIR="${TMP_DIR-"$(pwd)"}"
+PALETTE_FILE="${PALETTE_FILE-"$TMP_DIR/.ffmpeg-togif.$$.palette.png"}"
+
+PROGRESS_FILE="${PROGRESS_FILE-"$TMP_DIR/.ffmpeg-togif.$$.progress.txt"}"
+
+SCALE_W="${SCALE_W-iw}"
+SCALE_H="${SCALE_H-ih}"
+
+# Usage: progress_bar WIDTH MESSAGE
+# Monitor stdin for progress (a decimal in [0,1]) and update a progress bar.
+# ARGUMENTS
+#   WIDTH             Size of the progress bar not counting the message.
+#   MESSAGE           Text to display after the progress bar
+#
+# echo 0.5 | progress_bar 10 "Doing something"
+# [####----] Doing something
+progress_bar() {
+	PB_LEFT_SEPARATOR="${PB_LEFT_SEPARATOR-[}"
+	PB_RIGHT_SEPARATOR="${PB_RIGHT_SEPARATOR-]}"
+	PB_EMPTY="${PB_EMPTY--}"
+	PB_FILL="${PB_FILL-#}"
+
+	WIDTH="$1"
+	MESSAGE="$2"
+
+	PB_LS_LEN="$(printf "%s" "$PB_LEFT_SEPARATOR" | wc -c)"
+	PB_RS_LEN="$(printf "%s" "$PB_RIGHT_SEPARATOR" | wc -c)"
+	PB_E_LEN="$(printf "%s" "$PB_EMPTY" | wc -c)"
+	PB_F_LEN="$(printf "%s" "$PB_FILL" | wc -c)"
+
+	echo
+
+	( echo 0 ; cat ) | while IFS='' read -r PROGRESS || [ -n "$PROGRESS" ] ; do
+		tput cuu 1
+		#tput el
+
+		(
+			CURRENT_WIDTH=0
+			FILL_WIDTH="$(( WIDTH - PB_LS_LEN - PB_RS_LEN ))"
+
+			if [ "$FILL_WIDTH" -le 0 ]; then
+				printf "%s%s" "$PB_LEFT_SEPARATOR" "$PB_RIGHT_SEPARATOR"
+				exit
+			fi
+
+			printf "%s" "$PB_LEFT_SEPARATOR"
+			(
+				CURRENT_WIDTH="$(echo "$CURRENT_WIDTH + $PB_LS_LEN" | bc)"
+				if [ "$CURRENT_WIDTH" -ge "$WIDTH" ]; then
+					exit
+				fi
+
+				FILL_COUNT="$(printf "%.0f" "$(echo "$FILL_WIDTH * $PROGRESS" | bc)")"
+				F_COUNT="$(printf "%.0f" "$(echo "1.0*($FILL_COUNT+$PB_F_LEN/2)/$PB_F_LEN" | bc)")"
+				E_COUNT="$(printf "%.0f" "$(echo "1.0*($FILL_WIDTH-$FILL_COUNT)/$PB_E_LEN + 2" | bc)")"
+
+				if [ "$F_COUNT" = 0 ]; then
+					E_COUNT="$(( E_COUNT + 1))"
+				fi
+
+				for I in $(seq 1 "$F_COUNT") ; do
+					printf "%s" "$PB_FILL"
+				done
+
+				# shellcheck disable=SC2034
+				for I in $(seq 1 "$E_COUNT") ; do
+					printf "%s" "$PB_EMPTY"
+				done
+			) | head -c "$FILL_WIDTH"
+			printf "%s" "$PB_RIGHT_SEPARATOR"
+		) | head -c "$WIDTH"
+
+		if [ -n "$MESSAGE" ]; then
+			printf " %s" "$MESSAGE"
+		fi
+
+		echo
+		tput hpa
+	done
+}
+
+trim() {
+	sed -e 's/^[[:space:]]*//' | sed -e 's/[[:space:]]*$//'
+}
+
+read_progress() {
+	sleep 1
+
+	# Daddy, why are all these stdbufs here?
+	# Just in fucking case someone hoards their shit, honey.
+	tail --follow=name "$PROGRESS_FILE" 2>/dev/null | \
+	stdbuf -i0 -o0 sed -n "s/out_time_ms=\\(.*\\)/scale=4 ; \\1*1.0\\/$DURATION\\/1000/p" | \
+	stdbuf -i0 -o0 bc
+
+	echo 1
+}
+
+get_video_duration() {
+	echo "$(ffprobe -select_streams v:0 -show_entries "format=duration" -of compact "$1" 2>/dev/null | sed 's!.*=\(.*\)!\1!g')*1000" | \
+	bc
+}
+
+# shellcheck disable=SC2064
+trap "tput cnorm ; rm '$PROGRESS_FILE' ; rm '$PALETTE_FILE' ; exit" INT
+
+# Hide cursor
+tput civis
+
+rm -rfv "$PALETTE_FILE" "$PROGRESS_FILE"
+
+DURATION="$(get_video_duration "$INPUT")"
+
+# ( read_progress | progress_bar 40 "Calculating palette..." ) &
+echo "Calculating palette..." 1>&2
+ffmpeg -loglevel error -y -i "$INPUT" -vf palettegen "$PALETTE_FILE"
+
+if [ -e "$OUTPUT" ]; then
+	read -r -e -p "File '$OUTPUT' exists; overwrite? [y/N] " DO_OVERWRITE
+	DO_OVERWRITE="$(printf "%s" "$DO_OVERWRITE" | trim | cut -c1)"
+
+	if [ "$DO_OVERWRITE" != "y" ] && [ "$DO_OVERWRITE" != "Y" ]; then
+		exit 1
+	fi
+fi
+
+( read_progress | progress_bar 40 "Converting..." ) &
+
+ffmpeg -progress "$PROGRESS_FILE" -loglevel error \
+-i "$INPUT" -i "$PALETTE_FILE" -lavfi "[0:v][1:v] paletteuse" -y "$OUTPUT"
+rm "$PROGRESS_FILE"
+wait
+
+rm "$PALETTE_FILE"
+
+# Show cursor
+tput cnorm
