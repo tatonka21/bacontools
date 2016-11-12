@@ -1,3 +1,5 @@
+<img align="center" src="bacon_icon.png" alt="Yum">
+
 bacontools - gradual descent into madness
 =========================================
 bacontools is a collection of small utilities I've written over the years.
