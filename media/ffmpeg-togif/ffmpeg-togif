@@ -3,7 +3,14 @@
 # Convert video to gif using ffmpeg with a separate palette generation pass.
 #
 # REQUIREMENTS
-#   POSIX shell
+#   bash
+#   basename
+#   ffprobe
+#   ffmpeg
+#   tput
+#   tail
+#   sed
+#   rm
 #   bc
 
 INPUT="$1"
@@ -12,7 +19,6 @@ shift 2
 
 TMP_DIR="${TMP_DIR-"$(pwd)"}"
 PALETTE_FILE="${PALETTE_FILE-"$TMP_DIR/.ffmpeg-togif.$$.palette.png"}"
-
 PROGRESS_FILE="${PROGRESS_FILE-"$TMP_DIR/.ffmpeg-togif.$$.progress.txt"}"
 
 SCALE_W="${SCALE_W-iw}"
@@ -113,7 +119,7 @@ get_video_duration() {
 }
 
 # shellcheck disable=SC2064
-trap "tput cnorm ; rm '$PROGRESS_FILE' ; rm '$PALETTE_FILE' ; exit" INT
+trap "tput cnorm ; rm -fv '$PROGRESS_FILE' '$PALETTE_FILE' ; exit" INT
 
 # Hide cursor
 tput civis
@@ -136,7 +142,6 @@ if [ -e "$OUTPUT" ]; then
 fi
 
 ( read_progress | progress_bar 40 "Converting..." ) &
-
 ffmpeg -progress "$PROGRESS_FILE" -loglevel error \
 -i "$INPUT" -i "$PALETTE_FILE" -lavfi "[0:v][1:v] paletteuse" -y "$OUTPUT"
 rm "$PROGRESS_FILE"
