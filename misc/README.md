@@ -12,7 +12,7 @@ bacontools/misc - chaos reigns
 | corrupt           | Untested | Flip/remove random bits/bytes                           | C           |
 | maybe             | Hack     | Prints yes and no randomly interleaved                  | C           |
 | pip-upgrade-all   | Hack     | Upgrade all local PIP packages                          | Python      |
-| stopwatch         | Hack     | Count elapsed time                                      | POSIX shell |
+| stopwatch         | Hack     | Count elapsed time                                      | Bash        |
 | tasktags          | Untested | Search for tags like TODO                               | POSIX shell |
 | termdraw          | Moving   | Print ASCII-art graphs                                  | Python      |
 | update-all        | Hack     | Update all Git repositories in level 1 subdirectories   | POSIX shell |
