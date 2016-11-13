@@ -25,7 +25,9 @@ Cory_in_the_House_[11].mkv
 $ cat script
 #!/bin/sh
 for FILE in *.mkv ; do
-    ffmpeg -i "$FILE" sound_"$(GLOB='*.mkv' apdiff "$FILE")".wav
+.RS
+ffmpeg -i "$FILE" sound_"$(GLOB='*.mkv' apdiff "$FILE")".wav
+.RE
 done
 $ ./script
 $ ls *.wav
@@ -43,7 +45,9 @@ Makefile's .c.o rule (don't actually do that):
 .nf
 .RS
 for SOURCE in *.c ; do
-    cc "$SOURCE" -c -o "$(GLOB='*.c' apdiff "$SOURCE").o"
+.RS
+cc "$SOURCE" -c -o "$(GLOB='*.c' apdiff "$SOURCE").o"
+.RE
 done
 .RE
 .fi
