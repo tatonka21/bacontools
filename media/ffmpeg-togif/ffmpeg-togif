@@ -68,8 +68,8 @@ progress_bar() {
 				fi
 
 				FILL_COUNT="$(printf "%.0f" "$(echo "$FILL_WIDTH * $PROGRESS" | bc)")"
-				F_COUNT="$(printf "%.0f" "$(echo "1.0*($FILL_COUNT+$PB_F_LEN/2)/$PB_F_LEN" | bc)")"
-				E_COUNT="$(printf "%.0f" "$(echo "1.0*($FILL_WIDTH-$FILL_COUNT)/$PB_E_LEN + 2" | bc)")"
+				F_COUNT="$(printf "%.0f" "$(echo "scale=3 ; 1.0*($FILL_COUNT+$PB_F_LEN/2)/$PB_F_LEN" | bc)")"
+				E_COUNT="$(printf "%.0f" "$(echo "scale=3 ; 1.0*($FILL_WIDTH-$FILL_COUNT)/$PB_E_LEN + 2" | bc)")"
 
 				if [ "$F_COUNT" = 0 ]; then
 					E_COUNT="$(( E_COUNT + 1))"
