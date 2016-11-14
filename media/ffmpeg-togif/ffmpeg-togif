@@ -111,7 +111,7 @@ read_progress_once() {
 	# Daddy, why are all these stdbufs here?
 	# Just in fucking case someone hoards their shit, honey.
 	tac "$PROGRESS_FILE" 2>/dev/null | \
-	stdbuf -i0 -o0 sed -n "s:out_time_ms=\\(.*\\):scale=4 ; \\1*1.0/$DURATION/1000:p" | \
+	sed -n "s:out_time_ms=\\(.*\\):scale=4 ; \\1*1.0/$DURATION/1000:p" 2>&1 | \
 	head -1 | \
 	stdbuf -i0 -o0 bc
 }
