@@ -50,7 +50,6 @@ progress_bar() {
 
 	( echo 0 ; cat ) | while IFS='' read -r PROGRESS || [ -n "$PROGRESS" ] ; do
 		tput cuu 1
-		#tput el
 
 		(
 			CURRENT_WIDTH=0
@@ -155,7 +154,6 @@ rm -rfv "$PALETTE_FILE" "$PROGRESS_FILE"
 
 DURATION="$(get_video_duration "$INPUT")"
 
-# ( read_progress | progress_bar 40 "Calculating palette..." ) &
 echo "Calculating palette..." 1>&2
 ffmpeg -loglevel error -y -i "$INPUT" -vf palettegen "$PALETTE_FILE"
 
