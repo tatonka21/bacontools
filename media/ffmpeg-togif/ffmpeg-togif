@@ -45,9 +45,18 @@ progress_bar() {
 	PB_RS_LEN="$(printf "%s" "$PB_RIGHT_SEPARATOR" | wc -c)"
 	PB_E_LEN="$(printf "%s" "$PB_EMPTY" | wc -c)"
 	PB_F_LEN="$(printf "%s" "$PB_FILL" | wc -c)"
+	PB_PERIOD="${PB_PERIOD-30}"
+	PHASE=0
 
 	( echo 0 ; cat ) | while IFS='' read -r PROGRESS || [ -n "$PROGRESS" ] ; do
 		(
+			# Once every PB_PERIOD loops, erase the line before overwriting it
+			PHASE="$(( PHASE+1 ))"
+			if [ "$(( PHASE / PB_PERIOD ))" -ge 1 ]; then
+				PHASE=0
+				printf "\033[2K"
+			fi
+
 			CURRENT_WIDTH=0
 			FILL_WIDTH="$(( WIDTH - PB_LS_LEN - PB_RS_LEN ))"
 
@@ -89,6 +98,8 @@ progress_bar() {
 
 		printf "\r"
 	done
+
+	printf "\n"
 }
 
 trim() {
@@ -121,7 +132,13 @@ read_eta() {
 	NOW="$(date +%s)"
 	ELAPSED="$(( NOW - START ))"
 	PR="$(read_progress_once)"
-	printf "%s" "$(echo "$ELAPSED $PR" | awk '{printf "%.1f", ($1 / ($2 + 0.001) - $1) / 60}')"
+	RESULT="$(printf "%s" "$(echo "$ELAPSED $PR" | awk '{if ($2+0 != 0) printf "%.1f", ($1/$2-$1)/60}')")"
+
+	if [ -z "$RESULT" ]; then
+		RESULT=0
+	fi
+
+	printf "%4s" "$RESULT"
 }
 
 get_video_duration() {
