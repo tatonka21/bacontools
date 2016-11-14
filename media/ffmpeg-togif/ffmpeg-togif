@@ -139,6 +139,15 @@ fi
 # shellcheck disable=SC2064
 trap "tput cnorm ; rm -fv '$PROGRESS_FILE' '$PALETTE_FILE' ; exit" INT
 
+if [ -e "$OUTPUT" ]; then
+	read -r -e -p "File '$OUTPUT' exists; overwrite? [y/N] " DO_OVERWRITE
+	DO_OVERWRITE="$(printf "%s" "$DO_OVERWRITE" | trim | cut -c1)"
+
+	if [ "$DO_OVERWRITE" != "y" ] && [ "$DO_OVERWRITE" != "Y" ]; then
+		exit 1
+	fi
+fi
+
 # Hide cursor
 tput civis
 
@@ -149,15 +158,6 @@ DURATION="$(get_video_duration "$INPUT")"
 # ( read_progress | progress_bar 40 "Calculating palette..." ) &
 echo "Calculating palette..." 1>&2
 ffmpeg -loglevel error -y -i "$INPUT" -vf palettegen "$PALETTE_FILE"
-
-if [ -e "$OUTPUT" ]; then
-	read -r -e -p "File '$OUTPUT' exists; overwrite? [y/N] " DO_OVERWRITE
-	DO_OVERWRITE="$(printf "%s" "$DO_OVERWRITE" | trim | cut -c1)"
-
-	if [ "$DO_OVERWRITE" != "y" ] && [ "$DO_OVERWRITE" != "Y" ]; then
-		exit 1
-	fi
-fi
 
 ( read_progress | progress_bar 40 "Converting..." ) &
 ffmpeg -progress "$PROGRESS_FILE" -loglevel error \
