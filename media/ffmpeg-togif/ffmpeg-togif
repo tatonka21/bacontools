@@ -147,12 +147,12 @@ if [ -e "$OUTPUT" ]; then
 	fi
 fi
 
-# Hide cursor
-tput civis
-
 rm -rfv "$PALETTE_FILE" "$PROGRESS_FILE"
 
 DURATION="$(get_video_duration "$INPUT")"
+
+# Hide cursor
+tput civis
 
 echo "Calculating palette..." 1>&2
 ffmpeg -loglevel error -y -i "$INPUT" -vf palettegen "$PALETTE_FILE"
