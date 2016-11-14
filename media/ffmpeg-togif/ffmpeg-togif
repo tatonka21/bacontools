@@ -29,7 +29,6 @@ SCALE_H="${SCALE_H-ih}"
 # ARGUMENTS
 #   WIDTH             Size of the progress bar not counting the message.
 #   MESSAGE           Text to display after the progress bar
-#
 # echo 0.5 | progress_bar 10 "Doing something"
 # [####----] Doing something
 progress_bar() {
@@ -119,8 +118,6 @@ read_progress() {
 }
 
 read_progress_once() {
-	# Daddy, why are all these stdbufs here?
-	# Just in fucking case someone hoards their shit, honey.
 	tac "$PROGRESS_FILE" 2>/dev/null | \
 	sed -n "s:out_time_ms=\\(.*\\):scale=4 ; \\1*1.0/$DURATION/1000:p" 2>&1 | \
 	head -1 | \
