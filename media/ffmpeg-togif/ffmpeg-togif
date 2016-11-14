@@ -24,7 +24,7 @@ PROGRESS_FILE="${PROGRESS_FILE-"$TMP_DIR/.ffmpeg-togif.$$.progress.txt"}"
 SCALE_W="${SCALE_W-iw}"
 SCALE_H="${SCALE_H-ih}"
 
-# Usage: progress_bar WIDTH MESSAGE
+# Usage: progress_bar WIDTH MESSAGE_SCRIPT
 # Monitor stdin for progress (a decimal in [0,1]) and update a progress bar.
 # ARGUMENTS
 #   WIDTH             Size of the progress bar not counting the message.
@@ -46,11 +46,7 @@ progress_bar() {
 	PB_E_LEN="$(printf "%s" "$PB_EMPTY" | wc -c)"
 	PB_F_LEN="$(printf "%s" "$PB_FILL" | wc -c)"
 
-	echo
-
 	( echo 0 ; cat ) | while IFS='' read -r PROGRESS || [ -n "$PROGRESS" ] ; do
-		tput cuu 1
-
 		(
 			CURRENT_WIDTH=0
 			FILL_WIDTH="$(( WIDTH - PB_LS_LEN - PB_RS_LEN ))"
@@ -88,11 +84,10 @@ progress_bar() {
 		) | head -c "$WIDTH"
 
 		if [ -n "$MESSAGE" ]; then
-			printf " %s" "$MESSAGE"
+			printf " %s" "$(eval "$MESSAGE" 2>&1)"
 		fi
 
-		echo
-		tput hpa
+		printf "\r"
 	done
 }
 
@@ -110,6 +105,23 @@ read_progress() {
 	stdbuf -i0 -o0 bc
 
 	echo 1
+}
+
+read_progress_once() {
+	# Daddy, why are all these stdbufs here?
+	# Just in fucking case someone hoards their shit, honey.
+	tac "$PROGRESS_FILE" 2>/dev/null | \
+	stdbuf -i0 -o0 sed -n "s:out_time_ms=\\(.*\\):scale=4 ; \\1*1.0/$DURATION/1000:p" | \
+	head -1 | \
+	stdbuf -i0 -o0 bc
+}
+
+# read_eta START_TIME
+read_eta() {
+	NOW="$(date +%s)"
+	ELAPSED="$(( NOW - START ))"
+	PR="$(read_progress_once)"
+	printf "%s" "$(echo "$ELAPSED $PR" | awk '{printf "%.1f", ($1 / ($2 + 0.001) - $1) / 60}')"
 }
 
 get_video_duration() {
@@ -157,7 +169,10 @@ tput civis
 echo "Calculating palette..." 1>&2
 ffmpeg -loglevel error -y -i "$INPUT" -vf palettegen "$PALETTE_FILE"
 
-( read_progress | progress_bar 40 "Converting..." ) &
+START="$(date +%s)"
+
+# shellcheck disable=SC2016
+( read_progress | progress_bar 40 'echo "Converting... (ETA $(read_eta)m)"' ) &
 ffmpeg -progress "$PROGRESS_FILE" -loglevel error \
 -i "$INPUT" -i "$PALETTE_FILE" -lavfi "[0:v][1:v] paletteuse" -y "$OUTPUT"
 rm "$PROGRESS_FILE"
