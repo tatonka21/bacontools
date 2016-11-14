@@ -57,7 +57,7 @@ progress_bar() {
 			FILL_WIDTH="$(( WIDTH - PB_LS_LEN - PB_RS_LEN ))"
 
 			if [ "$FILL_WIDTH" -le 0 ]; then
-				printf "%s%s" "$PB_LEFT_SEPARATOR" "$PB_RIGHT_SEPARATOR"
+				printf "%s%s" "$PB_LEFT_SEPARATOR" "$PB_RIGHT_SEPARATOR" 2>&1
 				exit
 			fi
 
@@ -77,15 +77,15 @@ progress_bar() {
 				fi
 
 				for I in $(seq 1 "$F_COUNT") ; do
-					printf "%s" "$PB_FILL"
+					printf "%s" "$PB_FILL" 2>&1
 				done
 
 				# shellcheck disable=SC2034
 				for I in $(seq 1 "$E_COUNT") ; do
-					printf "%s" "$PB_EMPTY"
+					printf "%s" "$PB_EMPTY" 2>&1
 				done
 			) | head -c "$FILL_WIDTH"
-			printf "%s" "$PB_RIGHT_SEPARATOR"
+			printf "%s" "$PB_RIGHT_SEPARATOR" 2>&1
 		) | head -c "$WIDTH"
 
 		if [ -n "$MESSAGE" ]; then
