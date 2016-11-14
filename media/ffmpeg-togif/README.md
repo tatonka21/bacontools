@@ -7,7 +7,8 @@ filters for high quality GIFs.
 
 ```
 $ ffmpeg-togif video.mp4 video.gif
+File 'video.gif' exists; overwrite? [y/N] y
 Calculating palette...
-[############--------------------------] Converting...
+[####################------------------] Converting... (ETA  0.8m)
 ```
 Convert video to GIF.
