@@ -12,3 +12,19 @@ Calculating palette...
 [####################------------------] Converting... (ETA  0.8m)
 ```
 Convert video to GIF.
+
+```
+$ ffmpeg-togif -n 0.5 video.mp4 video.gif
+```
+Downscale `video.mp4` to 0.5x its original dimensions.
+
+```
+$ ffmpeg-togif -s 00:00:10 video.mp4 video.gif
+```
+Start decoding `video.mp4` at the 10 second mark.
+
+```
+$ ffmpeg-togif -s 00:00:10 -t 5 video.mp4 video.gif
+```
+Start decoding `video.mp4` at the 10 second mark, only process a 5 second
+fragment.

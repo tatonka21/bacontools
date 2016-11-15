@@ -2,6 +2,11 @@
 # Usage: ffmpeg-togif input.mp4 output.gif
 # Convert video to gif using ffmpeg with a separate palette generation pass.
 #
+# ARGUMENTS
+#   -n SCALE          Scale input video dimensions by SCALE.
+#   -s TIME           Seek to TIME when decoding (in hh:mm:ss.cs format).
+#   -t TIME           Decode TIME-long fragment.
+#
 # REQUIREMENTS
 #   bash
 #   basename
@@ -14,10 +19,6 @@
 #   tac
 #   rm
 #   bc
-
-INPUT="$1"
-OUTPUT="$2"
-shift 2
 
 TMP_DIR="${TMP_DIR-"$(pwd)"}"
 PALETTE_FILE="${PALETTE_FILE-"$TMP_DIR/.ffmpeg-togif.$$.palette.png"}"
@@ -145,6 +146,43 @@ get_video_duration() {
 	bc
 }
 
+while getopts :n:s:t: OPTION ; do
+	case "$OPTION" in
+		n)
+			echo "Setting scale to $OPTARG" 1>&2
+			SCALE_W="$OPTARG*iw"
+			SCALE_H="-1"
+			;;
+		s)
+			SEEK="$OPTARG"
+			SEEK_ARG="-ss $SEEK"
+			;;
+		t)
+			TIME="$OPTARG"
+			TIME_ARG="-t $TIME"
+			;;
+		\?)
+			echo "Invalid option '-$OPTARG'" 1>&2
+			echo "Read the source code for usage information" 1>&2
+			exit 1
+			;;
+		:)
+			echo "Option '-$OPTARG' requires an argument" 1>&2
+			exit 1
+			;;
+		*)
+			echo "This case catch-all is not supposed to happen" 1>&2
+			echo '\o/' 1>&2
+			exit 1
+	esac
+done
+
+shift "$(( OPTIND-1 ))"
+
+INPUT="$1"
+OUTPUT="$2"
+shift 2
+
 if [ -z "$INPUT" ]; then
 	echo "$(basename "$0"): input file not provided, exiting" 1>&2
 	exit 1
@@ -183,14 +221,20 @@ DURATION="$(get_video_duration "$INPUT")"
 tput civis
 
 echo "Calculating palette..." 1>&2
-ffmpeg -loglevel error -y -i "$INPUT" -vf palettegen "$PALETTE_FILE"
+# shellcheck disable=SC2086
+ffmpeg -loglevel error -y $SEEK_ARG $TIME_ARG -i "$INPUT" \
+-vf "scale=$SCALE_W:$SCALE_H:flags=lanczos,palettegen" \
+"$PALETTE_FILE"
 
 START="$(date +%s)"
 
 # shellcheck disable=SC2016
 ( read_progress | progress_bar 40 'echo "Converting... (ETA $(read_eta)m)"' ) &
+# shellcheck disable=SC2086
 ffmpeg -progress "$PROGRESS_FILE" -loglevel error \
--i "$INPUT" -i "$PALETTE_FILE" -lavfi "[0:v][1:v] paletteuse" -y "$OUTPUT"
+$SEEK_ARG $TIME_ARG -i "$INPUT" -i "$PALETTE_FILE" \
+-lavfi "[0:v]scale=$SCALE_W:$SCALE_H:flags=lanczos[s];[s][1:v]paletteuse" \
+-y "$OUTPUT"
 rm "$PROGRESS_FILE"
 wait
 
