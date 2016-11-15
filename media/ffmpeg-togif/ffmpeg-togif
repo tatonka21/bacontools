@@ -146,6 +146,25 @@ get_video_duration() {
 	bc
 }
 
+ffmpeg_ts_to_seconds() {
+	env TS="$1" python <<SCRIPT
+# -*- coding: utf-8 -*-
+import os, re
+
+ts = os.environ.get('TS', '')
+if not ts:
+	exit()
+nums = re.split(':', ts)[::-1]
+result = 0
+for i, n in enumerate(nums):
+	result += int(n) * (60**i)
+result *= 1000
+print(result)
+SCRIPT
+}
+
+echo "Using '$TMP_DIR' temporary directory" 1>&2
+
 while getopts :n:s:t: OPTION ; do
 	case "$OPTION" in
 		n)
@@ -159,6 +178,7 @@ while getopts :n:s:t: OPTION ; do
 			;;
 		t)
 			TIME="$OPTARG"
+			DURATION="$(ffmpeg_ts_to_seconds "$OPTARG")"
 			TIME_ARG="-t $TIME"
 			;;
 		\?)
@@ -219,7 +239,9 @@ if [ -e "$OUTPUT" ]; then
 	fi
 fi
 
-DURATION="$(get_video_duration "$INPUT")"
+if [ -z "$DURATION" ]; then
+	DURATION="$(get_video_duration "$INPUT")"
+fi
 
 # Hide cursor
 tput civis
