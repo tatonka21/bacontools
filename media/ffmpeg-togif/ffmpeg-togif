@@ -224,7 +224,7 @@ DURATION="$(get_video_duration "$INPUT")"
 # Hide cursor
 tput civis
 
-echo "Calculating palette..." 1>&2
+echo "Calculating palettes..." 1>&2
 # shellcheck disable=SC2086
 ffmpeg -loglevel error -y $SEEK_ARG $TIME_ARG -i "$INPUT" \
 -vf "scale=$SCALE_W:$SCALE_H:flags=lanczos,palettegen=stats_mode=single" \
