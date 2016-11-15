@@ -20,8 +20,8 @@
 #   rm
 #   bc
 
-TMP_DIR="${TMP_DIR-"$(pwd)"}"
-PALETTE_FILE="${PALETTE_FILE-"$TMP_DIR/.ffmpeg-togif.$$.palette.png"}"
+TMP_DIR="${TMP_DIR-"$(mktemp -d || exit 1)"}"
+PALETTE_FILE="${PALETTE_FILE-"$TMP_DIR/.ffmpeg-togif.$$.palette.%05d.png"}"
 PROGRESS_FILE="${PROGRESS_FILE-"$TMP_DIR/.ffmpeg-togif.$$.progress.txt"}"
 
 SCALE_W="${SCALE_W-iw}"
@@ -201,8 +201,14 @@ elif [ ! -r "$INPUT" ]; then
 	exit 1
 fi
 
+inttrap() {
+	tput cnorm
+	rm -rf "$TMP_DIR"
+	exit
+}
+
 # shellcheck disable=SC2064
-trap "tput cnorm ; rm -fv '$PROGRESS_FILE' '$PALETTE_FILE' ; exit" INT
+trap inttrap INT
 
 if [ -e "$OUTPUT" ]; then
 	read -r -e -p "File '$OUTPUT' exists; overwrite? [y/N] " DO_OVERWRITE
@@ -213,8 +219,6 @@ if [ -e "$OUTPUT" ]; then
 	fi
 fi
 
-rm -rfv "$PALETTE_FILE" "$PROGRESS_FILE"
-
 DURATION="$(get_video_duration "$INPUT")"
 
 # Hide cursor
@@ -223,7 +227,7 @@ tput civis
 echo "Calculating palette..." 1>&2
 # shellcheck disable=SC2086
 ffmpeg -loglevel error -y $SEEK_ARG $TIME_ARG -i "$INPUT" \
--vf "scale=$SCALE_W:$SCALE_H:flags=lanczos,palettegen" \
+-vf "scale=$SCALE_W:$SCALE_H:flags=lanczos,palettegen=stats_mode=single" \
 "$PALETTE_FILE"
 
 START="$(date +%s)"
@@ -233,12 +237,9 @@ START="$(date +%s)"
 # shellcheck disable=SC2086
 ffmpeg -progress "$PROGRESS_FILE" -loglevel error \
 $SEEK_ARG $TIME_ARG -i "$INPUT" -i "$PALETTE_FILE" \
--lavfi "[0:v]scale=$SCALE_W:$SCALE_H:flags=lanczos[s];[s][1:v]paletteuse" \
+-lavfi "[0:v]scale=$SCALE_W:$SCALE_H:flags=lanczos[s];[s][1:v]paletteuse=new=1" \
 -y "$OUTPUT"
 rm "$PROGRESS_FILE"
 wait
 
-rm "$PALETTE_FILE"
-
-# Show cursor
-tput cnorm
+inttrap
