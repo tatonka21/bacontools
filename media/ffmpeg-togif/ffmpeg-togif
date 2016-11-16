@@ -47,7 +47,7 @@ progress_bar() {
 	PB_RS_LEN="$(printf "%s" "$PB_RIGHT_SEPARATOR" | wc -c)"
 	PB_E_LEN="$(printf "%s" "$PB_EMPTY" | wc -c)"
 	PB_F_LEN="$(printf "%s" "$PB_FILL" | wc -c)"
-	PB_PERIOD="${PB_PERIOD-30}"
+	PB_PERIOD="${PB_PERIOD-2}"
 	PHASE=0
 
 	( echo 0 ; cat ) | while IFS='' read -r PROGRESS || [ -n "$PROGRESS" ] ; do
@@ -120,9 +120,28 @@ read_progress() {
 	echo 1
 }
 
+read_progress_frames() {
+	sleep 1
+
+	# Daddy, why are all these stdbufs here?
+	# Just in fucking case someone hoards their shit, honey.
+	tail --follow=name "$PROGRESS_FILE" 2>/dev/null | \
+	stdbuf -i0 -o0 sed -n "s/frame=\\(.*\\)/scale=4 ; \\1\\/$FRAME_COUNT/p" | \
+	stdbuf -i0 -o0 bc
+
+	echo 1
+}
+
 read_progress_once() {
 	tac "$PROGRESS_FILE" 2>/dev/null | \
 	sed -n "s:out_time_ms=\\(.*\\):scale=4 ; \\1*1.0/$DURATION/1000:p" 2>&1 | \
+	head -1 | \
+	stdbuf -i0 -o0 bc
+}
+
+read_progress_frames_once() {
+	tac "$PROGRESS_FILE" 2>/dev/null | \
+	sed -n "s:frame=\\(.*\\):scale=4 ; \\1*1.0/$FRAME_COUNT:p" 2>&1 | \
 	head -1 | \
 	stdbuf -i0 -o0 bc
 }
@@ -132,6 +151,19 @@ read_eta() {
 	NOW="$(date +%s)"
 	ELAPSED="$(( NOW - START ))"
 	PR="$(read_progress_once)"
+	RESULT="$(printf "%s" "$(echo "$ELAPSED $PR" | awk '{if ($2+0 != 0) printf "%.1f", ($1/$2-$1)/60}')")"
+
+	if [ -z "$RESULT" ]; then
+		RESULT=0
+	fi
+
+	printf "%4s" "$RESULT"
+}
+
+read_eta_frames() {
+	NOW="$(date +%s)"
+	ELAPSED="$(( NOW - START ))"
+	PR="$(read_progress_frames_once)"
 	RESULT="$(printf "%s" "$(echo "$ELAPSED $PR" | awk '{if ($2+0 != 0) printf "%.1f", ($1/$2-$1)/60}')")"
 
 	if [ -z "$RESULT" ]; then
@@ -243,19 +275,26 @@ if [ -z "$DURATION" ]; then
 	DURATION="$(get_video_duration "$INPUT")"
 fi
 
+# shellcheck disable=SC2086
+FRAME_COUNT="$(ffmpeg -i "$INPUT" $SEEK_ARG $TIME_ARG -vcodec copy -f rawvideo -y /dev/null 2>&1 | \
+tr ^M '\n' | awk '/^frame=/ {print $2}' | tail -n 1)"
+
 # Hide cursor
 tput civis
 
-echo "Calculating palettes..." 1>&2
+START="$(date +%s)"
+# shellcheck disable=SC2016
+( read_progress_frames | progress_bar 40 'echo "Calculating palettes (ETA $(read_eta_frames "$START")m)..."' ) &
 # shellcheck disable=SC2086
-ffmpeg -loglevel error -y $SEEK_ARG $TIME_ARG -i "$INPUT" \
+ffmpeg -progress "$PROGRESS_FILE" -loglevel error -y $SEEK_ARG $TIME_ARG -i "$INPUT" \
 -vf "scale=$SCALE_W:$SCALE_H:flags=lanczos,palettegen=stats_mode=single" \
 "$PALETTE_FILE"
+rm "$PROGRESS_FILE"
+wait
 
 START="$(date +%s)"
-
 # shellcheck disable=SC2016
-( read_progress | progress_bar 40 'echo "Converting... (ETA $(read_eta)m)"' ) &
+( read_progress | progress_bar 40 'echo "Converting... (ETA $(read_eta "$START")m)"' ) &
 # shellcheck disable=SC2086
 ffmpeg -progress "$PROGRESS_FILE" -loglevel error \
 $SEEK_ARG $TIME_ARG -i "$INPUT" -i "$PALETTE_FILE" \
