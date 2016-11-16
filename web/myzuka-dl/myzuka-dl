@@ -30,6 +30,14 @@ def tm(node)
   node.find(:xpath, './/div[@class=\'time\']').text
 end
 
+def cjp_chars(s)
+  s.scan(/\p{Han}|\p{Katakana}|\p{Hiragana}|\p{Hangul}/).size
+end
+
+def s_width(s)
+  cjp_chars(s) + s.length
+end
+
 module Myzuka
   class Downloader
     def download(s, opts)
@@ -62,15 +70,15 @@ module Myzuka
       displayed_results = [results.size, MAX_RESULTS].min
 
       idx_maxlen    = (results.size+1).to_s.length
-      artist_maxlen = results.map{|r| r[:artist].length}.max
-      title_maxlen  = results.map{|r| r[:title].length}.max
+      artist_maxlen = results.map{|r| s_width(r[:artist])}.max
+      title_maxlen  = results.map{|r| s_width(r[:title])}.max
       time_maxlen   = results.map{|r| r[:time].length}.max
 
       unless opts.index_list then
         results.take(MAX_RESULTS).each_with_index do |hit, index|
           idx    = (index+1).to_s.rjust(idx_maxlen)
-          artist = hit[:artist].ljust(artist_maxlen)
-          title  = hit[:title].ljust(title_maxlen)
+          artist = hit[:artist].ljust(artist_maxlen - cjp_chars(hit[:artist]))
+          title  = hit[:title].ljust(title_maxlen - cjp_chars(hit[:title]))
           time   = ("(" + hit[:time] + ")").rjust(time_maxlen + 2)
           STDERR.puts("#{idx}  #{artist}  #{title}  #{time}")
         end
