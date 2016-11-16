@@ -16,6 +16,7 @@ MYZUKA_DOMAIN = "myzuka.fm"
 MYZUKA_HOME   = "https://#{MYZUKA_DOMAIN}/"
 MAX_RESULTS   = Integer(ENV.fetch('MAX_RESULTS', '20'))
 TIMEOUT       = Integer(ENV.fetch('TIMEOUT', '60'))
+STDNULL       = File.open(File::NULL, 'w')
 
 def a(node)
   node.find(:xpath, './/p').text
@@ -130,7 +131,7 @@ end.parse!
 phantom_opts = ['--proxy-type=socks5', '--proxy=127.0.0.1:9050'] if cli_options.tor
 
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, {js_errors: false, timeout: TIMEOUT, :phantomjs_options => phantom_opts})
+  Capybara::Poltergeist::Driver.new(app, {js_errors: false, timeout: TIMEOUT, :phantomjs_options => phantom_opts, :phantomjs_logger => STDNULL})
 end
 
 Capybara.run_server            =  false

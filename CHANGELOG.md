@@ -12,6 +12,9 @@ Unreleased
 + `preptrack`: normalize audio gain
 + `preptrack`: handle UTF-8 paths and source tags
 
+### Fixed
++ `myzuka-dl`: silence `console.log` messages
+
 ***
 
 [2016.10.27]
