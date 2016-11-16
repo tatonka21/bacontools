@@ -12,6 +12,9 @@ Unreleased
 + `preptrack`: normalize audio gain
 + `preptrack`: handle UTF-8 paths and source tags
 
+### Changed
++ do not call `mandb` in Makefiles
+
 ### Fixed
 + `preptrack`: accept paths with single quotes
 + `myzuka-dl`: properly tabulate CJP characters
