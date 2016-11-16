@@ -13,6 +13,7 @@ Unreleased
 + `preptrack`: handle UTF-8 paths and source tags
 
 ### Fixed
++ `preptrack`: accept paths with single quotes
 + `myzuka-dl`: properly tabulate CJP characters
 + `myzuka-dl`: silence `console.log` messages
 
