@@ -17,7 +17,7 @@ diff --git a/web/imgur-dl/Makefile b/web/imgur-dl/Makefile
 index 3ac2da4..89854cb 100644
 --- a/web/imgur-dl/Makefile
 +++ b/web/imgur-dl/Makefile
-@@ -3,7 +3,8 @@
+@@ -3,6 +3,7 @@
  all:
  
  install:
@@ -26,7 +26,6 @@ index 3ac2da4..89854cb 100644
 +	cat Gemfile
  	install imgur-dl "${PREFIX}/bin"
  	install imgur-dl.1 "${PREFIX}/share/man/man1"
- 	mandb
 diff --git a/web/myzuka-dl/Makefile b/web/myzuka-dl/Makefile
 index a9f7a79..93abc26 100644
 --- a/web/myzuka-dl/Makefile
