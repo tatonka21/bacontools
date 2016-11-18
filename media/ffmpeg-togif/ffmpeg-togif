@@ -189,7 +189,7 @@ if not ts:
 nums = re.split(':', ts)[::-1]
 result = 0
 for i, n in enumerate(nums):
-	result += int(n) * (60**i)
+	result += float(n) * (60**i)
 result *= 1000
 print(result)
 SCRIPT
