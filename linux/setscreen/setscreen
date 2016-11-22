@@ -1,0 +1,15 @@
+#!/bin/sh
+# Usage: setscreen WIDTHxHEIGHT SCREEN
+# Create and apply X RandR modelines to a display.
+
+MODE="$1"
+SCREEN="$2"
+
+WIDTH="$(echo "$MODE" | grep -oP '[[:digit:]]+(?=:|x)')"
+HEIGHT="$(echo "$MODE" | grep -oP '(?<=:|x)[[:digit:]]+')"
+
+MODELINE="$(cvt "$WIDTH" "$HEIGHT" | tail -1 | cut -d' ' -f2-)"
+# shellcheck disable=SC2046
+xrandr --newmode $(echo "$MODELINE")
+xrandr --addmode "$SCREEN" "$(echo "$MODELINE" | cut -d' ' -f1)"
+xrandr --output "$SCREEN" --mode "$(echo "$MODELINE" | cut -d' ' -f1)"

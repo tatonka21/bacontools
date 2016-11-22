@@ -14,6 +14,7 @@ install:
 	$(MAKE) -C du1            install
 	$(MAKE) -C keepalive      install
 	$(MAKE) -C netinfo        install
+	$(MAKE) -C setscreen      install
 	$(MAKE) -C single-urxvt   install
 	$(MAKE) -C userls         install
 	$(MAKE) -C xclip-tofile   install

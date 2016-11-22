@@ -29,6 +29,7 @@ Hack       pip-upgrade-all
 Hack       respcode
 Hack       ringcat
 Hack       ruler
+Hack       setscreen
 Hack       single-urxvt
 Hack       stopwatch
 Hack       trimline
