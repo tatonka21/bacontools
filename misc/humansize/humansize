@@ -14,7 +14,10 @@ BYTE = "B"
 if __name__ == '__main__':
     bytes = int(sys.argv[1])
 
-    i = math.floor(math.log(bytes, BINARY_BASE))
+    try:
+        i = math.floor(math.log(bytes, BINARY_BASE))
+    except ValueError:
+        i = 0
 
     if i > len(BINARY_PREFIXES):
         i = len(BINARY_PREFIXES)
