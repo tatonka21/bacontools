@@ -7,6 +7,7 @@ Notable changes to `bacontools` are documented in this file.
 Unreleased
 ----------
 ### Added
++ `humansize`
 + `setscreen`
 + `apdiff`: EXAMPLES man page section
 + `ffmpeg-togif`

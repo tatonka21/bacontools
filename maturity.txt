@@ -21,6 +21,7 @@ Hack       git-force-pristine
 Hack       git-repo-list
 Hack       git-stat-atr
 Hack       httpdf
+Hack       humansize
 Hack       keepalive
 Hack       lines
 Hack       maybe

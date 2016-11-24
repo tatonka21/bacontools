@@ -16,6 +16,7 @@ install: all
 	$(MAKE) -C bitdiff         install
 	$(MAKE) -C byteat          install
 	$(MAKE) -C corrupt         install
+	$(MAKE) -C humansize       install
 	$(MAKE) -C maybe           install
 	$(MAKE) -C pip-upgrade-all install
 	$(MAKE) -C stopwatch       install

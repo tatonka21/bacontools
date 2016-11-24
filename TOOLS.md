@@ -83,6 +83,7 @@ Miscellaneous utilities
 | bitdiff           | Hack     | Detect different bytes in mostly similar files          | C           |
 | byteat            | Hack     | Print value of byte at index                            | C           |
 | corrupt           | Untested | Flip/remove random bits/bytes                           | C           |
+| humansize         | Hack     | Convert bytes to a human-readable size                  | Python      |
 | maybe             | Hack     | Prints yes and no randomly interleaved                  | C           |
 | pip-upgrade-all   | Hack     | Upgrade all local PIP packages                          | Python      |
 | stopwatch         | Hack     | Count elapsed time                                      | Bash        |
