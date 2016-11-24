@@ -20,12 +20,11 @@
 #   rm
 #   bc
 
-TMP_DIR="${TMP_DIR-"$(mktemp -d || exit 1)"}"
-PALETTE_FILE="${PALETTE_FILE-"$TMP_DIR/.ffmpeg-togif.$$.palette.%05d.png"}"
-PROGRESS_FILE="${PROGRESS_FILE-"$TMP_DIR/.ffmpeg-togif.$$.progress.txt"}"
-
-SCALE_W="${SCALE_W-iw}"
-SCALE_H="${SCALE_H-ih}"
+for COMMAND in head tail seq basename printf sed sleep cat tac stdbuf bc awk \
+	       env python tput cut ffmpeg ffprobe ; do
+	command -v "$COMMAND" 1>/dev/null 2>/dev/null || \
+	{ echo "command '$COMMAND' is not in PATH, but required" 1>&2 ; exit 1 ; }
+done
 
 # Usage: progress_bar WIDTH MESSAGE_SCRIPT
 # Monitor stdin for progress (a decimal in [0,1]) and update a progress bar.
@@ -195,7 +194,6 @@ print(result)
 SCRIPT
 }
 
-echo "Using '$TMP_DIR' temporary directory" 1>&2
 
 while getopts :n:s:t: OPTION ; do
 	case "$OPTION" in
@@ -253,6 +251,15 @@ elif [ ! -r "$INPUT" ]; then
 	exit 1
 fi
 
+TMP_DIR="${TMP_DIR-"$(mktemp -d || exit 1)"}"
+PALETTE_FILE="${PALETTE_FILE-"$TMP_DIR/.ffmpeg-togif.$$.palette.%05d.png"}"
+PROGRESS_FILE="${PROGRESS_FILE-"$TMP_DIR/.ffmpeg-togif.$$.progress.txt"}"
+
+SCALE_W="${SCALE_W-iw}"
+SCALE_H="${SCALE_H-ih}"
+
+echo "Using '$TMP_DIR' temporary directory" 1>&2
+
 inttrap() {
 	tput cnorm
 	rm -rf "$TMP_DIR"
@@ -267,7 +274,7 @@ if [ -e "$OUTPUT" ]; then
 	DO_OVERWRITE="$(printf "%s" "$DO_OVERWRITE" | trim | cut -c1)"
 
 	if [ "$DO_OVERWRITE" != "y" ] && [ "$DO_OVERWRITE" != "Y" ]; then
-		exit 1
+		inttrap
 	fi
 fi
 
