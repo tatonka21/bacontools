@@ -260,21 +260,21 @@ SCALE_H="${SCALE_H-ih}"
 
 echo "Using '$TMP_DIR' temporary directory" 1>&2
 
-inttrap() {
+cleanup() {
 	tput cnorm
 	rm -rf "$TMP_DIR"
 	exit
 }
 
 # shellcheck disable=SC2064
-trap inttrap INT
+trap cleanup INT
 
 if [ -e "$OUTPUT" ]; then
 	read -r -e -p "File '$OUTPUT' exists; overwrite? [y/N] " DO_OVERWRITE
 	DO_OVERWRITE="$(printf "%s" "$DO_OVERWRITE" | trim | cut -c1)"
 
 	if [ "$DO_OVERWRITE" != "y" ] && [ "$DO_OVERWRITE" != "Y" ]; then
-		inttrap
+		cleanup
 	fi
 fi
 
@@ -310,4 +310,4 @@ $SEEK_ARG $TIME_ARG -i "$INPUT" -i "$PALETTE_FILE" \
 rm "$PROGRESS_FILE"
 wait
 
-inttrap
+cleanup
