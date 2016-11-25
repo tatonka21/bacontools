@@ -1,0 +1,9 @@
+#!/bin/sh
+DIR="$1"
+
+if [ -z "$DIR" ]; then
+	DIR="."
+fi
+
+MAX_LEN="$(find "$DIR" ! -path '*/.git/*' -type f | ruler)"
+find "$DIR" ! -path '*/.git/*' -type f -exec sh -c 'printf "%'$MAX_LEN's  %s\n" "$(echo "{}" | sed 's:^\./::')" "$(humansize $(stat -c%s "{}"))"' ';'
