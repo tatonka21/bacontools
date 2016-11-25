@@ -22,4 +22,6 @@ if __name__ == '__main__':
     if i > len(BINARY_PREFIXES):
         i = len(BINARY_PREFIXES)
 
-    print("{0:.1f} {1}{2}".format(1.0 * bytes / BINARY_BASE**i, BINARY_PREFIXES[i], BYTE))
+    number = "{0:.1f}".format(1.0 * bytes / BINARY_BASE**i).replace(".0", "")
+
+    print("{} {}{}".format(number, BINARY_PREFIXES[i], BYTE))
