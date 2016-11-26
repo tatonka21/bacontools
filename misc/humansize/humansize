@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Usage: humansize [BYTES]
+# Usage: humansize [SIZE_IN_BYTES...]
 # Convert size in bytes to a less precise human-readable string.
 
 import sys
@@ -11,8 +11,11 @@ BINARY_PREFIXES = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi', 'Yi']
 BYTE = "B"
 
 
-if __name__ == '__main__':
-    bytes = int(sys.argv[1])
+def convert(s):
+    try:
+        bytes = int(s)
+    except:
+        bytes = 0
 
     try:
         i = math.floor(math.log(bytes, BINARY_BASE))
@@ -24,4 +27,9 @@ if __name__ == '__main__':
 
     number = "{0:.1f}".format(1.0 * bytes / BINARY_BASE**i).replace(".0", "")
 
-    print("{} {}{}".format(number, BINARY_PREFIXES[i], BYTE))
+    return "{} {}{}".format(number, BINARY_PREFIXES[i], BYTE)
+
+
+if __name__ == '__main__':
+    for arg in sys.argv[1:]:
+        print(convert(arg))
