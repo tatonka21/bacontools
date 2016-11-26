@@ -22,6 +22,12 @@ int_trap() {
 	exit 0
 }
 
+if [ "$#" -gt 0 ]; then
+	echo "warning: stopwatch does not take any arguments" 1>&2
+	echo "use Enter to mark a lap, and Ctrl-C to stop the script" 1>&2
+	echo 1>&2
+fi
+
 trap int_trap INT
 
 echo "Lap  Lap time  Total time"
